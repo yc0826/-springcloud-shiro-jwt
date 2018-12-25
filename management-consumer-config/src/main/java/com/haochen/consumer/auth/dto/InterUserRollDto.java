@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author YangChao
  */
-public class InterUserRollDto implements Serializable{
+public class InterUserRollDto implements Serializable {
     private static final long serialVersionUID = 7480570848857295660L;
 
     private String userCode;

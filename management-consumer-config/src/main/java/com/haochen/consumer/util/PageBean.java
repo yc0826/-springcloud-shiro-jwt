@@ -1,7 +1,13 @@
 package com.haochen.consumer.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
+/**
+ * @author YangChao
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PageBean implements Serializable {
 
     private Integer currentPage;

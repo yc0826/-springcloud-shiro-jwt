@@ -3,6 +3,7 @@ package com.haochen.consumer.auth.service;
 
 import com.haochen.consumer.auth.dto.InterUserRollDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ public interface MstInterUserRollService {
 
 //    void deleteAuthorization(String userCodeAndSubsyCode);
 
-    @RequestMapping(value = "/findPage", method = RequestMethod.POST)
+    @PostMapping(value = "/findPage")
     List<InterUserRollDto> findPage(Map<String, Object> paramMap);
 
     @RequestMapping(value = "/count", method = RequestMethod.POST)

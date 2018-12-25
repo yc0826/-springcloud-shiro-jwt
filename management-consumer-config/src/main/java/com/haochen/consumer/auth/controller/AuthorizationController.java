@@ -1,7 +1,10 @@
 package com.haochen.consumer.auth.controller;
 
 import com.haochen.common.Constants;
-
+import com.haochen.common.Response;
+import com.haochen.common.utils.ResultHelper;
+import com.haochen.consumer.auth.dto.InterUserRollDto;
+import com.haochen.consumer.auth.dto.UserRollQueryDto;
 import com.haochen.consumer.auth.entity.MstInterUserRollEntity;
 import com.haochen.consumer.auth.service.MstInterUserBaseService;
 import com.haochen.consumer.auth.service.MstInterUserRollService;
@@ -11,11 +14,10 @@ import com.haochen.consumer.base.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,43 +40,21 @@ public class AuthorizationController extends BaseController {
         this.subsyBaseService = subsyBaseService;
     }
 
-    @RequiresPermissions("authorization:view")
-    @RequestMapping()
-    public String list(Model model) {
-        setCommonData(model);
-        return "auth/authorization/list";
-    }
 
-//    @RequiresPermissions("authorization:view")
-//    @RequestMapping("/getAuthorizationListData")
-//
-//    public DataTableResponse<InterUserRollDto> getAuthorizationListData(DataTableRequest dataTable, InterUserRollDto interUserRollDto) {
-//        PageInfo pageInfo = new PageInfo(dataTable.getCurrentPage(), dataTable.getiDisplayLength());
-//        Map<String, Object> paramMap = new HashMap<>(8);
-//        paramMap.put("start", (pageInfo.getPage() - 1) * pageInfo.getRows());
-//        paramMap.put("size", PAGE_SIZE);
-//        if (StringUtils.hasText(interUserRollDto.getMobile())) {
-//            paramMap.put("mobile", interUserRollDto.getMobile());
-//        }
-//        if (StringUtils.hasText(interUserRollDto.getName())) {
-//            paramMap.put("name", interUserRollDto.getName());
-//        }
-//        if (StringUtils.hasText(interUserRollDto.getSubsyCode())) {
-//            paramMap.put("subsyCode", interUserRollDto.getSubsyCode());
-//        }
-//        if (StringUtils.hasText(interUserRollDto.getMobile())) {
-//            paramMap.put("mobile", interUserRollDto.getMobile());
-//        }
-//        if (!getCurrentUserSubsyCodes().contains(Constants.PLATFORM_SUBSY_CODE)) {
-//            String[] subsyCodes = getCurrentUserSubsyCodes().split(",");
-//            paramMap.put("subsyCodes", subsyCodes);
-//        }
-//        List<InterUserRollDto> authorizationList = authorizationService.findPage(paramMap);
-//        Integer count = authorizationService.count(paramMap);
-//        pageInfo.setTotal(count);
-//        PaginationResult<InterUserRollDto> result = new PaginationResult<>(authorizationList, pageInfo);
-//        return new DataTableResponse<>(dataTable.getsEcho(), result);
-//    }
+
+
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @GetMapping("/getAuthorizationList")
+    public Response getAuthorizationList(UserRollQueryDto userRollQueryDto) {
+        Map<String, Object> paramMap = new HashMap<>(8);
+        paramMap.put("start", userRollQueryDto.getStart());
+        paramMap.put("size", userRollQueryDto.getPageSize());
+        Map<String, Object> resultMap =new HashMap<>(2);
+        List<InterUserRollDto> authorizationList = authorizationService.findPage(paramMap);
+        resultMap.put("authorizationList", authorizationList);
+        resultMap.put("count", authorizationService.count(paramMap));
+        return ResultHelper.successResp(resultMap);
+    }
 
     @RequiresPermissions("authorization:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)

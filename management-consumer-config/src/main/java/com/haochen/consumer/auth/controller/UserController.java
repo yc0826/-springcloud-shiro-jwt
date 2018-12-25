@@ -106,7 +106,6 @@ public class UserController extends BaseController {
 
     @RequiresPermissions("user:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-
     public Map<String, Object> create(MstInterUserBaseEntity user) {
         Map<String, Object> resultMap = new HashMap<>(1);
         resultMap.put("status", 200);
@@ -121,29 +120,12 @@ public class UserController extends BaseController {
         return resultMap;
     }
 
-    @RequiresPermissions("user:view")
-    @RequestMapping(value = "/{interUserCode}/detail", method = RequestMethod.GET)
-    public String showDetailForm(@PathVariable("interUserCode") String interUserCode, Model model) {
-        setCommonData(model);
-        model.addAttribute("user", userService.findByCode(interUserCode));
-        model.addAttribute("userDtl", userService.findDtlByUserCode(interUserCode));
-        model.addAttribute("op", "修改");
-        return "auth/user/view";
-    }
+
+
+
 
     @RequiresPermissions("user:update")
-    @RequestMapping(value = "/{interUserCode}/update", method = RequestMethod.GET)
-    public String showUpdateForm(@PathVariable("interUserCode") String interUserCode, Model model) {
-        setCommonData(model);
-        model.addAttribute("user", userService.findByCode(interUserCode));
-        model.addAttribute("userDtl", userService.findDtlByUserCode(interUserCode));
-        model.addAttribute("op", "修改");
-        return "auth/user/edit";
-    }
-
-    @RequiresPermissions("user:update")
-    @RequestMapping(value = "/{interUserCode}/update", method = RequestMethod.POST)
-
+    @PostMapping(value = "/{interUserCode}/update")
     public Map<String, Object> update(@PathVariable("interUserCode") String interUserCode, MstInterUserBaseEntity user) {
         Map<String, Object> resultMap = new HashMap<>(2);
         resultMap.put("status", 200);

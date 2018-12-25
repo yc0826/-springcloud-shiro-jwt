@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController {
 
     @RequestMapping("/cloud")
-
     public String cloud(String name) {
         return "hello" + name + "---->2";
     }
