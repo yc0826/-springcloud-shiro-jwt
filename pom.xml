@@ -8,7 +8,7 @@
     <artifactId>shiro-auth-management</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>springcloud-shiro-auth-management</name>
+    <name>springcloud-shiro-jwt</name>
 
     <modules>
         <module>management-common</module>
