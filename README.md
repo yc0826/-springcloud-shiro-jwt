@@ -1,3 +1,5 @@
+姐妹版项目地址dubbo服务https://gitee.com/896022/shiroAuth.git
+
 本项目采用springcloud作为微服务框架，并运用了maven的多模块结构
 
 management-common 项目基础依赖
@@ -12,7 +14,6 @@ management-zuul springcloud路由组件 对内部和外部服务提供反向代�
 
 management-ui 基于vue的前端项目,通过调用management-consumer-config提供的外部服务接口实现整个业务功能
 
-姐妹版项目地址dubbo服务https://gitee.com/896022/shiroAuth.git
 
 启动说明
 
