@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haochen.provider.auth.repo.ICfgSysResoDao">
+
+    <!-- auto-generate start -->
+    <sql id="mysqlPaginationStart">
+        SELECT A.* FROM (
+    </sql>
+    <sql id="mysqlPaginationEnd">
+        ) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+    </sql>
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="cfgSysResoColumns">
+        <if test="null!=cfgSysResoId">
+            and cfg_sys_reso_id = #{cfgSysResoId}
+        </if>
+        <if test="null!=resoCode">
+            and reso_code = #{resoCode}
+        </if>
+        <if test="null!=parentResoCode">
+            and parent_reso_code = #{parentResoCode}
+        </if>
+        <if test="null!=url">
+            and url = #{url}
+        </if>
+        <if test="null!=resoName">
+            and reso_name = #{resoName}
+        </if>
+        <if test="null!=resoTypeCode">
+            and reso_type_code = #{resoTypeCode}
+        </if>
+        <if test="null!=permission">
+            and permission = #{permission}
+        </if>
+        <if test="null!=resoPlatCode">
+            and reso_plat_code = #{resoPlatCode}
+        </if>
+        <if test="null!=scTypeCode">
+            and sc_type_code = #{scTypeCode}
+        </if>
+        <if test="null!=crtTime">
+            and crt_time = #{crtTime}
+        </if>
+        <if test="null!=crtUserCode">
+            and crt_user_code = #{crtUserCode}
+        </if>
+        <if test="null!=updTime">
+            and upd_time = #{updTime}
+        </if>
+        <if test="null!=updUserCode">
+            and upd_user_code = #{updUserCode}
+        </if>
+        <if test="null!=delFlg">
+            and del_flg = #{delFlg}
+        </if>
+        <if test="null!=verNum">
+            and ver_num = #{verNum}
+        </if>
+    </sql>
+    <sql id="conditionCfgSysResoColumns">
+        <if test="null!=condition">
+            <if test="null!=condition.cfgSysResoId">
+                and cfg_sys_reso_id = #{condition.cfgSysResoId}
+            </if>
+            <if test="null!=condition.resoCode">
+                and reso_code = #{condition.resoCode}
+            </if>
+            <if test="null!=condition.parentResoCode">
+                and parent_reso_code = #{condition.parentResoCode}
+            </if>
+            <if test="null!=condition.url">
+                and url = #{condition.url}
+            </if>
+            <if test="null!=condition.resoName">
+                and reso_name = #{condition.resoName}
+            </if>
+            <if test="null!=condition.resoTypeCode">
+                and reso_type_code = #{condition.resoTypeCode}
+            </if>
+            <if test="null!=condition.permission">
+                and permission = #{condition.permission}
+            </if>
+            <if test="null!=condition.resoPlatCode">
+                and reso_plat_code = #{condition.resoPlatCode}
+            </if>
+            <if test="null!=condition.scTypeCode">
+                and sc_type_code = #{condition.scTypeCode}
+            </if>
+            <if test="null!=condition.crtTime">
+                and crt_time = #{condition.crtTime}
+            </if>
+            <if test="null!=condition.crtUserCode">
+                and crt_user_code = #{condition.crtUserCode}
+            </if>
+            <if test="null!=condition.updTime">
+                and upd_time = #{condition.updTime}
+            </if>
+            <if test="null!=condition.updUserCode">
+                and upd_user_code = #{condition.updUserCode}
+            </if>
+            <if test="null!=condition.delFlg">
+                and del_flg = #{condition.delFlg}
+            </if>
+            <if test="null!=condition.verNum">
+                and ver_num = #{condition.verNum}
+            </if>
+        </if>
+    </sql>
+    <sql id="cfgSysResoSetColumns">
+        <if test="null!=cfgSysResoId">
+            cfg_sys_reso_id = #{cfgSysResoId},
+        </if>
+        <if test="null!=resoCode">
+            reso_code = #{resoCode},
+        </if>
+        <if test="null!=parentResoCode">
+            parent_reso_code = #{parentResoCode},
+        </if>
+        <if test="null!=url">
+            url = #{url},
+        </if>
+        <if test="null!=resoName">
+            reso_name = #{resoName},
+        </if>
+        <if test="null!=resoTypeCode">
+            reso_type_code = #{resoTypeCode},
+        </if>
+        <if test="null!=permission">
+            permission = #{permission},
+        </if>
+        <if test="null!=resoPlatCode">
+            reso_plat_code = #{resoPlatCode},
+        </if>
+        <if test="null!=scTypeCode">
+            sc_type_code = #{scTypeCode},
+        </if>
+        <if test="null!=crtTime">
+            crt_time = #{crtTime},
+        </if>
+        <if test="null!=crtUserCode">
+            crt_user_code = #{crtUserCode},
+        </if>
+        upd_time = now(),
+        <if test="null!=updUserCode">
+            upd_user_code = #{updUserCode},
+        </if>
+        <if test="null!=delFlg">
+            del_flg = #{delFlg},
+        </if>
+        ver_num = ver_num + 1,
+    </sql>
+
+    <resultMap id="cfgSysResoResultMap" type="com.haochen.provider.auth.entity.CfgSysResoEntity">
+        <result property="cfgSysResoId" column="cfg_sys_reso_id"/>
+        <result property="resoCode" column="reso_code"/>
+        <result property="parentResoCode" column="parent_reso_code"/>
+        <result property="parentResoCodes" column="parent_reso_codes"/>
+        <result property="url" column="url"/>
+        <result property="resoName" column="reso_name"/>
+        <result property="resoTypeCode" column="reso_type_code"/>
+        <result property="permission" column="permission"/>
+        <result property="resoPlatCode" column="reso_plat_code"/>
+        <result property="scTypeCode" column="sc_type_code"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+    </resultMap>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="resoCode" parameterType="com.haochen.provider.auth.entity.CfgSysResoEntity">
+        <![CDATA[
+        INSERT INTO cfg_sys_reso (
+        	reso_code
+        	,parent_reso_code
+        	,parent_reso_codes
+        	,url
+        	,reso_name
+        	,reso_type_code
+        	,permission
+        	,reso_plat_code
+        	,sc_type_code
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{resoCode}
+        		,#{parentResoCode}
+        		,#{parentResoCodes}
+        		,#{url}
+        		,#{resoName}
+        		,#{resoTypeCode}
+        		,#{permission}
+        		,#{resoPlatCode}
+        		,#{scTypeCode}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+    </insert>
+
+    <delete id="deleteById">
+        <![CDATA[
+	    DELETE FROM
+	    	cfg_sys_reso 
+	    WHERE
+	    cfg_sys_reso_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+        <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    cfg_sys_reso_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+        DELETE FROM
+        cfg_sys_reso
+        WHERE
+        1=1
+        <include refid="cfgSysResoColumns"/>
+    </delete>
+
+    <update id="updateById">
+        UPDATE
+        cfg_sys_reso
+        <set>
+            <include refid="cfgSysResoSetColumns"/>
+        </set>
+        WHERE
+        cfg_sys_reso_id = #{cfgSysResoId}
+        and ver_num =#{verNum}
+    </update>
+    <update id="updateByCondition">
+        UPDATE
+        cfg_sys_reso
+        <set>
+            <include refid="cfgSysResoSetColumns"/>
+        </set>
+        WHERE
+        1=1
+        <include refid="conditionCfgSysResoColumns"/>
+    </update>
+
+    <select id="queryById" resultMap="cfgSysResoResultMap">
+        <![CDATA[
+			SELECT
+				cfg_sys_reso_id
+				,reso_code
+				,parent_reso_code
+				,parent_reso_codes
+				,url
+				,reso_name
+				,reso_type_code
+				,permission
+				,reso_plat_code
+				,sc_type_code
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				cfg_sys_reso 
+			WHERE 
+				cfg_sys_reso_id = #{id} 
+	    ]]>
+    </select>
+
+    <select id="queryByCondition" resultMap="cfgSysResoResultMap">
+        <![CDATA[
+				SELECT
+					cfg_sys_reso_id
+					,reso_code
+					,parent_reso_code
+					,url
+					,reso_name
+					,reso_type_code
+					,permission
+					,reso_plat_code
+					,sc_type_code
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+				FROM
+					cfg_sys_reso
+				WHERE
+					1=1
+					<include refid="cfgSysResoColumns" />
+			]]>
+    </select>
+
+    <select id="queryList" resultMap="cfgSysResoResultMap">
+        SELECT
+        cfg_sys_reso_id
+        ,reso_code
+        ,parent_reso_code
+        ,url
+        ,reso_name
+        ,reso_type_code
+        ,permission
+        ,reso_plat_code
+        ,sc_type_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        cfg_sys_reso
+        WHERE
+        1=1
+        <include refid="cfgSysResoColumns"/>
+        ORDER BY
+        cfg_sys_reso_id
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        cfg_sys_reso
+        WHERE
+        1=1
+        <include refid="cfgSysResoColumns"/>
+    </select>
+
+    <select id="queryAll" resultMap="cfgSysResoResultMap">
+        <![CDATA[
+			SELECT
+				cfg_sys_reso_id
+				,reso_code
+				,parent_reso_code
+				,url
+				,reso_name
+				,reso_type_code
+				,permission
+				,reso_plat_code
+				,sc_type_code
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				cfg_sys_reso 
+			ORDER BY
+				cfg_sys_reso_id
+	    ]]>
+    </select>
+
+    <select id="queryPaginationListCount" resultType="Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        cfg_sys_reso
+        WHERE
+        1=1
+        <include refid="conditionCfgSysResoColumns"/>
+    </select>
+
+    <select id="queryPaginationList" resultMap="cfgSysResoResultMap">
+        <include refid="mysqlPaginationStart"/>
+        SELECT
+        cfg_sys_reso_id
+        ,reso_code
+        ,parent_reso_code
+        ,url
+        ,reso_name
+        ,reso_type_code
+        ,permission
+        ,reso_plat_code
+        ,sc_type_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        cfg_sys_reso
+        WHERE
+        1=1
+        <include refid="conditionCfgSysResoColumns"/>
+        ORDER BY
+        cfg_sys_reso_id
+        <include refid="mysqlPaginationEnd"/>
+    </select>
+    <!-- auto-generate end -->
+
+
+    <!-- user-defined start -->
+    <sql id="resColumns">
+        cfg_sys_reso_id
+        ,reso_code
+        ,parent_reso_code
+        ,parent_reso_codes
+        ,url
+        ,reso_name
+        ,reso_type_code
+        ,permission
+        ,reso_plat_code
+        ,sc_type_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+    </sql>
+
+    <select id="findByCode" resultMap="cfgSysResoResultMap">
+        select
+        <include refid="resColumns"/>
+        from cfg_sys_reso
+        where reso_code = #{resoCode}
+    </select>
+
+    <select id="findByParentCode" resultMap="cfgSysResoResultMap">
+        select
+        <include refid="resColumns"/>
+        from cfg_sys_reso
+        where parent_reso_code = #{resoCode}
+    </select>
+
+    <select id="findAll" resultMap="cfgSysResoResultMap">
+        SELECT
+        <include refid="resColumns"/>
+        FROM
+        cfg_sys_reso
+        where del_flg = 0
+        and reso_type_code in ('00040003', '00040004')
+    </select>
+
+    <select id="findByPermissions" resultMap="cfgSysResoResultMap">
+        SELECT
+        <include refid="resColumns"/>
+        FROM
+        cfg_sys_reso
+        where del_flg = 0
+        and reso_type_code = '00040003'
+        and parent_reso_code = '1'
+        and permission in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY
+        cfg_sys_reso_id
+    </select>
+
+    <select id="findMenusByParentCode" resultMap="cfgSysResoResultMap">
+        SELECT
+        <include refid="resColumns"/>
+        FROM
+        cfg_sys_reso
+        where del_flg = 0
+        and reso_type_code = '00040003'
+        and parent_reso_code = #{parentResoCode}
+        and permission in
+        <foreach collection="permissionList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY
+        cfg_sys_reso_id
+    </select>
+
+    <select id="findResoSetByRollCode" resultMap="cfgSysResoResultMap">
+        select cfg_sys_reso_id
+        ,reso.reso_code
+        ,parent_reso_code
+        ,parent_reso_codes
+        ,url
+        ,reso_name
+        ,reso_type_code
+        ,permission
+        ,reso_plat_code
+        ,sc_type_code
+        ,reso.crt_time
+        ,reso.crt_user_code
+        ,reso.upd_time
+        ,reso.upd_user_code
+        ,reso.del_flg
+        ,reso.ver_num from cfg_sys_reso reso
+        left join mst_roll_reso_oper ro
+        on reso.reso_code = ro.reso_code and ro.del_flg = 0
+        where reso.del_flg = 0
+        and reso_type_code in ('00040003', '00040004')
+        and ro.roll_code = #{rollCode}
+    </select>
+
+    <update id="deleteLogicByResCode">
+        update cfg_sys_reso
+        set del_flg = 1
+        where reso_code = #{resoCode}
+    </update>
+
+    <update id="deleteOperLogicByResCode">
+        update mst_roll_reso_oper
+        set del_flg = 1
+        where reso_code = #{resoCode}
+    </update>
+
+    <select id="findfindPermissionsByResoCodes" resultType="java.lang.String">
+        select
+            permission
+        from cfg_sys_reso
+        where del_flg = 0
+        and permission is not null and permission != ''
+        and reso_type_code in ('00040003', '00040004')
+        and reso_code in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getWebResoMaxCode" resultType="java.lang.String">
+        select
+            max(cast(reso_code as SIGNED INTEGER)) + 1
+        from cfg_sys_reso
+        where reso_plat_code = '00050003'
+    </select>
+
+    <select id="findParentCodeByChildUrl" resultType="java.lang.String">
+        select
+            pp.reso_code
+        from cfg_sys_reso t
+        inner join cfg_sys_reso p on t.parent_reso_code = p.reso_code
+        inner join cfg_sys_reso pp on p.parent_reso_code = pp.reso_code
+        where t.del_flg = 0
+        and p.del_flg = 0
+        and t.url = #{url}
+    </select>
+
+    <resultMap id="menuMap" type="com.haochen.provider.auth.dto.MenuTreeDto">
+        <result property="id" column="reso_code"/>
+        <result property="parent_id" column="parent_reso_code"/>
+        <result property="url" column="url"/>
+        <result property="label" column="reso_name"/>
+        <result property="resoTypeCode" column="reso_type_code"/>
+        <result property="permission" column="permission"/>
+    </resultMap>
+
+    <select id="findMenusByParenCode" resultMap="menuMap">
+        SELECT
+        <include refid="resColumns"/>
+        FROM
+          cfg_sys_reso
+        WHERE del_flg = 0
+        AND reso_type_code IN ('00040003', '00040004')
+        AND parent_reso_code = #{parentResoCode}
+    </select>
+
+    <select id="getCheckedNodesByRoleCode" resultType="java.lang.String">
+        select
+          reso.reso_code
+        from cfg_sys_reso reso
+        left join mst_roll_reso_oper ro
+        on reso.reso_code = ro.reso_code and ro.del_flg = 0
+        where reso.del_flg = 0
+        and reso_type_code in ('00040003', '00040004')
+        and ro.roll_code = #{roleCode}
+    </select>
+    <!-- user-defined end -->
+
+</mapper>
+

@@ -1,0 +1,23 @@
+spring:
+  application:
+    #当前应用名称
+    name: management-provider
+  datasource:
+    url: jdbc:mysql://10.101.8.166:3306/yc2?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root123
+    driver-class-name: com.mysql.jdbc.Driver
+
+server:
+  #当前服务端口号
+  port: 8762
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+#mybatis
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/sqlMap/**/*.xml

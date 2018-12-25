@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstInterUserBaseDao">
+
+
+    <resultMap id="mstInterUserBaseResultMap" type="com.haochen.provider.auth.entity.MstInterUserBaseEntity">
+        <result property="mstInterUserBaseId" column="mst_inter_user_base_id"/>
+        <result property="interUserCode" column="inter_user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="salt" column="salt"/>
+        <result property="userPwd" column="user_pwd"/>
+        <result property="mobNum" column="mob_num"/>
+        <result property="eml" column="eml"/>
+        <result property="avtrUrl" column="avtr_url"/>
+        <result property="postnCode" column="postn_code"/>
+        <result property="webAcesFlg" column="web_aces_flg"/>
+        <result property="appAcesFlg" column="app_aces_flg"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+    </resultMap>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="insert" useGeneratedKeys="true" parameterType="com.haochen.provider.auth.entity.MstInterUserBaseEntity" >
+        <![CDATA[
+        INSERT INTO mst_inter_user_base (
+        	 inter_user_code
+        	,user_name
+        	,salt
+        	,user_pwd
+        	,mob_num
+        	,eml
+        	,avtr_url
+        	,postn_code
+        	,web_aces_flg
+        	,app_aces_flg
+        	,device_id
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{interUserCode}
+        		,#{userName}
+        		,#{salt}
+        		,#{userPwd}
+        		,#{mobNum}
+        		,#{eml}
+        		,#{avtrUrl}
+        		,#{postnCode}
+        		,#{webAcesFlg}
+        		,#{appAcesFlg}
+        		,#{deviceId}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+    </insert>
+
+    <!-- auto-generate end -->
+
+
+    <!-- user-defined start -->
+
+    <sql id="userColumns">
+        mst_inter_user_base_id
+        ,inter_user_code
+        ,user_name
+        ,salt
+        ,user_pwd
+        ,mob_num
+        ,eml
+        ,avtr_url
+        ,postn_code
+        ,web_aces_flg
+        ,app_aces_flg
+        ,device_id
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+    </sql>
+
+    <select id="findByCode" resultMap="mstInterUserBaseResultMap">
+        select
+        <include refid="userColumns"/>
+        from
+        mst_inter_user_base
+        where inter_user_code = #{userCode}
+    </select>
+
+    <select id="findAll" resultMap="mstInterUserBaseResultMap">
+        select
+        <include refid="userColumns"/>
+        from
+        mst_inter_user_base
+        where del_flg = 0
+    </select>
+
+    <select id="findByUsername" resultMap="mstInterUserBaseResultMap">
+        select
+        <include refid="userColumns"/>
+        from mst_inter_user_base
+        where del_flg = 0
+        and (user_name = #{username} or mob_num = #{username})
+    </select>
+
+    <!--wangtao 20180201 modify 增加条件 会所激活状态或者会所激活状态是空，  或者允许会所管理员登录字段=1 -->
+    <select id="findUserSubyCodesByUserCode" resultType="java.lang.String">
+        select
+        group_concat(userSubsy.subsy_code)
+        from mst_inter_user_subsy userSubsy left join mst_subsy_base subsyBase on userSubsy.subsy_code = subsyBase.subsy_code
+        where userSubsy.del_flg = 0
+        and (subsyBase.del_flg = 0 or subsyBase.del_flg is null)
+        and (subsyBase.subsy_activ_flg = 1 or subsyBase.subsy_activ_flg is null or is_allow_subsy_admin_login = 1)
+        and userSubsy.inter_user_code = #{userCode}
+        order by userSubsy.dflt_subsy_flg = 1 desc
+    </select>
+
+    <select id="findBySubsyCodes" resultMap="mstInterUserBaseResultMap">
+        select
+            t.mst_inter_user_base_id
+            ,t.inter_user_code
+            ,if(concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) != '',concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')), t.user_name ) `user_name`
+            ,t.salt
+            ,t.user_pwd
+            ,t.mob_num
+            ,t.eml
+            ,t.avtr_url
+            ,t.postn_code
+            ,t.web_aces_flg
+            ,t.app_aces_flg
+            ,t.device_id
+            ,t.crt_time
+            ,t.crt_user_code
+            ,t.upd_time
+            ,t.upd_user_code
+            ,t.del_flg
+            ,t.ver_num
+        from mst_inter_user_base t
+        inner join mst_inter_user_subsy s on t.inter_user_code = s.inter_user_code and s.del_flg = 0
+        inner join mst_inter_user_dtl d on t.inter_user_code = d.inter_user_code and d.del_flg = 0
+        where t.del_flg = 0
+        <if test="subsyCodeArray != null and subsyCodeArray.length > 0">
+            AND s.subsy_code in
+            <foreach collection="subsyCodeArray" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        group by t.inter_user_code
+    </select>
+
+    <insert id="inserUserSubsy" useGeneratedKeys="true" parameterType="com.haochen.provider.auth.entity.MstInterUserBaseEntity">
+        INSERT INTO `mst_inter_user_subsy` (
+        `inter_user_code`
+        , `subsy_code`
+        , `dflt_subsy_flg`
+        , `crt_time`
+        , `crt_user_code`
+        , `upd_time`
+        , `upd_user_code`
+        , `del_flg`
+        , `ver_num`
+        )
+        VALUES (
+          #{userCode}
+        , #{subsyCode}
+        , #{dfltSubsyFlg}
+        , now()
+        , #{crtUser}
+        , NULL
+        , NULL
+        , 0
+        , 1
+        )
+    </insert>
+
+    <delete id="deleteUserSubsyByUserCode">
+        delete from mst_inter_user_subsy
+        where inter_user_code = #{userCode}
+        AND subsy_code != 'fangsu'
+    </delete>
+
+    <sql id="mstInterUserBaseSetColumns">
+        <if test="null!=mstInterUserBaseId">
+            mst_inter_user_base_id = #{mstInterUserBaseId},
+        </if>
+        <if test="null!=interUserCode">
+            inter_user_code = #{interUserCode},
+        </if>
+        <if test="null!=userName">
+            user_name = #{userName},
+        </if>
+        <if test="null!=salt">
+            salt = #{salt},
+        </if>
+        <if test="null!=userPwd">
+            user_pwd = #{userPwd},
+        </if>
+        <if test="null!=mobNum">
+            mob_num = #{mobNum},
+        </if>
+        <if test="null!=eml">
+            eml = #{eml},
+        </if>
+        <if test="null!=avtrUrl">
+            avtr_url = #{avtrUrl},
+        </if>
+        <if test="null!=postnCode">
+            postn_code = #{postnCode},
+        </if>
+        <if test="null!=webAcesFlg">
+            web_aces_flg = #{webAcesFlg},
+        </if>
+        <if test="null!=appAcesFlg">
+            app_aces_flg = #{appAcesFlg},
+        </if>
+        <if test="null!=deviceId">
+            device_id = #{deviceId},
+        </if>
+        <if test="null!=crtTime">
+            crt_time = #{crtTime},
+        </if>
+        <if test="null!=crtUserCode">
+            crt_user_code = #{crtUserCode},
+        </if>
+        upd_time = now(),
+        <if test="null!=updUserCode">
+            upd_user_code = #{updUserCode},
+        </if>
+        <if test="null!=delFlg">
+            del_flg = #{delFlg},
+        </if>
+        ver_num = ver_num + 1,
+    </sql>
+
+    <update id="updateUser" parameterType="com.haochen.provider.auth.entity.MstInterUserBaseEntity">
+        update mst_inter_user_base
+        <set>
+            <include refid="mstInterUserBaseSetColumns" />
+        </set>
+        WHERE
+        inter_user_code = #{interUserCode}
+        and ver_num =#{verNum}
+    </update>
+
+
+    <resultMap id="interUserResultMap" type="com.haochen.provider.auth.dto.InterUserDto">
+        <result property="interUserCode" column="inter_user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="mobile" column="mob_num"/>
+        <result property="appAcesFlg" column="app_aces_flg"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+    </resultMap>
+
+    <sql id="whereCondition">
+        where b.del_flg = 0
+        <if test="subsyCodes != null and subsyCodes.length > 0">
+            and s.subsy_code in
+            <foreach collection="subsyCodes" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="subsyCode != null and subsyCode != ''">
+            and s.subsy_code = #{subsyCode}
+        </if>
+        <if test="name != null and name != ''">
+            and (concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) like '${name}%'
+            or  b.user_name like '${name}%')
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and b.mob_num like '${mobile}%'
+        </if>
+        <if test="gderFlg != null">
+            and d.gder_flg = #{gderFlg}
+        </if>
+        <if test="appAcesFlg != null">
+            and b.app_aces_flg = #{appAcesFlg}
+        </if>
+    </sql>
+
+
+    <select id="findPage" resultMap="interUserResultMap">
+        select
+             b.inter_user_code
+            ,b.user_name
+            ,b.mob_num
+            ,b.app_aces_flg
+            ,b.crt_time
+            ,b.upd_time
+            ,concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) `name`
+            ,if(d.gder_flg = 1, '男', '女') `sex`
+        from
+        mst_inter_user_base b
+        left join mst_inter_user_dtl d on d.inter_user_code = b.inter_user_code and d.del_flg = 0
+        inner join mst_inter_user_subsy s on s.inter_user_code = b.inter_user_code and s.del_flg = 0
+        <include refid="whereCondition"/>
+        group by b.inter_user_code
+        limit #{start}, #{size}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from (
+          select
+            b.inter_user_code
+            ,b.user_name
+            ,b.mob_num
+            ,b.app_aces_flg
+            ,b.crt_time
+            ,b.upd_time
+            ,concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) `name`
+            ,if(d.gder_flg = 1, '男', '女') `sex`
+        from
+          mst_inter_user_base b
+        left join mst_inter_user_dtl d on d.inter_user_code = b.inter_user_code and d.del_flg = 0
+        inner join mst_inter_user_subsy s on s.inter_user_code = b.inter_user_code and s.del_flg = 0
+        <include refid="whereCondition"/>
+        group by b.inter_user_code
+        ) tb
+    </select>
+
+
+
+    <select id="findByMobile" resultMap="mstInterUserBaseResultMap">
+        select
+        <include refid="userColumns"/>
+        from
+        mst_inter_user_base
+        where mob_num = #{mobNum}
+        and del_flg = 0
+    </select>
+
+    <!-- user-defined end -->
+
+</mapper>
+

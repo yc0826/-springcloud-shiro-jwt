@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: management-zuul
+
+server:
+  #当前服务端口号
+  port: 8768
+
+zuul:
+  routes:
+    management-consumer:
+      path: /shiroAuth/**
+      sensitiveHeaders:
+      stripPrefix: false
+  ignored-services: management-provider
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+

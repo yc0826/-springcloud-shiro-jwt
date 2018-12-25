@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstInterUserRollDao">
+
+    <!-- auto-generate start -->
+    <sql id="mysqlPaginationStart">
+        SELECT A.* FROM (
+    </sql>
+    <sql id="mysqlPaginationEnd">
+        ) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+    </sql>
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="mstInterUserRollColumns">
+        <if test="null!=mstInterUserRollId">
+            and mst_inter_user_roll_id = #{mstInterUserRollId}
+        </if>
+        <if test="null!=interUserCode">
+            and inter_user_code = #{interUserCode}
+        </if>
+        <if test="null!=subsyCode">
+            and subsy_code = #{subsyCode}
+        </if>
+        <if test="null!=rollCode">
+            and roll_code = #{rollCode}
+        </if>
+        <if test="null!=crtTime">
+            and crt_time = #{crtTime}
+        </if>
+        <if test="null!=crtUserCode">
+            and crt_user_code = #{crtUserCode}
+        </if>
+        <if test="null!=updTime">
+            and upd_time = #{updTime}
+        </if>
+        <if test="null!=updUserCode">
+            and upd_user_code = #{updUserCode}
+        </if>
+        <if test="null!=delFlg">
+            and del_flg = #{delFlg}
+        </if>
+        <if test="null!=verNum">
+            and ver_num = #{verNum}
+        </if>
+    </sql>
+    <sql id="conditionMstInterUserRollColumns">
+        <if test="null!=condition">
+            <if test="null!=condition.mstInterUserRollId">
+                and mst_inter_user_roll_id = #{condition.mstInterUserRollId}
+            </if>
+            <if test="null!=condition.interUserCode">
+                and inter_user_code = #{condition.interUserCode}
+            </if>
+            <if test="null!=condition.subsyCode">
+                and subsy_code = #{condition.subsyCode}
+            </if>
+            <if test="null!=condition.rollCode">
+                and roll_code = #{condition.rollCode}
+            </if>
+            <if test="null!=condition.crtTime">
+                and crt_time = #{condition.crtTime}
+            </if>
+            <if test="null!=condition.crtUserCode">
+                and crt_user_code = #{condition.crtUserCode}
+            </if>
+            <if test="null!=condition.updTime">
+                and upd_time = #{condition.updTime}
+            </if>
+            <if test="null!=condition.updUserCode">
+                and upd_user_code = #{condition.updUserCode}
+            </if>
+            <if test="null!=condition.delFlg">
+                and del_flg = #{condition.delFlg}
+            </if>
+            <if test="null!=condition.verNum">
+                and ver_num = #{condition.verNum}
+            </if>
+        </if>
+    </sql>
+    <sql id="mstInterUserRollSetColumns">
+        <if test="null!=mstInterUserRollId">
+            mst_inter_user_roll_id = #{mstInterUserRollId},
+        </if>
+        <if test="null!=interUserCode">
+            inter_user_code = #{interUserCode},
+        </if>
+        <if test="null!=subsyCode">
+            subsy_code = #{subsyCode},
+        </if>
+        <if test="null!=rollCode">
+            roll_code = #{rollCode},
+        </if>
+        <if test="null!=crtTime">
+            crt_time = #{crtTime},
+        </if>
+        <if test="null!=crtUserCode">
+            crt_user_code = #{crtUserCode},
+        </if>
+        upd_time = now(),
+        <if test="null!=updUserCode">
+            upd_user_code = #{updUserCode},
+        </if>
+        <if test="null!=delFlg">
+            del_flg = #{delFlg},
+        </if>
+        ver_num = ver_num + 1,
+    </sql>
+
+    <resultMap id="mstInterUserRollResultMap" type="com.haochen.provider.auth.entity.MstInterUserRollEntity">
+        <result property="mstInterUserRollId" column="mst_inter_user_roll_id"/>
+        <result property="interUserCode" column="inter_user_code"/>
+        <result property="subsyCode" column="subsy_code"/>
+        <result property="rollCodes" column="roll_codes"/>
+        <result property="subsyCodes" column="subsy_codes"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+    </resultMap>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="insert">
+        <![CDATA[
+        INSERT INTO mst_inter_user_roll (
+        	mst_inter_user_roll_id
+        	,inter_user_code
+        	,subsy_code
+        	,roll_code
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{mstInterUserRollId}
+        		,#{interUserCode}
+        		,#{subsyCode}
+        		,#{rollCode}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+    </insert>
+
+    <delete id="deleteById">
+        <![CDATA[
+	    DELETE FROM
+	    	mst_inter_user_roll 
+	    WHERE
+	    mst_inter_user_roll_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+        <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    mst_inter_user_roll_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+        DELETE FROM
+        mst_inter_user_roll
+        WHERE
+        1=1
+        <include refid="mstInterUserRollColumns"/>
+    </delete>
+
+    <update id="updateById">
+        UPDATE
+        mst_inter_user_roll
+        <set>
+            <include refid="mstInterUserRollSetColumns"/>
+        </set>
+        WHERE
+        mst_inter_user_roll_id = #{mstInterUserRollId}
+        and ver_num =#{verNum}
+    </update>
+    <update id="updateByCondition">
+        UPDATE
+        mst_inter_user_roll
+        <set>
+            <include refid="mstInterUserRollSetColumns"/>
+        </set>
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserRollColumns"/>
+    </update>
+
+    <select id="queryById" resultMap="mstInterUserRollResultMap">
+        <![CDATA[
+			SELECT
+				mst_inter_user_roll_id
+				,inter_user_code
+				,subsy_code
+				,roll_code
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_inter_user_roll 
+			WHERE 
+				mst_inter_user_roll_id = #{id} 
+	    ]]>
+    </select>
+
+    <select id="queryByCondition" resultMap="mstInterUserRollResultMap">
+        <![CDATA[
+				SELECT
+					mst_inter_user_roll_id
+					,inter_user_code
+					,subsy_code
+					,roll_code
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+				FROM
+					mst_inter_user_roll
+				WHERE
+					1=1
+					<include refid="mstInterUserRollColumns" />
+			]]>
+    </select>
+
+    <select id="queryList" resultMap="mstInterUserRollResultMap">
+        SELECT
+        mst_inter_user_roll_id
+        ,inter_user_code
+        ,subsy_code
+        ,roll_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        mst_inter_user_roll
+        WHERE
+        1=1
+        <include refid="mstInterUserRollColumns"/>
+        ORDER BY
+        mst_inter_user_roll_id
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        mst_inter_user_roll
+        WHERE
+        1=1
+        <include refid="mstInterUserRollColumns"/>
+    </select>
+
+    <select id="queryAll" resultMap="mstInterUserRollResultMap">
+        <![CDATA[
+			SELECT
+				mst_inter_user_roll_id
+				,inter_user_code
+				,subsy_code
+				,roll_code
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_inter_user_roll 
+			ORDER BY
+				mst_inter_user_roll_id
+	    ]]>
+    </select>
+
+    <select id="queryPaginationListCount" resultType="Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        mst_inter_user_roll
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserRollColumns"/>
+    </select>
+
+    <select id="queryPaginationList" resultMap="mstInterUserRollResultMap">
+        <include refid="mysqlPaginationStart"/>
+        SELECT
+        mst_inter_user_roll_id
+        ,inter_user_code
+        ,subsy_code
+        ,roll_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        mst_inter_user_roll
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserRollColumns"/>
+        ORDER BY
+        mst_inter_user_roll_id
+        <include refid="mysqlPaginationEnd"/>
+    </select>
+    <!-- auto-generate end -->
+
+
+    <!-- user-defined start -->
+
+    <sql id="userRoleColumns">
+        mst_inter_user_roll_id
+        ,inter_user_code
+        ,subsy_code
+        ,roll_code
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+    </sql>
+
+    <select id="findByUserCode" resultType="java.lang.String">
+        SELECT
+        roll_code
+        FROM
+        mst_inter_user_roll
+        where del_flg = 0
+        and inter_user_code = #{userCode}
+    </select>
+
+
+
+
+    <select id="findEntityByUserCodeAndSubsyCode" resultMap="mstInterUserRollResultMap">
+        select
+        mst_inter_user_roll_id
+        ,inter_user_code
+        ,subsy_code
+        ,group_concat(roll_code) `roll_codes`
+        ,group_concat(subsy_code) `subsy_codes`
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        from
+        mst_inter_user_roll
+        where del_flg = 0
+        and inter_user_code = #{userCode}
+        and subsy_code = #{subsyCode}
+        group by inter_user_code
+    </select>
+
+    <delete id="deleteUserRollByUserCode">
+        delete from mst_inter_user_roll
+        where inter_user_code = #{arg0}
+        and subsy_code = #{arg1}
+    </delete>
+
+
+    <insert id="insertUserRoll">
+        INSERT INTO mst_inter_user_roll (
+        mst_inter_user_roll_id
+        ,inter_user_code
+        ,subsy_code
+        ,roll_code
+        ,crt_time
+        ,crt_user_code
+        ,del_flg
+        ,ver_num
+        ) VALUES (
+        #{mstInterUserRollId}
+        ,#{interUserCode}
+        ,#{subsyCode}
+        ,#{rollCode}
+        ,now()
+        ,#{crtUserCode}
+        ,0
+        ,1
+        )
+    </insert>
+
+    <resultMap id="userRollResultMap" type="com.haochen.provider.auth.dto.InterUserRollDto">
+        <result column="inter_user_code" property="userCode"/>
+        <result column="mob_num" property="mobile"/>
+        <result column="roll_codes" property="rollCodes"/>
+        <result column="name" property="name"/>
+        <result column="subsy_disp_name" property="subsyName"/>
+        <result column="subsy_code" property="subsyCode"/>
+    </resultMap>
+
+    <sql id="whereCondition">
+        where ur.del_flg = 0 and ub.del_flg = 0 and (ud.del_flg = 0 or ud.del_flg is null)
+        <if test="subsyCodes != null and subsyCodes.length > 0">
+            and ur.roll_code != 'ROLL999'
+            and ur.subsy_code in
+            <foreach collection="subsyCodes" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="subsyCode != null and subsyCode != ''">
+            and ur.subsy_code = #{subsyCode}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and ub.mob_num like '${mobile}%'
+        </if>
+        <if test="name != null and name != ''">
+            and (concat(ifnull(ud.user_last_name, ''), ifnull(ud.user_first_name, '')) like '${name}%'
+            or  ub.user_name like '${name}%')
+        </if>
+    </sql>
+
+    <select id="findPage" resultMap="userRollResultMap">
+        select
+        ur.inter_user_code
+        ,ur.subsy_code
+        ,group_concat(roll_code) `roll_codes`
+        ,ub.mob_num
+        ,ub.user_name
+        ,sb.subsy_disp_name
+        ,if(CONCAT(IFNULL(ud.user_last_name, ''), IFNULL(ud.user_first_name, '')) = '', ub.user_name, CONCAT(IFNULL(ud.user_last_name, ''), IFNULL(ud.user_first_name, ''))) `name`
+        from
+        mst_inter_user_roll `ur`
+        inner join mst_inter_user_base `ub` on ur.inter_user_code = `ub`.inter_user_code
+		left join mst_subsy_base sb on ur.subsy_code = sb.subsy_code
+        left join mst_inter_user_dtl ud on ur.inter_user_code = `ud`.inter_user_code
+        <include refid="whereCondition" />
+        group by ur.subsy_code, ur.inter_user_code
+        order by field(ur.inter_user_code, 'admin') desc
+        limit #{start}, #{size}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(*) from (
+        select
+        1
+        from
+        mst_inter_user_roll `ur`
+        inner join mst_inter_user_base `ub` on ur.inter_user_code = `ub`.inter_user_code
+        left join mst_subsy_base sb on ur.subsy_code = sb.subsy_code
+        left join mst_inter_user_dtl ud on ur.inter_user_code = `ud`.inter_user_code
+        <include refid="whereCondition" />
+        group by ur.subsy_code, ur.inter_user_code
+        ) tb
+    </select>
+    
+    <select id="getInterUserRollSubsyCodesByUserCode" resultType="java.lang.String">
+        select t.subsy_code
+        from mst_inter_user_roll t
+        where t.inter_user_code = #{interUserCode}
+        and t.del_flg = 0
+        group by t.subsy_code
+    </select>
+
+    <select id="queryMmatronOtherRollExist" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM mst_inter_user_roll t
+        WHERE
+        t.del_flg = 0
+        and inter_user_code = #{interUserCode}
+        and t.roll_code != 'ROLL013'
+        and t.roll_code != 'ROLL017'
+    </select>
+
+
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM mst_inter_user_roll
+    </select>
+    <!-- user-defined end -->
+
+</mapper>
+

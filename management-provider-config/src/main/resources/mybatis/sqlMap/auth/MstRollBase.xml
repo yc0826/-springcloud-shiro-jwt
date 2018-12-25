@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstRollBaseDao">
+
+	<!-- auto-generate start -->
+	<sql id = "mysqlPaginationStart">
+    	SELECT A.* FROM ( 
+	</sql>
+	<sql id = "mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="mstRollBaseColumns">
+    	<if test="null!=mstRollBaseId"> 
+    		and mst_roll_base_id = #{mstRollBaseId}
+    	</if>
+    	<if test="null!=rollCode"> 
+    		and roll_code = #{rollCode}
+    	</if>
+    	<if test="null!=rollName"> 
+    		and roll_name = #{rollName}
+    	</if>
+    	<if test="null!=rollDesc"> 
+    		and roll_desc = #{rollDesc}
+    	</if>
+    	<if test="null!=rollPermis"> 
+    		and roll_permis = #{rollPermis}
+    	</if>
+    	<if test="null!=crtTime"> 
+    		and crt_time = #{crtTime}
+    	</if>
+    	<if test="null!=crtUserCode"> 
+    		and crt_user_code = #{crtUserCode}
+    	</if>
+    	<if test="null!=updTime"> 
+    		and upd_time = #{updTime}
+    	</if>
+    	<if test="null!=updUserCode"> 
+    		and upd_user_code = #{updUserCode}
+    	</if>
+    	<if test="null!=delFlg"> 
+    		and del_flg = #{delFlg}
+    	</if>
+    	<if test="null!=verNum"> 
+    		and ver_num = #{verNum}
+    	</if>
+	</sql>
+	<sql id="conditionMstRollBaseColumns">
+	    <if test="null!=condition">
+        	<if test="null!=condition.mstRollBaseId"> 
+        		and mst_roll_base_id = #{condition.mstRollBaseId}
+        	</if>
+        	<if test="null!=condition.rollCode"> 
+        		and roll_code = #{condition.rollCode}
+        	</if>
+        	<if test="null!=condition.rollName"> 
+        		and roll_name = #{condition.rollName}
+        	</if>
+        	<if test="null!=condition.rollDesc"> 
+        		and roll_desc = #{condition.rollDesc}
+        	</if>
+        	<if test="null!=condition.rollPermis"> 
+        		and roll_permis = #{condition.rollPermis}
+        	</if>
+        	<if test="null!=condition.crtTime"> 
+        		and crt_time = #{condition.crtTime}
+        	</if>
+        	<if test="null!=condition.crtUserCode"> 
+        		and crt_user_code = #{condition.crtUserCode}
+        	</if>
+        	<if test="null!=condition.updTime"> 
+        		and upd_time = #{condition.updTime}
+        	</if>
+        	<if test="null!=condition.updUserCode"> 
+        		and upd_user_code = #{condition.updUserCode}
+        	</if>
+        	<if test="null!=condition.delFlg"> 
+        		and del_flg = #{condition.delFlg}
+        	</if>
+        	<if test="null!=condition.verNum"> 
+        		and ver_num = #{condition.verNum}
+        	</if>
+        </if>
+	</sql>
+	<sql id="mstRollBaseSetColumns">
+			<if test="null!=mstRollBaseId">
+				mst_roll_base_id = #{mstRollBaseId},
+			</if>
+			<if test="null!=rollCode">
+				roll_code = #{rollCode},
+			</if>
+			<if test="null!=rollName">
+				roll_name = #{rollName},
+			</if>
+			<if test="null!=rollDesc">
+				roll_desc = #{rollDesc},
+			</if>
+			<if test="null!=rollPermis">
+				roll_permis = #{rollPermis},
+			</if>
+			<if test="null!=crtTime">
+				crt_time = #{crtTime},
+			</if>
+			<if test="null!=crtUserCode">
+				crt_user_code = #{crtUserCode},
+			</if>
+			upd_time = now(),
+			<if test="null!=updUserCode">
+				upd_user_code = #{updUserCode},
+			</if>
+			<if test="null!=delFlg">
+				del_flg = #{delFlg},
+			</if>
+			ver_num = ver_num + 1,
+	</sql>
+
+	<resultMap id="mstRollBaseResultMap" type="com.haochen.provider.auth.entity.MstRollBaseEntity">
+        <result property="mstRollBaseId" column="mst_roll_base_id"/>
+        <result property="rollCode" column="roll_code"/>
+        <result property="rollName" column="roll_name"/>
+        <result property="rollDesc" column="roll_desc"/>
+        <result property="rollPermis" column="roll_permis"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+	</resultMap>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert">
+    <![CDATA[
+        INSERT INTO mst_roll_base (
+        	mst_roll_base_id
+        	,roll_code
+        	,roll_name
+        	,roll_desc
+        	,roll_permis
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{mstRollBaseId}
+        		,#{rollCode}
+        		,#{rollName}
+        		,#{rollDesc}
+        		,#{rollPermis}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+	</insert>
+	
+	<delete id="deleteById">
+    <![CDATA[
+	    DELETE FROM
+	    	mst_roll_base 
+	    WHERE
+	    mst_roll_base_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+    <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    mst_roll_base_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+	    DELETE FROM
+	    	mst_roll_base 
+	    WHERE
+	    	1=1
+		    <include refid="mstRollBaseColumns" />
+    </delete>
+    
+	<update id="updateById">
+	    UPDATE
+	    	mst_roll_base 
+        <set>
+	        <include refid="mstRollBaseSetColumns" />
+		</set>
+	    WHERE
+	    mst_roll_base_id = #{mstRollBaseId} 
+		and ver_num =#{verNum}
+	</update>
+	<update id="updateByCondition">
+	    UPDATE
+	    	mst_roll_base 
+	    <set>
+	        <include refid="mstRollBaseSetColumns" />
+	    </set>
+	    WHERE
+			1=1
+	<include refid="conditionMstRollBaseColumns" />
+	</update>
+    
+    <select id="queryById" resultMap="mstRollBaseResultMap">
+    	<![CDATA[
+			SELECT
+				mst_roll_base_id
+				,roll_code
+				,roll_name
+				,roll_desc
+				,roll_permis
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_roll_base 
+			WHERE 
+				mst_roll_base_id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="queryByCondition" resultMap="mstRollBaseResultMap">
+			<![CDATA[
+				SELECT
+					mst_roll_base_id
+					,roll_code
+					,roll_name
+					,roll_desc
+					,roll_permis
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+				FROM
+					mst_roll_base
+				WHERE
+					1=1
+					<include refid="mstRollBaseColumns" />
+			]]>
+	</select>
+	
+	<select id="queryList" resultMap="mstRollBaseResultMap">
+		SELECT
+			mst_roll_base_id
+			,roll_code
+			,roll_name
+			,roll_desc
+			,roll_permis
+			,crt_time
+			,crt_user_code
+			,upd_time
+			,upd_user_code
+			,del_flg
+			,ver_num
+		FROM
+			mst_roll_base
+		WHERE
+			1=1
+			<include refid="mstRollBaseColumns" />
+		ORDER BY
+			mst_roll_base_id
+	</select>
+	
+
+	<select id="queryAll" resultMap="mstRollBaseResultMap">
+    	<![CDATA[
+			SELECT
+				mst_roll_base_id
+				,roll_code
+				,roll_name
+				,roll_desc
+				,roll_permis
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_roll_base 
+			ORDER BY
+				mst_roll_base_id
+	    ]]>
+	</select>
+	
+	<select id="queryPaginationListCount" resultType="Integer">
+			SELECT
+				COUNT(0)
+			FROM
+				mst_roll_base 
+			WHERE
+				1=1 
+			<include refid="conditionMstRollBaseColumns" />
+	</select>
+	
+	<select id="queryPaginationList"  resultMap="mstRollBaseResultMap">
+		<include refid="mysqlPaginationStart" />
+			SELECT
+				mst_roll_base_id
+				,roll_code
+				,roll_name
+				,roll_desc
+				,roll_permis
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_roll_base
+			WHERE
+				1=1
+				<include refid="conditionMstRollBaseColumns" />
+			ORDER BY
+				mst_roll_base_id
+		 <include refid="mysqlPaginationEnd" />
+	</select>
+	<!-- auto-generate end -->
+
+	<!-- user-defined start -->
+	<sql id="roleColumns">
+		mst_roll_base_id
+		,roll_code
+		,roll_name
+		,roll_desc
+		,roll_permis
+		,crt_time
+		,crt_user_code
+		,upd_time
+		,upd_user_code
+		,del_flg
+		,ver_num
+	</sql>
+	
+	<select id="findByCode" resultMap="mstRollBaseResultMap">
+		select
+		<include refid="roleColumns" />
+		FROM
+			mst_roll_base
+		WHERE
+			roll_code = #{rollCode}
+	</select>
+
+	<delete id="deleteRoleResource">
+		delete o from mst_roll_reso_oper o
+		inner join (select r.reso_code from cfg_sys_reso r
+		where r.reso_type_code in ('00040003','00040004')) reso on o.reso_code = reso.reso_code
+		where o.roll_code = #{rollCode}
+	</delete>
+
+	<insert id="insertRoleResource">
+		INSERT INTO `mst_roll_reso_oper` (`roll_code`, `reso_code`,`reso_oper_code`,`crt_time`, `crt_user_code`, `del_flg`, `ver_num`)
+		VALUES (#{rollCode}, #{resoCode},#{resoOperCode}, now(), #{crtUserCode}, 0, 0);
+	</insert>
+
+	<delete id="deleteRoleByCode">
+		update mst_roll_base
+		set del_flg = 1
+		where roll_code = #{rollCode}
+	</delete>
+
+	<select id="findPage" resultMap="mstRollBaseResultMap">
+		SELECT
+		<include refid="roleColumns" />
+		FROM
+			mst_roll_base
+		where del_flg = 0
+		ORDER BY field(roll_code, 'admin') DESC
+		limit #{start}, #{size}
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			mst_roll_base
+		where del_flg = 0
+	</select>
+
+	<select id="findByFilter" resultMap="mstRollBaseResultMap">
+		SELECT
+		<include refid="roleColumns" />
+		FROM
+		mst_roll_base
+		where del_flg = 0
+		<if test="flag == 0">
+		and	roll_code != 'admin'
+		and	roll_code != 'ROLL999'
+		</if>
+		and roll_code != 'ROLL013'
+		and roll_code != 'ROLL017'
+		ORDER BY
+		mst_roll_base_id
+	</select>
+
+	<select id="findResourceCodesByRoleCodes" resultType="java.lang.String">
+		select
+			reso_code
+		from mst_roll_reso_oper
+		where del_flg = 0
+		and roll_code in
+		<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="findNamesByRollCodes" resultType="java.lang.String">
+		select
+			group_concat(roll_name)
+		from
+			mst_roll_base
+		where del_flg = 0
+		and roll_code in
+		<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<!-- user-defined end -->
+	
+</mapper>
+

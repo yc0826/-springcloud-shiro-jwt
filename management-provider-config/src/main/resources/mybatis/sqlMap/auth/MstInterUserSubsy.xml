@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstInterUserSubsyDao">
+
+	<!-- auto-generate start -->
+	<sql id = "mysqlPaginationStart">
+    	SELECT A.* FROM ( 
+	</sql>
+	<sql id = "mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="mstInterUserSubsyColumns">
+    	<if test="null!=mstInterUserSubsyId"> 
+    		and MST_INTER_USER_SUBSY_ID = #{mstInterUserSubsyId}
+    	</if>
+    	<if test="null!=interUserCode"> 
+    		and INTER_USER_CODE = #{interUserCode}
+    	</if>
+    	<if test="null!=subsyCode"> 
+    		and SUBSY_CODE = #{subsyCode}
+    	</if>
+    	<if test="null!=dfltSubsyFlg"> 
+    		and DFLT_SUBSY_FLG = #{dfltSubsyFlg}
+    	</if>
+    	<if test="null!=crtTime"> 
+    		and CRT_TIME = #{crtTime}
+    	</if>
+    	<if test="null!=crtUserCode"> 
+    		and CRT_USER_CODE = #{crtUserCode}
+    	</if>
+    	<if test="null!=updTime"> 
+    		and UPD_TIME = #{updTime}
+    	</if>
+    	<if test="null!=updUserCode"> 
+    		and UPD_USER_CODE = #{updUserCode}
+    	</if>
+    	<if test="null!=delFlg"> 
+    		and DEL_FLG = #{delFlg}
+    	</if>
+    	<if test="null!=verNum"> 
+    		and VER_NUM = #{verNum}
+    	</if>
+	</sql>
+	<sql id="conditionMstInterUserSubsyColumns">
+	    <if test="null!=condition">
+        	<if test="null!=condition.mstInterUserSubsyId"> 
+        		and MST_INTER_USER_SUBSY_ID = #{condition.mstInterUserSubsyId}
+        	</if>
+        	<if test="null!=condition.interUserCode"> 
+        		and INTER_USER_CODE = #{condition.interUserCode}
+        	</if>
+        	<if test="null!=condition.subsyCode"> 
+        		and SUBSY_CODE = #{condition.subsyCode}
+        	</if>
+        	<if test="null!=condition.dfltSubsyFlg"> 
+        		and DFLT_SUBSY_FLG = #{condition.dfltSubsyFlg}
+        	</if>
+        	<if test="null!=condition.crtTime"> 
+        		and CRT_TIME = #{condition.crtTime}
+        	</if>
+        	<if test="null!=condition.crtUserCode"> 
+        		and CRT_USER_CODE = #{condition.crtUserCode}
+        	</if>
+        	<if test="null!=condition.updTime"> 
+        		and UPD_TIME = #{condition.updTime}
+        	</if>
+        	<if test="null!=condition.updUserCode"> 
+        		and UPD_USER_CODE = #{condition.updUserCode}
+        	</if>
+        	<if test="null!=condition.delFlg"> 
+        		and DEL_FLG = #{condition.delFlg}
+        	</if>
+        	<if test="null!=condition.verNum"> 
+        		and VER_NUM = #{condition.verNum}
+        	</if>
+        </if>
+	</sql>
+	<sql id="mstInterUserSubsySetColumns">
+			<if test="null!=mstInterUserSubsyId">
+				MST_INTER_USER_SUBSY_ID = #{mstInterUserSubsyId},
+			</if>
+			<if test="null!=interUserCode">
+				INTER_USER_CODE = #{interUserCode},
+			</if>
+			<if test="null!=subsyCode">
+				SUBSY_CODE = #{subsyCode},
+			</if>
+			<if test="null!=dfltSubsyFlg">
+				DFLT_SUBSY_FLG = #{dfltSubsyFlg},
+			</if>
+			<if test="null!=crtTime">
+				CRT_TIME = #{crtTime},
+			</if>
+			<if test="null!=crtUserCode">
+				CRT_USER_CODE = #{crtUserCode},
+			</if>
+			UPD_TIME = now(),
+			<if test="null!=updUserCode">
+				UPD_USER_CODE = #{updUserCode},
+			</if>
+			<if test="null!=delFlg">
+				DEL_FLG = #{delFlg},
+			</if>
+			VER_NUM = VER_NUM + 1,
+	</sql>
+
+	<resultMap id="mstInterUserSubsyResultMap" type="com.haochen.provider.auth.entity.MstInterUserSubsyEntity">
+        <result property="mstInterUserSubsyId" column="MST_INTER_USER_SUBSY_ID"/>
+        <result property="interUserCode" column="INTER_USER_CODE"/>
+        <result property="subsyCode" column="SUBSY_CODE"/>
+        <result property="dfltSubsyFlg" column="DFLT_SUBSY_FLG"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="crtUserCode" column="CRT_USER_CODE"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="updUserCode" column="UPD_USER_CODE"/>
+        <result property="delFlg" column="DEL_FLG"/>
+        <result property="verNum" column="VER_NUM"/>
+	</resultMap>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert">
+    <![CDATA[
+        INSERT INTO mst_inter_user_subsy (
+        	MST_INTER_USER_SUBSY_ID
+        	,INTER_USER_CODE
+        	,SUBSY_CODE
+        	,DFLT_SUBSY_FLG
+        	,CRT_TIME
+        	,CRT_USER_CODE
+        	,UPD_TIME
+        	,UPD_USER_CODE
+        	,DEL_FLG
+        	,VER_NUM
+        ) VALUES (
+        		#{mstInterUserSubsyId}
+        		,#{interUserCode}
+        		,#{subsyCode}
+        		,#{dfltSubsyFlg}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+	</insert>
+	
+	<delete id="deleteById">
+    <![CDATA[
+	    DELETE FROM
+	    	MST_INTER_USER_SUBSY 
+	    WHERE
+	    mst_inter_user_subsy_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+    <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    mst_inter_user_subsy_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+	    DELETE FROM
+	    	MST_INTER_USER_SUBSY 
+	    WHERE
+	    	1=1
+		    <include refid="mstInterUserSubsyColumns" />
+    </delete>
+    
+	<update id="updateById">
+	    UPDATE
+	    	MST_INTER_USER_SUBSY 
+        <set>
+	        <include refid="mstInterUserSubsySetColumns" />
+		</set>
+	    WHERE
+	    MST_INTER_USER_SUBSY_ID = #{mstInterUserSubsyId} 
+		and VER_NUM =#{verNum}
+	</update>
+	<update id="updateByCondition">
+	    UPDATE
+	    	MST_INTER_USER_SUBSY 
+	    <set>
+	        <include refid="mstInterUserSubsySetColumns" />
+	    </set>
+	    WHERE
+			1=1
+	<include refid="conditionMstInterUserSubsyColumns" />
+	</update>
+    
+    <select id="queryById" resultMap="mstInterUserSubsyResultMap">
+    	<![CDATA[
+			SELECT
+				MST_INTER_USER_SUBSY_ID
+				,INTER_USER_CODE
+				,SUBSY_CODE
+				,DFLT_SUBSY_FLG
+				,CRT_TIME
+				,CRT_USER_CODE
+				,UPD_TIME
+				,UPD_USER_CODE
+				,DEL_FLG
+				,VER_NUM
+			FROM
+				MST_INTER_USER_SUBSY 
+			WHERE 
+				MST_INTER_USER_SUBSY_ID = #{id} 
+	    ]]>
+	</select>
+	
+	<select id="queryList" resultMap="mstInterUserSubsyResultMap">
+		SELECT
+			MST_INTER_USER_SUBSY_ID
+			,INTER_USER_CODE
+			,SUBSY_CODE
+			,DFLT_SUBSY_FLG
+			,CRT_TIME
+			,CRT_USER_CODE
+			,UPD_TIME
+			,UPD_USER_CODE
+			,DEL_FLG
+			,VER_NUM
+		FROM
+			MST_INTER_USER_SUBSY
+		WHERE
+			1=1
+			<include refid="mstInterUserSubsyColumns" />
+		ORDER BY
+			MST_INTER_USER_SUBSY_ID
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT(0)
+		FROM
+			MST_INTER_USER_SUBSY
+		WHERE
+			1=1
+			<include refid="mstInterUserSubsyColumns" />
+	</select>
+	
+	<select id="queryAll" resultMap="mstInterUserSubsyResultMap">
+    	<![CDATA[
+			SELECT
+				MST_INTER_USER_SUBSY_ID
+				,INTER_USER_CODE
+				,SUBSY_CODE
+				,DFLT_SUBSY_FLG
+				,CRT_TIME
+				,CRT_USER_CODE
+				,UPD_TIME
+				,UPD_USER_CODE
+				,DEL_FLG
+				,VER_NUM
+			FROM
+				MST_INTER_USER_SUBSY 
+			ORDER BY
+				MST_INTER_USER_SUBSY_ID
+	    ]]>
+	</select>
+	
+	<select id="queryPaginationListCount" resultType="Integer">
+			SELECT
+				COUNT(0)
+			FROM
+				MST_INTER_USER_SUBSY 
+			WHERE
+				1=1 
+			<include refid="conditionMstInterUserSubsyColumns" />
+	</select>
+
+	<!-- auto-generate end -->
+	
+	
+	<!-- user-defined start -->
+	
+	<resultMap id="mstInterUserSubsyBeanResultMap" type="com.haochen.provider.auth.entity.MstInterUserSubsyEntity">
+        <result property="mstInterUserSubsyId" column="mst_inter_user_subsy_id"/>
+        <result property="interUserCode" column="inter_user_code"/>
+        <result property="subsyCode" column="subsy_code"/>
+        <result property="dfltSubsyFlg" column="dflt_subsy_flg"/>
+        <result property="subsyDispName" column="subsy_name"/>
+        <result property="dataPermisCode" column="data_permis_code"/>
+	</resultMap>
+	
+	<!--<select id="getUserSubsyListByInterUserCode" resultMap="mstInterUserSubsyBeanResultMap">-->
+    	<!--<![CDATA[-->
+			<!--select distinct-->
+				<!--t1.mst_inter_user_subsy_id-->
+				<!--,t1.inter_user_code-->
+				<!--,t1.subsy_code-->
+				<!--,t1.dflt_subsy_flg-->
+				<!--,t2.subsy_name-->
+				<!--,t3.data_permis_code-->
+			<!--from-->
+				<!--mst_inter_user_subsy t1-->
+				<!--join mst_subsy_base t2 on t1.subsy_code = t2.subsy_code-->
+				<!--join mst_inter_user_data_permis t3 on t3.inter_user_code = #{interUserCode} and t3.subsy_code = t2.subsy_code-->
+			<!--where t1.del_flg = 0 and t2.del_flg = 0 and t3.del_flg = 0-->
+		    <!--and t1.inter_user_code = #{interUserCode}-->
+	    <!--]]>-->
+	<!--</select>-->
+
+	<!--&lt;!&ndash;根据部门代码获得用户会所权限列表 create by hm &ndash;&gt;-->
+	<!--<select id="getUserSubsyListByDeptCode" resultMap="mstInterUserSubsyBeanResultMap">-->
+		<!--SELECT DISTINCT-->
+		<!--mius.mst_inter_user_subsy_id-->
+		<!--,mius.inter_user_code-->
+		<!--,mius.subsy_code-->
+		<!--,mius.dflt_subsy_flg-->
+		<!--,msb.subsy_name-->
+		<!--FROM-->
+		<!--mst_inter_user_subsy AS mius-->
+		<!--LEFT JOIN mst_subsy_base AS msb ON mius.subsy_code = msb.subsy_code-->
+		<!--LEFT JOIN mst_inter_user_data_permis AS miudp ON miudp.inter_user_code = mius.inter_user_code AND miudp.subsy_code = msb.subsy_code-->
+		<!--LEFT JOIN mst_inter_user_org AS miuo ON miuo.inter_user_code = mius.inter_user_code-->
+		<!--WHERE mius.del_flg = 0 AND msb.del_flg = 0 AND miudp.del_flg = 0 AND miuo.del_flg = 0-->
+		<!--AND miudp.data_permis_code LIKE '%11%'-->
+		<!--AND miuo.dept_code=#{deptCode} AND mius.subsy_code = #{subsyCode}-->
+	<!--</select>-->
+
+
+
+
+	<resultMap id="getInterUserSubsyListByUserCodeResultMap" type="java.util.Map">
+		<result property="subsyCode" column="subsyCode"/>
+		<result property="dfltSubsyFlg" column="dfltSubsyFlg"/>
+		<result property="subsyName" column="subsy_name"/>
+		<result property="dataAuthCode" column="dataAuthCode"/>
+	</resultMap>
+	<!--WT 获取内部用户会所信息 -->
+	<select id="getInterUserSubsyListByUserCode" resultMap="getInterUserSubsyListByUserCodeResultMap">
+		SELECT
+		userSubsy.subsy_code AS subsyCode,
+		userSubsy.dflt_subsy_flg AS dfltSubsyFlg,
+		subsyBase.subsy_name AS subsyName
+		FROM
+		mst_inter_user_subsy userSubsy
+		JOIN mst_subsy_base subsyBase ON userSubsy.subsy_code = subsyBase.subsy_code
+		WHERE
+		userSubsy.inter_user_code = #{interUserCode}
+		AND userSubsy.del_flg = 0
+		AND subsyBase.del_flg = 0
+	</select>
+
+
+
+	<!-- user-defined end -->
+	
+</mapper>
+

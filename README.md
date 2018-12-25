@@ -1,37 +1,21 @@
-# springcloud-shiro-jwt
+本项目采用springcloud作为微服务框架，并运用了maven的多模块结构
 
-#### 介绍
-springboot2.0, springcloud, shiro, mybatis, redis, log4j2, vue, element-ui前端框架, jwt标准无状态token验证权限
+姐妹版项目地址dubbo服务https://gitee.com/896022/shiroAuth.git
 
-#### 软件架构
-软件架构说明
+启动说明
 
+1.运行需要先执行init.sql
 
-#### 安装教程
+2.启动Eureka注册服务management-register-server main方法
 
-1. xxxx
-2. xxxx
-3. xxxx
+3.启动内部接口服务management-rpc-service main方法
 
-#### 使用说明
+4.启动web服务management-web-server main方法，推荐用idea直接启动调试，如果是idea的话在配置Edit Configurations里 Working Directory请选择$MODULE_DIR$，这样才能正确加载到web资源。
 
-1. xxxx
-2. xxxx
-3. xxxx
+5.登陆帐号admin 密码123456
 
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+6.目前zuul模块没有实际用途，供后续动静分离时使用
 
 
-#### 码云特技
+有使用和部署问题加群833825797讨论
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

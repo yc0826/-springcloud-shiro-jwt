@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstInterUserDtlDao">
+
+    <!-- auto-generate start -->
+    <sql id="mysqlPaginationStart">
+    	SELECT A.* FROM ( 
+	</sql>
+    <sql id="mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="mstInterUserDtlColumns">
+        <if test="null!=mstInterUserDtlId">
+            and mst_inter_user_dtl_id = #{mstInterUserDtlId}
+        </if>
+        <if test="null!=interUserCode">
+            and inter_user_code = #{interUserCode}
+        </if>
+        <if test="null!=userLastName">
+            and user_last_name = #{userLastName}
+        </if>
+        <if test="null!=userFirstName">
+            and user_first_name = #{userFirstName}
+        </if>
+        <if test="null!=userNkName">
+            and user_nk_name = #{userNkName}
+        </if>
+        <if test="null!=userSign">
+            and user_sign = #{userSign}
+        </if>
+        <if test="null!=userDob">
+            and user_dob = #{userDob}
+        </if>
+        <if test="null!=gderFlg">
+            and gder_flg = #{gderFlg}
+        </if>
+        <if test="null!=loctProvCode">
+            and loct_prov_code = #{loctProvCode}
+        </if>
+        <if test="null!=loctCityCode">
+            and loct_city_code = #{loctCityCode}
+        </if>
+        <if test="null!=loctAddr">
+            and loct_addr = #{loctAddr}
+        </if>
+        <if test="null!=postNo">
+            and post_no = #{postNo}
+        </if>
+        <if test="null!=crtTime">
+            and crt_time = #{crtTime}
+        </if>
+        <if test="null!=crtUserCode">
+            and crt_user_code = #{crtUserCode}
+        </if>
+        <if test="null!=updTime">
+            and upd_time = #{updTime}
+        </if>
+        <if test="null!=updUserCode">
+            and upd_user_code = #{updUserCode}
+        </if>
+        <if test="null!=delFlg">
+            and del_flg = #{delFlg}
+        </if>
+        <if test="null!=verNum">
+            and ver_num = #{verNum}
+        </if>
+    </sql>
+    <sql id="conditionMstInterUserDtlColumns">
+        <if test="null!=condition">
+            <if test="null!=condition.mstInterUserDtlId">
+                and mst_inter_user_dtl_id = #{condition.mstInterUserDtlId}
+            </if>
+            <if test="null!=condition.interUserCode">
+                and inter_user_code = #{condition.interUserCode}
+            </if>
+            <if test="null!=condition.userLastName">
+                and user_last_name = #{condition.userLastName}
+            </if>
+            <if test="null!=condition.userFirstName">
+                and user_first_name = #{condition.userFirstName}
+            </if>
+            <if test="null!=condition.userNkName">
+                and user_nk_name = #{condition.userNkName}
+            </if>
+            <if test="null!=condition.userSign">
+                and user_sign = #{condition.userSign}
+            </if>
+            <if test="null!=condition.userDob">
+                and user_dob = #{condition.userDob}
+            </if>
+            <if test="null!=condition.gderFlg">
+                and gder_flg = #{condition.gderFlg}
+            </if>
+            <if test="null!=condition.loctProvCode">
+                and loct_prov_code = #{condition.loctProvCode}
+            </if>
+            <if test="null!=condition.loctCityCode">
+                and loct_city_code = #{condition.loctCityCode}
+            </if>
+            <if test="null!=condition.loctAddr">
+                and loct_addr = #{condition.loctAddr}
+            </if>
+            <if test="null!=condition.postNo">
+                and post_no = #{condition.postNo}
+            </if>
+            <if test="null!=condition.crtTime">
+                and crt_time = #{condition.crtTime}
+            </if>
+            <if test="null!=condition.crtUserCode">
+                and crt_user_code = #{condition.crtUserCode}
+            </if>
+            <if test="null!=condition.updTime">
+                and upd_time = #{condition.updTime}
+            </if>
+            <if test="null!=condition.updUserCode">
+                and upd_user_code = #{condition.updUserCode}
+            </if>
+            <if test="null!=condition.delFlg">
+                and del_flg = #{condition.delFlg}
+            </if>
+            <if test="null!=condition.verNum">
+                and ver_num = #{condition.verNum}
+            </if>
+        </if>
+    </sql>
+    <sql id="mstInterUserDtlSetColumns">
+        <if test="null!=mstInterUserDtlId">
+            mst_inter_user_dtl_id = #{mstInterUserDtlId},
+        </if>
+        <if test="null!=interUserCode">
+            inter_user_code = #{interUserCode},
+        </if>
+        <if test="null!=userLastName">
+            user_last_name = #{userLastName},
+        </if>
+        <if test="null!=userFirstName">
+            user_first_name = #{userFirstName},
+        </if>
+        <if test="null!=userNkName">
+            user_nk_name = #{userNkName},
+        </if>
+        <if test="null!=userSign">
+            user_sign = #{userSign},
+        </if>
+        <if test="null!=userDob">
+            user_dob = #{userDob},
+        </if>
+        <if test="null!=gderFlg">
+            gder_flg = #{gderFlg},
+        </if>
+        <if test="null!=loctProvCode">
+            loct_prov_code = #{loctProvCode},
+        </if>
+        <if test="null!=loctCityCode">
+            loct_city_code = #{loctCityCode},
+        </if>
+        <if test="null!=loctAddr">
+            loct_addr = #{loctAddr},
+        </if>
+        <if test="null!=postNo">
+            post_no = #{postNo},
+        </if>
+        <if test="null!=crtTime">
+            crt_time = #{crtTime},
+        </if>
+        <if test="null!=crtUserCode">
+            crt_user_code = #{crtUserCode},
+        </if>
+        upd_time = now(),
+        <if test="null!=updUserCode">
+            upd_user_code = #{updUserCode},
+        </if>
+        <if test="null!=delFlg">
+            del_flg = #{delFlg},
+        </if>
+        ver_num = ver_num + 1,
+    </sql>
+
+    <resultMap id="mstInterUserDtlResultMap" type="com.haochen.provider.auth.entity.MstInterUserDtlEntity">
+        <result property="mstInterUserDtlId" column="mst_inter_user_dtl_id"/>
+        <result property="interUserCode" column="inter_user_code"/>
+        <result property="userLastName" column="user_last_name"/>
+        <result property="userFirstName" column="user_first_name"/>
+        <result property="userNkName" column="user_nk_name"/>
+        <result property="userSign" column="user_sign"/>
+        <result property="userDob" column="user_dob"/>
+        <result property="gderFlg" column="gder_flg"/>
+        <result property="loctProvCode" column="loct_prov_code"/>
+        <result property="loctCityCode" column="loct_city_code"/>
+        <result property="loctAddr" column="loct_addr"/>
+        <result property="postNo" column="post_no"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+    </resultMap>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="insert">
+    <![CDATA[
+
+        INSERT INTO mst_inter_user_dtl (
+        	mst_inter_user_dtl_id
+        	,inter_user_code
+        	,user_last_name
+        	,user_first_name
+        	,user_nk_name
+        	,user_sign
+        	,user_dob
+        	,gder_flg
+        	,loct_prov_code
+        	,loct_city_code
+        	,loct_addr
+        	,post_no
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{mstInterUserDtlId}
+        		,#{interUserCode}
+        		,#{userLastName}
+        		,#{userFirstName}
+        		,#{userNkName}
+        		,#{userSign}
+        		,#{userDob}
+        		,#{gderFlg}
+        		,#{loctProvCode}
+        		,#{loctCityCode}
+        		,#{loctAddr}
+        		,#{postNo}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+
+        ]]>
+	</insert>
+
+    <delete id="deleteById">
+    <![CDATA[
+
+	    DELETE FROM
+	    	mst_inter_user_dtl 
+	    WHERE
+	    mst_inter_user_dtl_id = #{id} 
+
+        ]]>
+    </delete>
+    <delete id="deleteLogicById">
+    <![CDATA[
+
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    mst_inter_user_dtl_id = #{id} 
+
+        ]]>
+    </delete>
+    <delete id="deleteByCondition">
+        DELETE FROM
+        mst_inter_user_dtl
+        WHERE
+        1=1
+        <include refid="mstInterUserDtlColumns"/>
+    </delete>
+
+    <update id="updateById">
+        UPDATE
+        mst_inter_user_dtl
+        <set>
+            <include refid="mstInterUserDtlSetColumns"/>
+        </set>
+        WHERE
+        mst_inter_user_dtl_id = #{mstInterUserDtlId}
+        and ver_num =#{verNum}
+    </update>
+    <update id="updateByCondition">
+        UPDATE
+        mst_inter_user_dtl
+        <set>
+            <include refid="mstInterUserDtlSetColumns"/>
+        </set>
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserDtlColumns"/>
+    </update>
+
+    <select id="queryById" resultMap="mstInterUserDtlResultMap">
+    	<![CDATA[
+
+			SELECT
+				mst_inter_user_dtl_id
+				,inter_user_code
+				,user_last_name
+				,user_first_name
+				,user_nk_name
+				,user_sign
+				,user_dob
+				,gder_flg
+				,loct_prov_code
+				,loct_city_code
+				,loct_addr
+				,post_no
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_inter_user_dtl 
+			WHERE 
+				mst_inter_user_dtl_id = #{id} 
+
+        ]]>
+	</select>
+
+    <select id="queryByCondition" resultMap="mstInterUserDtlResultMap">
+			<![CDATA[
+
+				SELECT
+					mst_inter_user_dtl_id
+					,inter_user_code
+					,user_last_name
+					,user_first_name
+					,user_nk_name
+					,user_sign
+					,user_dob
+					,gder_flg
+					,loct_prov_code
+					,loct_city_code
+					,loct_addr
+					,post_no
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+				FROM
+					mst_inter_user_dtl
+				WHERE
+					1=1
+					<include refid="mstInterUserDtlColumns" />
+
+        ]]>
+	</select>
+
+    <select id="queryList" resultMap="mstInterUserDtlResultMap">
+        SELECT
+        mst_inter_user_dtl_id
+        ,inter_user_code
+        ,user_last_name
+        ,user_first_name
+        ,user_nk_name
+        ,user_sign
+        ,user_dob
+        ,gder_flg
+        ,loct_prov_code
+        ,loct_city_code
+        ,loct_addr
+        ,post_no
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        mst_inter_user_dtl
+        WHERE
+        1=1
+        <include refid="mstInterUserDtlColumns"/>
+        ORDER BY
+        mst_inter_user_dtl_id
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        mst_inter_user_dtl
+        WHERE
+        1=1
+        <include refid="mstInterUserDtlColumns"/>
+    </select>
+
+    <select id="queryAll" resultMap="mstInterUserDtlResultMap">
+    	<![CDATA[
+
+			SELECT
+				mst_inter_user_dtl_id
+				,inter_user_code
+				,user_last_name
+				,user_first_name
+				,user_nk_name
+				,user_sign
+				,user_dob
+				,gder_flg
+				,loct_prov_code
+				,loct_city_code
+				,loct_addr
+				,post_no
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				mst_inter_user_dtl 
+			ORDER BY
+				mst_inter_user_dtl_id
+
+        ]]>
+	</select>
+
+    <select id="queryPaginationListCount" resultType="Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        mst_inter_user_dtl
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserDtlColumns"/>
+    </select>
+
+    <select id="queryPaginationList" resultMap="mstInterUserDtlResultMap">
+        <include refid="mysqlPaginationStart"/>
+        SELECT
+        mst_inter_user_dtl_id
+        ,inter_user_code
+        ,user_last_name
+        ,user_first_name
+        ,user_nk_name
+        ,user_sign
+        ,user_dob
+        ,gder_flg
+        ,loct_prov_code
+        ,loct_city_code
+        ,loct_addr
+        ,post_no
+        ,crt_time
+        ,crt_user_code
+        ,upd_time
+        ,upd_user_code
+        ,del_flg
+        ,ver_num
+        FROM
+        mst_inter_user_dtl
+        WHERE
+        1=1
+        <include refid="conditionMstInterUserDtlColumns"/>
+        ORDER BY
+        mst_inter_user_dtl_id
+        <include refid="mysqlPaginationEnd"/>
+    </select>
+    <!-- auto-generate end -->
+
+
+    <!-- user-defined start -->
+
+    <sql id="userDtlColumns">
+		mst_inter_user_dtl_id
+		,inter_user_code
+		,user_last_name
+		,user_first_name
+		,user_nk_name
+		,user_sign
+		,user_dob
+		,gder_flg
+		,loct_prov_code
+		,loct_city_code
+		,loct_addr
+		,post_no
+		,crt_time
+		,crt_user_code
+		,upd_time
+		,upd_user_code
+		,del_flg
+		,ver_num
+	</sql>
+    <select id="findByUserCode" resultMap="mstInterUserDtlResultMap">
+        SELECT
+        <include refid="userDtlColumns"/>
+        FROM
+          mst_inter_user_dtl
+        WHERE del_flg = 0
+        AND inter_user_code = #{userCode}
+    </select>
+
+    <update id="deleteByUserCode">
+        update mst_inter_user_dtl
+        set del_flg = 1
+        where inter_user_code  = #{userCode}
+    </update>
+
+    <!-- user-defined end -->
+
+</mapper>
+

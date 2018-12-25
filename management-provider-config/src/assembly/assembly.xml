@@ -1,0 +1,32 @@
+<assembly>
+    <id>package</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <!-- 可执行文件 -->
+        <fileSet>
+            <directory>src/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- classes -->
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>classes</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <!-- 依赖jar包 -->
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <excludes>
+                <exclude>com.shiro:management-rpc-service</exclude>
+            </excludes>
+        </dependencySet>
+    </dependencySets>
+</assembly>

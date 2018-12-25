@@ -1,0 +1,1132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.haochen.provider.auth.repo.IMstSubsyBaseDao">
+
+	<!-- auto-generate start -->
+	<sql id = "mysqlPaginationStart">
+    	SELECT A.* FROM ( 
+	</sql>
+	<sql id = "mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="mstSubsyBaseColumns">
+    	<if test="null!=mstSubsyBaseId"> 
+    		and mst_subsy_base_id = #{mstSubsyBaseId}
+    	</if>
+    	<if test="null!=subsyCode"> 
+    		and subsy_code = #{subsyCode}
+    	</if>
+    	<if test="null!=subsyName"> 
+    		and subsy_name = #{subsyName}
+    	</if>
+    	<if test="null!=subsyDispName"> 
+    		and subsy_disp_name = #{subsyDispName}
+    	</if>
+    	<if test="null!=loctProvCode"> 
+    		and loct_prov_code = #{loctProvCode}
+    	</if>
+    	<if test="null!=loctCityCode"> 
+    		and loct_city_code = #{loctCityCode}
+    	</if>
+    	<if test="null!=loctAreaCode"> 
+    		and loct_area_code = #{loctAreaCode}
+    	</if>
+    	<if test="null!=subsyAddr"> 
+    		and subsy_addr = #{subsyAddr}
+    	</if>
+    	<if test="null!=loctLon"> 
+    		and loct_lon = #{loctLon}
+    	</if>
+    	<if test="null!=loctLat"> 
+    		and loct_lat = #{loctLat}
+    	</if>
+    	<if test="null!=phoneNum"> 
+    		and phone_num = #{phoneNum}
+    	</if>
+    	<if test="null!=mobNum"> 
+    		and mob_num = #{mobNum}
+    	</if>
+    	<if test="null!=postNo"> 
+    		and post_no = #{postNo}
+    	</if>
+    	<if test="null!=subsyDesc"> 
+    		and subsy_desc = #{subsyDesc}
+    	</if>
+    	<if test="null!=busiTimeDesc"> 
+    		and busi_time_desc = #{busiTimeDesc}
+    	</if>
+    	<if test="null!=brandCode"> 
+    		and brand_code = #{brandCode}
+    	</if>
+    	<if test="null!=subsyBrandType"> 
+    		and subsy_brand_type = #{subsyBrandType}
+    	</if>
+    	<if test="null!=banrUrl"> 
+    		and banr_url = #{banrUrl}
+    	</if>
+    	<if test="null!=auditStatusCode"> 
+    		and audit_status_code = #{auditStatusCode}
+    	</if>
+    	<if test="null!=prodAuditStatusCode"> 
+    		and prod_audit_status_code = #{prodAuditStatusCode}
+    	</if>
+    	<if test="null!=closeAuditStatusCode"> 
+    		and close_audit_status_code = #{closeAuditStatusCode}
+    	</if>
+    	<if test="null!=closeAuditApprover"> 
+    		and close_audit_approver = #{closeAuditApprover}
+    	</if>
+    	<if test="null!=isAllowSubsyAdminLogin"> 
+    		and is_allow_subsy_admin_login = #{isAllowSubsyAdminLogin}
+    	</if>
+    	<if test="null!=price"> 
+    		and price = #{price}
+    	</if>
+    	<if test="null!=populVal"> 
+    		and popul_val = #{populVal}
+    	</if>
+    	<if test="null!=servScore"> 
+    		and serv_score = #{servScore}
+    	</if>
+    	<if test="null!=crtTime"> 
+    		and crt_time = #{crtTime}
+    	</if>
+    	<if test="null!=crtUserCode"> 
+    		and crt_user_code = #{crtUserCode}
+    	</if>
+    	<if test="null!=updTime"> 
+    		and upd_time = #{updTime}
+    	</if>
+    	<if test="null!=updUserCode"> 
+    		and upd_user_code = #{updUserCode}
+    	</if>
+    	<if test="null!=delFlg"> 
+    		and del_flg = #{delFlg}
+    	</if>
+    	<if test="null!=verNum"> 
+    		and ver_num = #{verNum}
+    	</if>
+    	<if test="null!=homeDispResvFlg"> 
+    		and home_disp_resv_flg = #{homeDispResvFlg}
+    	</if>
+    	<if test="null!=promotionDesc"> 
+    		and promotion_desc = #{promotionDesc}
+    	</if>
+    	<if test="null!=bookDesc"> 
+    		and book_desc = #{bookDesc}
+    	</if>
+    	<if test="null!=subsyType"> 
+    		and subsy_type = #{subsyType}
+    	</if>
+    	<if test="null!=subsyActivFlg"> 
+    		and subsy_activ_flg = #{subsyActivFlg}
+    	</if>
+    	<if test="null!=subsyActivStartTime"> 
+    		and subsy_activ_start_time = #{subsyActivStartTime}
+    	</if>
+    	<if test="null!=subsyActivEndTime"> 
+    		and subsy_activ_end_time = #{subsyActivEndTime}
+    	</if>
+    	<if test="null!=subsyOpenFlg"> 
+    		and subsy_open_flg = #{subsyOpenFlg}
+    	</if>
+	</sql>
+	<sql id="conditionMstSubsyBaseColumns">
+	    <if test="null!=condition">
+        	<if test="null!=condition.mstSubsyBaseId"> 
+        		and mst_subsy_base_id = #{condition.mstSubsyBaseId}
+        	</if>
+        	<if test="null!=condition.subsyCode"> 
+        		and subsy_code = #{condition.subsyCode}
+        	</if>
+        	<if test="null!=condition.subsyName"> 
+        		and subsy_name = #{condition.subsyName}
+        	</if>
+        	<if test="null!=condition.subsyDispName"> 
+        		and subsy_disp_name = #{condition.subsyDispName}
+        	</if>
+        	<if test="null!=condition.loctProvCode"> 
+        		and loct_prov_code = #{condition.loctProvCode}
+        	</if>
+        	<if test="null!=condition.loctCityCode"> 
+        		and loct_city_code = #{condition.loctCityCode}
+        	</if>
+        	<if test="null!=condition.loctAreaCode"> 
+        		and loct_area_code = #{condition.loctAreaCode}
+        	</if>
+        	<if test="null!=condition.subsyAddr"> 
+        		and subsy_addr = #{condition.subsyAddr}
+        	</if>
+        	<if test="null!=condition.loctLon"> 
+        		and loct_lon = #{condition.loctLon}
+        	</if>
+        	<if test="null!=condition.loctLat"> 
+        		and loct_lat = #{condition.loctLat}
+        	</if>
+        	<if test="null!=condition.phoneNum"> 
+        		and phone_num = #{condition.phoneNum}
+        	</if>
+        	<if test="null!=condition.mobNum"> 
+        		and mob_num = #{condition.mobNum}
+        	</if>
+        	<if test="null!=condition.postNo"> 
+        		and post_no = #{condition.postNo}
+        	</if>
+        	<if test="null!=condition.subsyDesc"> 
+        		and subsy_desc = #{condition.subsyDesc}
+        	</if>
+        	<if test="null!=condition.busiTimeDesc"> 
+        		and busi_time_desc = #{condition.busiTimeDesc}
+        	</if>
+        	<if test="null!=condition.brandCode"> 
+        		and brand_code = #{condition.brandCode}
+        	</if>
+        	<if test="null!=condition.subsyBrandType"> 
+        		and subsy_brand_type = #{condition.subsyBrandType}
+        	</if>
+        	<if test="null!=condition.banrUrl"> 
+        		and banr_url = #{condition.banrUrl}
+        	</if>
+        	<if test="null!=condition.auditStatusCode"> 
+        		and audit_status_code = #{condition.auditStatusCode}
+        	</if>
+        	<if test="null!=condition.prodAuditStatusCode"> 
+        		and prod_audit_status_code = #{condition.prodAuditStatusCode}
+        	</if>
+        	<if test="null!=condition.closeAuditStatusCode"> 
+        		and close_audit_status_code = #{condition.closeAuditStatusCode}
+        	</if>
+        	<if test="null!=condition.closeAuditApprover"> 
+        		and close_audit_approver = #{condition.closeAuditApprover}
+        	</if>
+        	<if test="null!=condition.isAllowSubsyAdminLogin"> 
+        		and is_allow_subsy_admin_login = #{condition.isAllowSubsyAdminLogin}
+        	</if>
+        	<if test="null!=condition.price"> 
+        		and price = #{condition.price}
+        	</if>
+        	<if test="null!=condition.populVal"> 
+        		and popul_val = #{condition.populVal}
+        	</if>
+        	<if test="null!=condition.servScore"> 
+        		and serv_score = #{condition.servScore}
+        	</if>
+        	<if test="null!=condition.crtTime"> 
+        		and crt_time = #{condition.crtTime}
+        	</if>
+        	<if test="null!=condition.crtUserCode"> 
+        		and crt_user_code = #{condition.crtUserCode}
+        	</if>
+        	<if test="null!=condition.updTime"> 
+        		and upd_time = #{condition.updTime}
+        	</if>
+        	<if test="null!=condition.updUserCode"> 
+        		and upd_user_code = #{condition.updUserCode}
+        	</if>
+        	<if test="null!=condition.delFlg"> 
+        		and del_flg = #{condition.delFlg}
+        	</if>
+        	<if test="null!=condition.verNum"> 
+        		and ver_num = #{condition.verNum}
+        	</if>
+        	<if test="null!=condition.homeDispResvFlg"> 
+        		and home_disp_resv_flg = #{condition.homeDispResvFlg}
+        	</if>
+        	<if test="null!=condition.promotionDesc"> 
+        		and promotion_desc = #{condition.promotionDesc}
+        	</if>
+        	<if test="null!=condition.bookDesc"> 
+        		and book_desc = #{condition.bookDesc}
+        	</if>
+        	<if test="null!=condition.subsyType"> 
+        		and subsy_type = #{condition.subsyType}
+        	</if>
+        	<if test="null!=condition.subsyActivFlg"> 
+        		and subsy_activ_flg = #{condition.subsyActivFlg}
+        	</if>
+        	<if test="null!=condition.subsyActivStartTime"> 
+        		and subsy_activ_start_time = #{condition.subsyActivStartTime}
+        	</if>
+        	<if test="null!=condition.subsyActivEndTime"> 
+        		and subsy_activ_end_time = #{condition.subsyActivEndTime}
+        	</if>
+        	<if test="null!=condition.subsyOpenFlg"> 
+        		and subsy_open_flg = #{condition.subsyOpenFlg}
+        	</if>
+        </if>
+	</sql>
+	<sql id="mstSubsyBaseSetColumns">
+			<if test="null!=mstSubsyBaseId">
+				mst_subsy_base_id = #{mstSubsyBaseId},
+			</if>
+			<if test="null!=subsyCode">
+				subsy_code = #{subsyCode},
+			</if>
+			<if test="null!=subsyName">
+				subsy_name = #{subsyName},
+			</if>
+			<if test="null!=subsyDispName">
+				subsy_disp_name = #{subsyDispName},
+			</if>
+			<if test="null!=loctProvCode">
+				loct_prov_code = #{loctProvCode},
+			</if>
+			<if test="null!=loctCityCode">
+				loct_city_code = #{loctCityCode},
+			</if>
+			<if test="null!=loctAreaCode">
+				loct_area_code = #{loctAreaCode},
+			</if>
+			<if test="null!=subsyAddr">
+				subsy_addr = #{subsyAddr},
+			</if>
+			<if test="null!=loctLon">
+				loct_lon = #{loctLon},
+			</if>
+			<if test="null!=loctLat">
+				loct_lat = #{loctLat},
+			</if>
+			<if test="null!=phoneNum">
+				phone_num = #{phoneNum},
+			</if>
+			<if test="null!=mobNum">
+				mob_num = #{mobNum},
+			</if>
+			<if test="null!=postNo">
+				post_no = #{postNo},
+			</if>
+			<if test="null!=subsyDesc">
+				subsy_desc = #{subsyDesc},
+			</if>
+			<if test="null!=busiTimeDesc">
+				busi_time_desc = #{busiTimeDesc},
+			</if>
+			<if test="null!=brandCode">
+				brand_code = #{brandCode},
+			</if>
+			<if test="null!=subsyBrandType">
+				subsy_brand_type = #{subsyBrandType},
+			</if>
+			<if test="null!=banrUrl">
+				banr_url = #{banrUrl},
+			</if>
+			<if test="null!=auditStatusCode">
+				audit_status_code = #{auditStatusCode},
+			</if>
+			<if test="null!=prodAuditStatusCode">
+				prod_audit_status_code = #{prodAuditStatusCode},
+			</if>
+			<if test="null!=closeAuditStatusCode">
+				close_audit_status_code = #{closeAuditStatusCode},
+			</if>
+			<if test="null!=closeAuditApprover">
+				close_audit_approver = #{closeAuditApprover},
+			</if>
+			<if test="null!=isAllowSubsyAdminLogin">
+				is_allow_subsy_admin_login = #{isAllowSubsyAdminLogin},
+			</if>
+			<if test="null!=price">
+				price = #{price},
+			</if>
+			<if test="null!=populVal">
+				popul_val = #{populVal},
+			</if>
+			<if test="null!=servScore">
+				serv_score = #{servScore},
+			</if>
+			<if test="null!=crtTime">
+				crt_time = #{crtTime},
+			</if>
+			<if test="null!=crtUserCode">
+				crt_user_code = #{crtUserCode},
+			</if>
+			upd_time = now(),
+			<if test="null!=updUserCode">
+				upd_user_code = #{updUserCode},
+			</if>
+			<if test="null!=delFlg">
+				del_flg = #{delFlg},
+			</if>
+			ver_num = ver_num + 1,
+			<if test="null!=homeDispResvFlg">
+				home_disp_resv_flg = #{homeDispResvFlg},
+			</if>
+			<if test="null!=promotionDesc">
+				promotion_desc = #{promotionDesc},
+			</if>
+			<if test="null!=bookDesc">
+				book_desc = #{bookDesc},
+			</if>
+			<if test="null!=subsyType">
+				subsy_type = #{subsyType},
+			</if>
+			<if test="null!=subsyActivFlg">
+				subsy_activ_flg = #{subsyActivFlg},
+			</if>
+			<if test="null!=subsyActivStartTime">
+				subsy_activ_start_time = #{subsyActivStartTime},
+			</if>
+			<if test="null!=subsyActivEndTime">
+				subsy_activ_end_time = #{subsyActivEndTime},
+			</if>
+			<if test="null!=subsyOpenFlg">
+				subsy_open_flg = #{subsyOpenFlg},
+			</if>
+	</sql>
+
+    <resultMap id="mstSubsyBaseResultMap" type="com.haochen.provider.auth.entity.MstSubsyBaseEntity">
+        <result property="mstSubsyBaseId" column="mst_subsy_base_id"/>
+        <result property="subsyCode" column="subsy_code"/>
+        <result property="subsyName" column="subsy_name"/>
+        <result property="subsyDispName" column="subsy_disp_name"/>
+        <result property="loctProvCode" column="loct_prov_code"/>
+        <result property="loctCityCode" column="loct_city_code"/>
+        <result property="loctAreaCode" column="loct_area_code"/>
+        <result property="subsyAddr" column="subsy_addr"/>
+        <result property="loctLon" column="loct_lon"/>
+        <result property="loctLat" column="loct_lat"/>
+        <result property="phoneNum" column="phone_num"/>
+        <result property="mobNum" column="mob_num"/>
+        <result property="postNo" column="post_no"/>
+        <result property="subsyDesc" column="subsy_desc"/>
+        <result property="busiTimeDesc" column="busi_time_desc"/>
+        <result property="brandCode" column="brand_code"/>
+        <result property="subsyBrandType" column="subsy_brand_type"/>
+        <result property="banrUrl" column="banr_url"/>
+        <result property="auditStatusCode" column="audit_status_code"/>
+        <result property="prodAuditStatusCode" column="prod_audit_status_code"/>
+        <result property="closeAuditStatusCode" column="close_audit_status_code"/>
+        <result property="closeAuditApprover" column="close_audit_approver"/>
+        <result property="isAllowSubsyAdminLogin" column="is_allow_subsy_admin_login"/>
+        <result property="price" column="price"/>
+        <result property="populVal" column="popul_val"/>
+        <result property="servScore" column="serv_score"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+        <result property="homeDispResvFlg" column="home_disp_resv_flg"/>
+        <result property="promotionDesc" column="promotion_desc"/>
+        <result property="bookDesc" column="book_desc"/>
+        <result property="subsyType" column="subsy_type"/>
+        <result property="subsyActivFlg" column="subsy_activ_flg"/>
+        <result property="subsyActivStartTime" column="subsy_activ_start_time"/>
+        <result property="subsyActivEndTime" column="subsy_activ_end_time"/>
+        <result property="subsyOpenFlg" column="subsy_open_flg"/>
+	</resultMap>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert">
+    <![CDATA[
+        INSERT INTO mst_subsy_base (
+        	mst_subsy_base_id
+        	,subsy_code
+        	,subsy_name
+        	,subsy_disp_name
+        	,loct_prov_code
+        	,loct_city_code
+        	,loct_area_code
+        	,subsy_addr
+        	,loct_lon
+        	,loct_lat
+        	,phone_num
+        	,mob_num
+        	,post_no
+        	,subsy_desc
+        	,busi_time_desc
+        	,brand_code
+        	,subsy_brand_type
+        	,banr_url
+        	,audit_status_code
+        	,prod_audit_status_code
+        	,close_audit_status_code
+        	,close_audit_approver
+        	,is_allow_subsy_admin_login
+        	,price
+        	,popul_val
+        	,serv_score
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        	,home_disp_resv_flg
+        	,promotion_desc
+        	,book_desc
+        	,subsy_type
+        	,subsy_activ_flg
+        	,subsy_activ_start_time
+        	,subsy_activ_end_time
+        	,subsy_open_flg
+        ) VALUES (
+        		#{mstSubsyBaseId}
+        		,#{subsyCode}
+        		,#{subsyName}
+        		,#{subsyDispName}
+        		,#{loctProvCode}
+        		,#{loctCityCode}
+        		,#{loctAreaCode}
+        		,#{subsyAddr}
+        		,#{loctLon}
+        		,#{loctLat}
+        		,#{phoneNum}
+        		,#{mobNum}
+        		,#{postNo}
+        		,#{subsyDesc}
+        		,#{busiTimeDesc}
+        		,#{brandCode}
+        		,#{subsyBrandType}
+        		,#{banrUrl}
+        		,#{auditStatusCode}
+        		,#{prodAuditStatusCode}
+        		,#{closeAuditStatusCode}
+        		,#{closeAuditApprover}
+        		,#{isAllowSubsyAdminLogin}
+        		,#{price}
+        		,#{populVal}
+        		,#{servScore}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        		,#{homeDispResvFlg}
+        		,#{promotionDesc}
+        		,#{bookDesc}
+        		,#{subsyType}
+        		,#{subsyActivFlg}
+        		,#{subsyActivStartTime}
+        		,#{subsyActivEndTime}
+        		,#{subsyOpenFlg}
+        )
+    ]]>
+	</insert>
+	
+	<delete id="deleteById">
+    <![CDATA[
+	    DELETE FROM
+	    	mst_subsy_base 
+	    WHERE
+	    mst_subsy_base_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+    <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    mst_subsy_base_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+	    DELETE FROM
+	    	mst_subsy_base 
+	    WHERE
+	    	1=1
+		    <include refid="mstSubsyBaseColumns" />
+    </delete>
+    
+	<update id="updateById">
+	    UPDATE
+	    	mst_subsy_base 
+        <set>
+	        <include refid="mstSubsyBaseSetColumns" />
+		</set>
+	    WHERE
+	    mst_subsy_base_id = #{mstSubsyBaseId} 
+		and ver_num =#{verNum}
+	</update>
+	<update id="updateByCondition">
+	    UPDATE
+	    	mst_subsy_base 
+	    <set>
+	        <include refid="mstSubsyBaseSetColumns" />
+	    </set>
+	    WHERE
+			1=1
+	<include refid="conditionMstSubsyBaseColumns" />
+	</update>
+    
+    <select id="queryById" resultMap="mstSubsyBaseResultMap">
+    	<![CDATA[
+			SELECT
+				mst_subsy_base_id
+				,subsy_code
+				,subsy_name
+				,subsy_disp_name
+				,loct_prov_code
+				,loct_city_code
+				,loct_area_code
+				,subsy_addr
+				,loct_lon
+				,loct_lat
+				,phone_num
+				,mob_num
+				,post_no
+				,subsy_desc
+				,busi_time_desc
+				,brand_code
+				,subsy_brand_type
+				,banr_url
+				,audit_status_code
+				,prod_audit_status_code
+				,close_audit_status_code
+				,close_audit_approver
+				,is_allow_subsy_admin_login
+				,price
+				,popul_val
+				,serv_score
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+				,home_disp_resv_flg
+				,promotion_desc
+				,book_desc
+				,subsy_type
+				,subsy_activ_flg
+				,subsy_activ_start_time
+				,subsy_activ_end_time
+				,subsy_open_flg
+			FROM
+				mst_subsy_base 
+			WHERE 
+				mst_subsy_base_id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="queryByCondition" resultMap="mstSubsyBaseResultMap">
+			<![CDATA[
+				SELECT
+					mst_subsy_base_id
+					,subsy_code
+					,subsy_name
+					,subsy_disp_name
+					,loct_prov_code
+					,loct_city_code
+					,loct_area_code
+					,subsy_addr
+					,loct_lon
+					,loct_lat
+					,phone_num
+					,mob_num
+					,post_no
+					,subsy_desc
+					,busi_time_desc
+					,brand_code
+					,subsy_brand_type
+					,banr_url
+					,audit_status_code
+					,prod_audit_status_code
+					,close_audit_status_code
+					,close_audit_approver
+					,is_allow_subsy_admin_login
+					,price
+					,popul_val
+					,serv_score
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+					,home_disp_resv_flg
+					,promotion_desc
+					,book_desc
+					,subsy_type
+					,subsy_activ_flg
+					,subsy_activ_start_time
+					,subsy_activ_end_time
+					,subsy_open_flg
+				FROM
+					mst_subsy_base
+				WHERE
+					1=1
+					<include refid="mstSubsyBaseColumns" />
+			]]>
+	</select>
+	
+	<select id="queryList" resultMap="mstSubsyBaseResultMap">
+		SELECT
+			mst_subsy_base_id
+			,subsy_code
+			,subsy_name
+			,subsy_disp_name
+			,loct_prov_code
+			,loct_city_code
+			,loct_area_code
+			,subsy_addr
+			,loct_lon
+			,loct_lat
+			,phone_num
+			,mob_num
+			,post_no
+			,subsy_desc
+			,busi_time_desc
+			,brand_code
+			,subsy_brand_type
+			,banr_url
+			,audit_status_code
+			,prod_audit_status_code
+			,close_audit_status_code
+			,close_audit_approver
+			,is_allow_subsy_admin_login
+			,price
+			,popul_val
+			,serv_score
+			,crt_time
+			,crt_user_code
+			,upd_time
+			,upd_user_code
+			,del_flg
+			,ver_num
+			,home_disp_resv_flg
+			,promotion_desc
+			,book_desc
+			,subsy_type
+			,subsy_activ_flg
+			,subsy_activ_start_time
+			,subsy_activ_end_time
+			,subsy_open_flg
+		FROM
+			mst_subsy_base
+		WHERE
+			1=1
+			<include refid="mstSubsyBaseColumns" />
+		ORDER BY
+			mst_subsy_base_id
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT(0)
+		FROM
+			mst_subsy_base
+		WHERE
+			1=1
+			<include refid="mstSubsyBaseColumns" />
+	</select>
+	
+	<select id="queryAll" resultMap="mstSubsyBaseResultMap">
+    	<![CDATA[
+			SELECT
+				mst_subsy_base_id
+				,subsy_code
+				,subsy_name
+				,subsy_disp_name
+				,loct_prov_code
+				,loct_city_code
+				,loct_area_code
+				,subsy_addr
+				,loct_lon
+				,loct_lat
+				,phone_num
+				,mob_num
+				,post_no
+				,subsy_desc
+				,busi_time_desc
+				,brand_code
+				,subsy_brand_type
+				,banr_url
+				,audit_status_code
+				,prod_audit_status_code
+				,close_audit_status_code
+				,close_audit_approver
+				,is_allow_subsy_admin_login
+				,price
+				,popul_val
+				,serv_score
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+				,home_disp_resv_flg
+				,promotion_desc
+				,book_desc
+				,subsy_type
+				,subsy_activ_flg
+				,subsy_activ_start_time
+				,subsy_activ_end_time
+				,subsy_open_flg
+			FROM
+				mst_subsy_base 
+			ORDER BY
+				mst_subsy_base_id
+
+
+
+        ]]>
+    </select>
+
+    <select id="queryPaginationListCount" resultType="Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        mst_subsy_base
+        WHERE
+        1=1
+        <include refid="conditionMstSubsyBaseColumns"/>
+    </select>
+
+    <!-- auto-generate end -->
+
+    <sql id="subsyBaseColumns">
+          mst_subsy_base_id
+            ,subsy_code
+            ,subsy_name
+            ,subsy_disp_name
+            ,loct_prov_code
+            ,loct_city_code
+            ,loct_area_code
+            ,subsy_addr
+            ,loct_lon
+            ,loct_lat
+            ,phone_num
+            ,mob_num
+            ,post_no
+            ,subsy_desc
+            ,busi_time_desc
+            ,brand_code
+	    ,subsy_brand_type
+            ,banr_url
+				,audit_status_code
+				,prod_audit_status_code
+				,is_allow_subsy_admin_login
+				,close_audit_status_code
+				,close_audit_approver
+            ,price
+            ,popul_val
+            ,serv_score
+            ,crt_time
+            ,crt_user_code
+            ,upd_time
+            ,upd_user_code
+            ,del_flg
+            ,ver_num
+	    ,home_disp_resv_flg
+				,promotion_desc
+				,book_desc
+	    ,subsy_type
+	    ,subsy_activ_flg
+	    ,subsy_activ_start_time
+	    ,subsy_activ_end_time
+    </sql>
+
+    <sql id="whereCondition">
+        where del_flg = 0
+        <if test="null != name and name != ''">
+            and (subsy_name LIKE '${name}%' OR subsy_disp_name LIKE '${name}%')
+        </if>
+        <if test="null != cityCode and cityCode != ''">
+            and loct_city_code = #{cityCode}
+        </if>
+        <if test="null != brandCode and brandCode != ''">
+            and brand_code = #{brandCode}
+        </if>
+        <if test="null != statCode and statCode != ''">
+            and audit_status_code = #{statCode}
+        </if>
+        <if test="null != useType and useType == 'mmatron'">
+            and subsy_activ_flg = 1
+        </if>
+
+
+        <if test="subsyCodes != null and subsyCodes.length > 0">
+            and subsy_code in
+            <foreach collection="subsyCodes" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="querySubsyListByMap" resultMap="mstSubsyBaseResultMap">
+        SELECT
+          <include refid="subsyBaseColumns"/>
+        FROM
+          mst_subsy_base
+        <include refid="whereCondition" />
+		<if test="null != subsyOpenFlg and subsyOpenFlg != ''">
+			and subsy_open_flg = #{subsyOpenFlg}
+		</if>
+		<if test="null != subsyActivFlg and subsyActivFlg != ''">
+			and subsy_activ_flg = #{subsyActivFlg}
+		</if>
+		<if test="null != subsyType and subsyType != ''">
+			and subsy_type = #{subsyType}
+		</if>
+        Limit #{start}, #{size}
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+          count(*)
+        FROM
+        mst_subsy_base
+        <include refid="whereCondition" />
+		<if test="null != subsyOpenFlg and subsyOpenFlg != ''">
+			and subsy_open_flg = #{subsyOpenFlg}
+		</if>
+		<if test="null != subsyActivFlg and subsyActivFlg != ''">
+			and subsy_activ_flg = #{subsyActivFlg}
+		</if>
+		<if test="null != subsyType and subsyType != ''">
+			and subsy_type = #{subsyType}
+		</if>
+    </select>
+
+    <select id="queryByCode" resultMap="mstSubsyBaseResultMap">
+        select
+        <include refid="subsyBaseColumns"/>
+        from
+        mst_subsy_base
+        where subsy_code = #{subsyCode}
+    </select>
+
+    <select id="findAll" resultMap="mstSubsyBaseResultMap">
+        select
+        <include refid="subsyBaseColumns"/>
+        from
+        mst_subsy_base
+        where del_flg = 0
+		and subsy_type = '00790001'
+    </select>
+
+    <select id="getSubsyNamesByCodes" resultType="java.lang.String">
+        select
+        group_concat(subsy_disp_name)
+        from mst_subsy_base
+        where del_flg = 0
+        and subsy_code in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findSubsyListBySubsyCodes" resultMap="mstSubsyBaseResultMap">
+        select
+        <include refid="subsyBaseColumns"/>
+        from
+        mst_subsy_base
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="getSubsyListByCodes" resultMap="mstSubsyBaseResultMap">
+        select
+          <include refid="subsyBaseColumns"/>
+        from mst_subsy_base
+        where del_flg = 0
+        and subsy_code in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+
+
+    <select id="getSubsyRegionIndex" resultType="java.lang.String">
+        select t.subys_code_index
+        from mst_subsy_region_rule t
+        where t.region_code = #{regionCode}
+    </select>
+
+    <select id="getSubsyBrandIndex" resultType="java.lang.String">
+       select t.subys_code_index
+       from mst_subsy_brand_rule t
+       where t.brand_code = #{brandCode}
+    </select>
+
+    <select id="getLastCodeByPrefix" resultType="java.lang.String">
+        select max(right(subsy_code, 3)) from mst_subsy_base
+        where left(subsy_code, 7) = #{prefix}
+    </select>
+
+
+	<!-- 根据登陆用户code，取得会所信息列表-->
+	<select id="getSubsyInfoListByUserCode" resultMap="mstSubsyBaseResultMap">
+		SELECT
+        b.subsy_code,
+		b.subsy_disp_name,
+		b.subsy_desc,
+		b.subsy_addr,
+		b.phone_num,
+		b.busi_time_desc,
+		b.brand_code
+        FROM mst_inter_user_subsy u
+        INNER JOIN mst_subsy_base b on u.subsy_code = b.subsy_code
+        WHERE u.del_flg = 0
+        AND b.del_flg = 0
+        AND b.brand_code != '' AND b.brand_code != 0
+		AND u.inter_user_code = #{userCode}
+		ORDER BY b.brand_code,b.subsy_code
+	</select>
+
+
+	<!-- 根据会所手机号查找会所，  根据会所手机号-->
+	<select id="queryByMobnum" resultMap="mstSubsyBaseResultMap">
+		<![CDATA[
+			SELECT
+				mst_subsy_base_id
+				,subsy_code
+				,subsy_name
+				,subsy_disp_name
+				,loct_prov_code
+				,loct_city_code
+				,loct_area_code
+				,subsy_addr
+				,loct_lon
+				,loct_lat
+				,phone_num
+				,mob_num
+				,post_no
+				,subsy_desc
+				,busi_time_desc
+				,brand_code
+				,subsy_brand_type
+				,banr_url
+				,audit_status_code
+				,prod_audit_status_code
+				,close_audit_status_code
+				,close_audit_approver
+				,is_allow_subsy_admin_login
+				,price
+				,popul_val
+				,serv_score
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+				,home_disp_resv_flg
+				,promotion_desc
+				,book_desc
+				,subsy_type
+				,subsy_activ_flg
+				,subsy_activ_start_time
+				,subsy_activ_end_time
+				,subsy_open_flg
+			FROM
+				mst_subsy_base
+			WHERE
+				mob_num = #{mobNum}
+				and del_flg = 0
+			]]>
+			<if test="null!=subsyCode">
+				and subsy_code != #{subsyCode}
+			</if>
+
+	</select>
+
+
+
+	<!-- wangtao 查找会所关闭模块使用的会所列表 -->
+	<select id="findSubsyListForClose" resultMap="mstSubsyBaseResultMap">
+			SELECT
+				mst_subsy_base_id
+				,subsy_code
+				,subsy_name
+				,subsy_disp_name
+				,loct_prov_code
+				,loct_city_code
+				,loct_area_code
+				,subsy_addr
+				,loct_lon
+				,loct_lat
+				,phone_num
+				,mob_num
+				,post_no
+				,subsy_desc
+				,busi_time_desc
+				,brand_code
+				,subsy_brand_type
+				,banr_url
+				,audit_status_code
+				,prod_audit_status_code
+				,close_audit_status_code
+				,close_audit_approver
+				,is_allow_subsy_admin_login
+				,price
+				,popul_val
+				,serv_score
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+				,home_disp_resv_flg
+				,promotion_desc
+				,book_desc
+				,subsy_type
+				,subsy_activ_flg
+				,subsy_activ_start_time
+				,subsy_activ_end_time
+			FROM
+				mst_subsy_base
+				where
+				del_flg =0
+				and subsy_type = '00790001'
+				<if test="brandList != null and brandList.length > 0">
+					and brand_code in
+					<foreach collection="brandList" index="index" item="item" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				</if>
+			ORDER BY
+				mst_subsy_base_id
+			Limit #{start}, #{size}
+	</select>
+
+
+	<select id="findSubsyListForCloseCount" resultType="java.lang.Integer">
+		SELECT
+			count(1)
+		FROM
+			mst_subsy_base
+			where
+			del_flg =0
+			<if test="brandList != null and brandList.length > 0">
+				and brand_code in
+				<foreach collection="brandList" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+	</select>
+
+	<resultMap id="subsyComboMap" type="com.haochen.provider.auth.dto.SubsyComboDto">
+		<result property="subsyCode" column="subsy_code"/>
+		<result property="subsyName" column="subsy_disp_name"/>
+		<result property="subsyType" column="subsy_type"/>
+		<result property="auditStatusCode" column="audit_status_code"/>
+		<result property="subsyActivFlg" column="subsy_activ_flg"/>
+		<result property="subsyOpenFlg" column="subsy_open_flg"/>
+	</resultMap>
+
+
+	<select id="getSubsyListByUserCode" resultMap="subsyComboMap">
+        select
+        b.subsy_code, b.subsy_disp_name,b.subsy_type,b.subsy_activ_flg,b.subsy_open_flg
+        from mst_inter_user_subsy u
+        inner join mst_subsy_base b on u.subsy_code = b.subsy_code
+        where u.del_flg = 0
+        and b.del_flg = 0
+        and u.inter_user_code = #{userCode}
+    </select>
+    <!-- user-defined end -->
+
+</mapper>
+
