@@ -22,8 +22,12 @@ public class TransactionAdviceConfig {
 
     private static final String AOP_POINTCUT_EXPRESSION = "execution(* com..service..*.*(..)))";
 
+    private final PlatformTransactionManager transactionManager;
+
     @Autowired
-    private PlatformTransactionManager transactionManager;
+    public TransactionAdviceConfig(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
     @Bean
     public TransactionInterceptor txadvice() {
