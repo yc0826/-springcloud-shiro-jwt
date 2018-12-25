@@ -1,9 +1,15 @@
 本项目采用springcloud作为微服务框架，并运用了maven的多模块结构
+
 management-common 项目基础依赖
+
 management-eureka-server springcloud注册服务组件
+
 management-provider-config springcloud内部服务提供组件,持久化和业务逻辑,服务基于restful标准
+
 management-consumer-config springcloud外部服务提供组件,依赖于内部服务提供组件,服务基于restful标准
-management-zuul springcloud路由组件 对内部和外部服务提供反向代理达到集群部署分流的目的,相当于一个java版本的ngx
+
+management-zuul springcloud路由组件 对内部和外部服务提供反向代理达到集群部署分流的目的,相当于一个java版本的nginx
+
 management-ui 基于vue的前端项目,通过调用management-consumer-config提供的外部服务接口实现整个业务功能
 
 姐妹版项目地址dubbo服务https://gitee.com/896022/shiroAuth.git
