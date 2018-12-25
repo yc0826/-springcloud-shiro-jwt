@@ -10,7 +10,9 @@
 
 3.启动内部接口服务management-rpc-service main方法
 
-4.启动web服务management-web-server main方法，推荐用idea直接启动调试，如果是idea的话在配置Edit Configurations里 Working Directory请选择$MODULE_DIR$，这样才能正确加载到web资源。
+4.启动web服务management-web-server main方法。
+
+5.启用前端服务,需要node环境,进入management-ui目录,npm install & npm run dev 即可进行访问
 
 5.登陆帐号admin 密码123456
 
