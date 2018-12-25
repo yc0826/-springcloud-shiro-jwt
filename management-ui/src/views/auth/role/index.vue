@@ -24,6 +24,7 @@
         label="操作"
         width="100"
       >
+
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -56,7 +57,7 @@
         >
           <el-input
             v-model="form.rollName"
-            auto-complete="off"
+            autocomplete="off"
             size="small"
           />
         </el-form-item>
@@ -67,7 +68,7 @@
           <el-input
             v-model="form.rollDesc"
             size="small"
-            auto-complete="off"
+            autocomplete="off"
           />
         </el-form-item>
         <el-form-item
