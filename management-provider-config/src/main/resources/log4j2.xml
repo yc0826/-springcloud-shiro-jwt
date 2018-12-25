@@ -16,7 +16,9 @@
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <Logger name="org.springframework" level="INFO"/>
         <Logger name="org.mybatis.spring" level="ERROR"/>
-        <Logger name="com.zaxxer.hikari.pool" level="INFO"/>
+        <Logger name="com.zaxxer.hikari" level="INFO"/>
+        <Logger name="com.netflix" level="INFO"/>
+        <Logger name="org.apache.http" level="INFO"/>
         <Root level="DEBUG">
             <AppenderRef ref="Console"/>
         </Root>
