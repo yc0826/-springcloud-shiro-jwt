@@ -30,11 +30,14 @@ endpoints:
   health:
     sensitive: false
 
-feign:
-  client:
-    config:
-      feignName:
-        connectTimeout: 50000
-        readTimeout: 50000
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 120000
+  #请求连接的超时时间
+  ConnectTimeout: 30000
+
+logging:
+  config: classpath:log4j2.xml
+
 
 

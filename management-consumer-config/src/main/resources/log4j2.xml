@@ -8,21 +8,17 @@
         <!--这个输出控制台的配置-->
         <Console name="Console" target="SYSTEM_OUT">
             <!--输出日志的格式-->
-            <PatternLayout pattern="%d{HH:mm:ss:SSS} %-5p %c{2} - %m%n"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS/} %-5p] [%t] (%c:%L) - %m%n"/>
         </Console>
     </Appenders>
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <Loggers>
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
-        <Logger name="com.shiro" level="DEBUG"/>
         <Logger name="org.springframework" level="INFO"/>
         <Logger name="org.mybatis.spring" level="ERROR"/>
-        <Logger name="org.apache" level="INFO"/>
-        <Logger name="org.hibernate" level="INFO"/>
-        <Logger name="org.springframework.web" level="ERROR"/>
-        <Logger name="org.mongodb.driver.cluster" level="INFO"/>
-        <Logger name="com.alibaba.dubbo.remoting.exchange.support.header" level="INFO"/>
-        <Logger name="com.alibaba.dubbo.remoting.transport" level="INFO"/>
+        <Logger name="com.zaxxer.hikari" level="INFO"/>
+        <Logger name="com.netflix" level="INFO"/>
+        <Logger name="org.apache.http" level="INFO"/>
         <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
