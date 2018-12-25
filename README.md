@@ -31,5 +31,5 @@ management-ui 基于vue的前端项目,通过调用management-consumer-config提
 6.目前zuul模块没有实际用途，供后续动静分离时使用
 
 
-有使用和部署问题加群833825797讨论
+有使用和部署问题欢迎加群833825797讨论
 
