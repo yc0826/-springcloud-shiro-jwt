@@ -21,3 +21,4 @@ eureka:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/sqlMap/**/*.xml
+

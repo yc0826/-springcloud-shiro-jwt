@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Created on 15/11/7.
+ * @author YangChao
  */
 public class SystemException extends Exception {
     private SystemStatus systemStatus = null;

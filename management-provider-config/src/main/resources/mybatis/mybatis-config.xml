@@ -8,6 +8,6 @@
     <settings>
         <setting name="cacheEnabled" value="false"/>
         <setting name="localCacheScope" value="STATEMENT"/>
-        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
     </settings>
 </configuration>
