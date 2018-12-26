@@ -52,11 +52,7 @@ public class DbShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        MstInterUserBaseEntity mstInterUserBaseEntity = (MstInterUserBaseEntity) principals.getPrimaryPrincipal();
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(mstInterUserRollService.findRoles(mstInterUserBaseEntity.getUserName()));
-        authorizationInfo.setStringPermissions(mstInterUserRollService.findPermissions(mstInterUserBaseEntity.getUserName()));
-        return authorizationInfo;
+        return new SimpleAuthorizationInfo();
     }
 }
 

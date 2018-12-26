@@ -77,7 +77,6 @@ export default {
         url: '/resource/findMenus',
         method: 'get'
       }).then(response => {
-        console.log(response.data)
         this.model.menus = response.data
         this.listLoading = false
       })

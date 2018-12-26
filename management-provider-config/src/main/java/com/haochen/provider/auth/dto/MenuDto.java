@@ -3,6 +3,9 @@ package com.haochen.provider.auth.dto;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * @author YangChao
+ */
 public class MenuDto implements Serializable {
 
     private Set<String> permissions;
