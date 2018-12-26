@@ -23,5 +23,6 @@ mybatis:
   mapper-locations: classpath:mybatis/sqlMap/**/*.xml
 
 
+
 logging:
   config: classpath:log4j2.xml

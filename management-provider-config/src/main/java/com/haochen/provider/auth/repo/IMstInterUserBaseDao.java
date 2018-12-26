@@ -1,7 +1,7 @@
 package com.haochen.provider.auth.repo;
 
-import com.haochen.provider.auth.entity.MstInterUserBaseEntity;
 import com.haochen.provider.auth.dto.InterUserDto;
+import com.haochen.provider.auth.entity.MstInterUserBaseEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
