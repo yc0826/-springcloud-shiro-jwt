@@ -87,7 +87,7 @@ export default {
       }
     }).then(response => {
       this.tableData = response.data.authorizationList
-      // this.total = response.data.count
+      this.total = response.data.count
       this.listLoading = false
     })
   } }
