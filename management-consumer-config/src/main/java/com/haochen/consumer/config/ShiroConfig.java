@@ -1,10 +1,5 @@
 package com.haochen.consumer.config;
 
-import com.haochen.consumer.shiro.cache.JedisManager;
-import com.haochen.consumer.shiro.cache.JedisShiroSessionRepository;
-import com.haochen.consumer.shiro.cache.impl.CustomShiroCacheManager;
-import com.haochen.consumer.shiro.cache.impl.JedisShiroCacheManager;
-import com.haochen.consumer.shiro.dao.CustomShiroSessionDAO;
 import com.haochen.consumer.shiro.filter.JwtAuthFilter;
 import com.haochen.consumer.shiro.realm.DbShiroRealm;
 import com.haochen.consumer.shiro.realm.JwtShiroRealm;
@@ -29,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
-import redis.clients.jedis.JedisPool;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -55,40 +49,6 @@ public class ShiroConfig {
     }
 
 
-    @Bean
-    public JedisManager jedisManager(JedisPool jedisPool) {
-        JedisManager jedisManager = new JedisManager();
-        jedisManager.setJedisPool(jedisPool);
-        return jedisManager;
-    }
-
-    @Bean
-    public JedisShiroSessionRepository jedisShiroSessionRepository(JedisPool jedisPool) {
-        JedisShiroSessionRepository jedisShiroSessionRepository = new JedisShiroSessionRepository();
-        jedisShiroSessionRepository.setJedisManager(jedisManager(jedisPool));
-        return jedisShiroSessionRepository;
-    }
-
-    @Bean
-    public JedisShiroCacheManager jedisShiroCacheManager(JedisPool jedisPool) {
-        JedisShiroCacheManager jedisShiroCacheManager = new JedisShiroCacheManager();
-        jedisShiroCacheManager.setJedisManager(jedisManager(jedisPool));
-        return jedisShiroCacheManager;
-    }
-
-    @Bean
-    public CustomShiroCacheManager cacheManager(JedisPool jedisPool) {
-        CustomShiroCacheManager cacheManager = new CustomShiroCacheManager();
-        cacheManager.setShiroCacheManager(jedisShiroCacheManager(jedisPool));
-        return cacheManager;
-    }
-
-    @Bean
-    public CustomShiroSessionDAO customShiroSessionDAO(JedisPool jedisPool) {
-        CustomShiroSessionDAO customShiroSessionDAO = new CustomShiroSessionDAO();
-        customShiroSessionDAO.setShiroSessionRepository(jedisShiroSessionRepository(jedisPool));
-        return customShiroSessionDAO;
-    }
 
 
     @Bean("securityManager")
