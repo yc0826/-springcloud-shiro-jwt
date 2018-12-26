@@ -24,7 +24,7 @@ management-ui 基于 vue 的前端项目,通过调用 management-consumer-config
 
 4.启动外部接口服务 management-consumer-config 类 ConsumerApplication 中 main 方法。
 
-5.启用前端服务,需要 node 环境,进入 management-ui 目录,npm install & npm run dev 即可进行访问
+5.启用前端服务 需要 node 环境,进入 management-ui 目录,npm install & npm run dev 即可进行访问
 
 5.登陆帐号 admin 密码 123456
 
