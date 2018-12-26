@@ -55,7 +55,4 @@ public interface MstInterUserBaseService {
     UserInfoOutputBean getUserInfo(@RequestParam("userName") String userName);
 
 
-
-
-
 }

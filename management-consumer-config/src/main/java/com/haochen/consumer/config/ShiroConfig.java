@@ -4,19 +4,25 @@ import com.haochen.consumer.shiro.cache.JedisManager;
 import com.haochen.consumer.shiro.cache.JedisShiroSessionRepository;
 import com.haochen.consumer.shiro.cache.impl.CustomShiroCacheManager;
 import com.haochen.consumer.shiro.cache.impl.JedisShiroCacheManager;
-import com.haochen.consumer.shiro.credential.CustomCredentialsMatcher;
 import com.haochen.consumer.shiro.dao.CustomShiroSessionDAO;
-import com.haochen.consumer.shiro.filter.AccessControlFilter;
-import com.haochen.consumer.shiro.filter.JWTFilter;
-import com.haochen.consumer.shiro.filter.KickoutSessionControlFilter;
-import com.haochen.consumer.shiro.filter.SimpleFilter;
-import com.haochen.consumer.shiro.realm.MyRealm;
+import com.haochen.consumer.shiro.filter.JwtAuthFilter;
+import com.haochen.consumer.shiro.realm.DbShiroRealm;
+import com.haochen.consumer.shiro.realm.JwtShiroRealm;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.SessionStorageEvaluator;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +31,9 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import redis.clients.jedis.JedisPool;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -35,46 +43,16 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+    public FilterRegistrationBean<Filter> filterRegistrationBean() {
+        FilterRegistrationBean<Filter> filterRegistration = new FilterRegistrationBean<>();
         filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
         //  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
         filterRegistration.addInitParameter("targetFilterLifecycle", "true");
+        filterRegistration.setAsyncSupported(true);
         filterRegistration.setEnabled(true);
-        filterRegistration.addUrlPatterns("/*");
+        filterRegistration.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ASYNC);
         return filterRegistration;
     }
-
-    @Bean
-    public FilterRegistrationBean shiroJWTFilterRegistration(JWTFilter jwtFilter) {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean(jwtFilter);
-        filterRegistration.setEnabled(false);
-        return filterRegistration;
-    }
-
-
-    @Bean
-    public FilterRegistrationBean shiroSimpleFilterRegistration(SimpleFilter simpleFilter) {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean(simpleFilter);
-        filterRegistration.setEnabled(false);
-        return filterRegistration;
-    }
-
-
-    @Bean
-    public FilterRegistrationBean shiroAccessControlFilterRegistration(AccessControlFilter accessControlFilter) {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean(accessControlFilter);
-        filterRegistration.setEnabled(false);
-        return filterRegistration;
-    }
-
-    @Bean
-    public FilterRegistrationBean shiroKickoutSessionControlFilterFilterRegistration(KickoutSessionControlFilter kickoutSessionControlFilter) {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean(kickoutSessionControlFilter);
-        filterRegistration.setEnabled(false);
-        return filterRegistration;
-    }
-
 
 
     @Bean
@@ -113,22 +91,12 @@ public class ShiroConfig {
     }
 
 
-    @Bean
-    public CustomCredentialsMatcher credentialsMatcher() {
-        return new CustomCredentialsMatcher();
-    }
-
-    @Bean
-    public MyRealm myRealm() {
-        return new MyRealm();
-    }
-
     @Bean("securityManager")
-    public DefaultWebSecurityManager getManager(MyRealm realm) {
+    public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         // 使用自己的realm
-        manager.setRealm(realm);
-
+        manager.setAuthenticator(authenticator());
+        manager.setRealms(Arrays.asList(jwtShiroRealm(), dbShiroRealm()));
         /*
          * 关闭shiro自带的session，详情见文档
          * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
@@ -144,46 +112,53 @@ public class ShiroConfig {
 
 
     @Bean
-    public JWTFilter jwtFilter() {
-        return new JWTFilter();
+    public Authenticator authenticator() {
+        ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
+        authenticator.setAuthenticationStrategy(new FirstSuccessfulStrategy());
+        return authenticator;
     }
 
     @Bean
-    public SimpleFilter simpleFilter() {
-        return new SimpleFilter();
+    protected SessionStorageEvaluator sessionStorageEvaluator() {
+        DefaultWebSessionStorageEvaluator sessionStorageEvaluator = new DefaultWebSessionStorageEvaluator();
+        sessionStorageEvaluator.setSessionStorageEnabled(false);
+        return sessionStorageEvaluator;
     }
 
-    @Bean
-    public AccessControlFilter accessControlFilter() {
-        return new AccessControlFilter();
+    @Bean("dbRealm")
+    public Realm dbShiroRealm() {
+        return new DbShiroRealm();
     }
 
-    @Bean
-    public KickoutSessionControlFilter kickoutSessionControlFilter(JedisPool jedisPool) {
-        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
-        kickoutSessionControlFilter.setCacheManager(cacheManager(jedisPool));
-        return kickoutSessionControlFilter;
+    @Bean("jwtRealm")
+    public Realm jwtShiroRealm() {
+        return new JwtShiroRealm();
     }
+
+
+    private JwtAuthFilter createAuthFilter() {
+        return new JwtAuthFilter();
+    }
+
 
     @Bean("shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        Map<String, Filter> filterMap = shiroFilterFactoryBean.getFilters();
-        filterMap.put("jwt", jwtFilter());
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setUnauthorizedUrl("/401");
-        shiroFilterFactoryBean.setFilters(filterMap);
+    public ShiroFilterFactoryBean shiroFilter() {
+        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
+        factoryBean.setSecurityManager(securityManager());
+        Map<String, Filter> filterMap = factoryBean.getFilters();
+        filterMap.put("authcToken", createAuthFilter());
+        factoryBean.setFilters(filterMap);
+        factoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
+        return factoryBean;
+    }
 
-        Map<String, String> filterChainDefinitionMap = shiroFilterFactoryBean.getFilterChainDefinitionMap();
-
-        // 所有请求通过我们自己的JWT Filter
-        // 访问401和404页面不通过我们的Filter
-        filterChainDefinitionMap.put("/401", "anon");
-        filterChainDefinitionMap.put("/user/login", "anon");
-//        filterChainDefinitionMap.put("/common/**", "anon");
-        filterChainDefinitionMap.put("/**", "jwt");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
+    @Bean
+    protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
+        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/user/login", "noSessionCreation,anon");
+        chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]");
+        chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken");
+        return chainDefinition;
     }
 
     /**
@@ -205,7 +180,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;

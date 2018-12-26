@@ -3,24 +3,23 @@ package com.haochen.consumer.auth.controller;
 import com.haochen.common.Constants;
 import com.haochen.common.Response;
 import com.haochen.common.exception.SystemException;
-import com.haochen.common.utils.PasswordEncryption;
 import com.haochen.common.utils.ResultHelper;
 import com.haochen.consumer.auth.dto.*;
 import com.haochen.consumer.auth.entity.MstInterUserBaseEntity;
 import com.haochen.consumer.auth.service.MstInterUserBaseService;
 import com.haochen.consumer.base.controller.BaseController;
-import com.haochen.consumer.util.JWTUtil;
+import com.haochen.consumer.util.JwtUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,25 +42,22 @@ public class UserController extends BaseController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/login")
-    public Response login(@RequestBody LoginInputBean loginDto) throws InvalidKeySpecException, NoSuchAlgorithmException, SystemException {
-        MstInterUserBaseEntity user = userService.findByUsername(loginDto.getUsername());
-        if(user == null) {
-            throw new SystemException("用户名或密码错");
-        }
-        String hash = PasswordEncryption.getEncryptedPassword(loginDto.getPassword(), user.getSalt());
-        if (user.getUserPwd().equals(hash)) {
-            LoginOutputBean loginOutputBean = new LoginOutputBean();
-            loginOutputBean.setToken(JWTUtil.sign(loginDto.getUsername(), user.getUserPwd()));
-            return ResultHelper.successResp(loginOutputBean);
-        } else {
-            throw new UnauthorizedException();
-        }
+    public Response login(@RequestBody LoginInputBean loginDto) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), loginDto.getPassword());
+        subject.login(token);
+
+        MstInterUserBaseEntity user = (MstInterUserBaseEntity) subject.getPrincipal();
+        String newToken = JwtUtils.sign(user.getUserName(), user.getSalt(), 3600) ;
+        LoginOutputBean loginOutputBean = new LoginOutputBean();
+        loginOutputBean.setToken(newToken);
+        return ResultHelper.successResp(loginOutputBean);
     }
 
     @GetMapping("/info")
     public Response info() {
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        UserInfoOutputBean userInfoOutputBean = userService.getUserInfo(userName);
+        MstInterUserBaseEntity mstInterUserBaseEntity = (MstInterUserBaseEntity) SecurityUtils.getSubject().getPrincipal();
+        UserInfoOutputBean userInfoOutputBean = userService.getUserInfo(mstInterUserBaseEntity.getUserName());
         return ResultHelper.successResp(userInfoOutputBean);
     }
 
