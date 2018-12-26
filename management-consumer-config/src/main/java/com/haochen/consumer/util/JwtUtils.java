@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -78,8 +77,6 @@ public class JwtUtils {
 
     /**
      * 生成随机盐,长度32位
-     *
-     * @return
      */
     public static String generateSalt() {
         SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();

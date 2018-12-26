@@ -1,6 +1,7 @@
 package com.haochen.common.utils;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.haochen.common.ApiResponse;
 import com.haochen.common.SystemStatus;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,7 @@ public class ResultHelper {
         ApiResponse response = new ApiResponse(SystemStatus.HTTP_OK());
         response.setData(t);
         response.setSuccess(true);
-
+        logger.info("Response:" + JSONObject.toJSONString(response));
         return response;
     }
 
