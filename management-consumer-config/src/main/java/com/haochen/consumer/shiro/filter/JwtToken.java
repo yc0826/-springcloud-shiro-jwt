@@ -41,4 +41,5 @@ public class JwtToken implements HostAuthenticationToken {
     public String toString() {
         return token + ':' + host;
     }
+
 }
