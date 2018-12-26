@@ -40,7 +40,7 @@ public class CommonController {
 
 
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @PostMapping("/getMenus")
     public Response getMenus(@RequestParam String resCode) {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
@@ -51,7 +51,7 @@ public class CommonController {
         return ResultHelper.successResp(resoService.findMenus(menuDto));
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/getModule")
     public Response getModule() {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();

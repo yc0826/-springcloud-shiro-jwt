@@ -43,7 +43,7 @@ public class AuthorizationController extends BaseController {
 
 
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/getAuthorizationList")
     public Response getAuthorizationList(UserRollQueryDto userRollQueryDto) {
         Map<String, Object> paramMap = new HashMap<>(8);

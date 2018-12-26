@@ -40,7 +40,7 @@ public class UserController extends BaseController {
     }
 
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @PostMapping("/login")
     public Response login(@RequestBody LoginInputBean loginDto) {
         Subject subject = SecurityUtils.getSubject();
@@ -77,7 +77,7 @@ public class UserController extends BaseController {
 
 
     @RequiresPermissions("user:view")
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/getInterUserListData")
     public Response getInterUserListData(UserListDto userListDto) {
         Map<String, Object> paramMap = new HashMap<>(6);

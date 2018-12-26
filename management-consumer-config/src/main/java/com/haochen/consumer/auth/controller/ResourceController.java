@@ -32,7 +32,7 @@ public class ResourceController extends BaseController {
         return "auth/resource/list";
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/findMenus")
     public Response findMenus() {
         return ResultHelper.successResp(resourceService.findAll());

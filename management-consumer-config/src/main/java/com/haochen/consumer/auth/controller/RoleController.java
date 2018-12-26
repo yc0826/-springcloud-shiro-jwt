@@ -47,7 +47,7 @@ public class RoleController extends BaseController {
     }
 
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/roleList")
     public Response roleList(RoleListDto roleListDto) {
         Map<String, Object> paramMap = new HashMap<>(6);
@@ -60,7 +60,7 @@ public class RoleController extends BaseController {
         return ResultHelper.successResp(resultMap);
     }
 
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/findMenus")
     public Response findMenus(String roleCode) {
         Map<String, Object> paramMap = new HashMap<>(2);
