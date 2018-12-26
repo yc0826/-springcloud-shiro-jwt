@@ -1,5 +1,6 @@
 package com.haochen.consumer.config;
 
+import com.haochen.consumer.shiro.credential.JwtCredentialsMatcher;
 import com.haochen.consumer.shiro.filter.JwtAuthFilter;
 import com.haochen.consumer.shiro.realm.DbShiroRealm;
 import com.haochen.consumer.shiro.realm.JwtShiroRealm;
@@ -72,6 +73,11 @@ public class ShiroConfig {
 
 
     @Bean
+    public JwtCredentialsMatcher jwtCredentialsMatcher() {
+        return new JwtCredentialsMatcher();
+    }
+
+    @Bean
     public Authenticator authenticator() {
         ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
         authenticator.setAuthenticationStrategy(new FirstSuccessfulStrategy());
@@ -92,7 +98,9 @@ public class ShiroConfig {
 
     @Bean("jwtRealm")
     public Realm jwtShiroRealm() {
-        return new JwtShiroRealm();
+        JwtShiroRealm jwtShiroRealm = new JwtShiroRealm();
+        jwtShiroRealm.setCredentialsMatcher(jwtCredentialsMatcher());
+        return jwtShiroRealm;
     }
 
 

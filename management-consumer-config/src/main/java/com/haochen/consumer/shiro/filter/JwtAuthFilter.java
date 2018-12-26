@@ -1,5 +1,10 @@
 package com.haochen.consumer.shiro.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import com.haochen.common.BizConstants;
+import com.haochen.common.Response;
+import com.haochen.common.SystemStatus;
+import com.haochen.common.utils.ResultHelper;
 import com.haochen.consumer.auth.entity.MstInterUserBaseEntity;
 import com.haochen.consumer.util.JwtUtils;
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +21,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -65,11 +71,13 @@ public class JwtAuthFilter extends AuthenticatingFilter {
      * 如果这个Filter在之前isAccessAllowed（）方法中返回false,则会进入这个方法。我们这里直接返回错误的response
      */
     @Override
-    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) {
+    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws IOException {
         HttpServletResponse httpResponse = WebUtils.toHttp(servletResponse);
         httpResponse.setCharacterEncoding("UTF-8");
-        httpResponse.setContentType("application/json;charset=UTF-8");
         httpResponse.setStatus(HttpStatus.SC_NON_AUTHORITATIVE_INFORMATION);
+        Response restResponse = ResultHelper.infoResp(SystemStatus.OAUTH_NOT_VALID_ACCESS_TOKEN_NOT_EXPIRES());
+        httpResponse.setHeader("Content-Type", BizConstants.APPLICATION_JSON);
+        httpResponse.getWriter().write(JSONObject.toJSONString(restResponse));
         fillCorsHeader(WebUtils.toHttp(servletRequest), httpResponse);
         return false;
     }

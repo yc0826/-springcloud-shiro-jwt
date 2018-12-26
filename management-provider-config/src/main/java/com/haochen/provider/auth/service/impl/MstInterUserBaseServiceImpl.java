@@ -12,10 +12,8 @@ import com.haochen.provider.auth.dto.UserMenu;
 import com.haochen.provider.auth.entity.CfgSysResoEntity;
 import com.haochen.provider.auth.entity.MstInterUserBaseEntity;
 import com.haochen.provider.auth.entity.MstInterUserDtlEntity;
-import com.haochen.provider.auth.repo.ICfgSysResoDao;
-import com.haochen.provider.auth.repo.IMstInterUserBaseDao;
-import com.haochen.provider.auth.repo.IMstInterUserDtlDao;
-import com.haochen.provider.auth.repo.IMstInterUserRollDao;
+import com.haochen.provider.auth.entity.TranInterUserTokenEntity;
+import com.haochen.provider.auth.repo.*;
 import com.haochen.provider.auth.service.MstInterUserBaseService;
 import com.haochen.provider.auth.service.MstInterUserRollService;
 import com.haochen.provider.auth.service.SubsyBaseService;
@@ -52,6 +50,9 @@ public class MstInterUserBaseServiceImpl implements MstInterUserBaseService {
 
     @Resource
     private ICfgSysResoDao cfgSysResoDao;
+
+    @Resource
+    private ITranInterUserTokenDao tranInterUserTokenDao;
 
     //-- user-defined start --
 
@@ -364,6 +365,30 @@ public class MstInterUserBaseServiceImpl implements MstInterUserBaseService {
             }
         }
         return false;
+    }
+
+    @Override
+    public void updateJwtToken(TranInterUserTokenEntity tranInterUserTokenEntity) {
+        TranInterUserTokenEntity interUserTokenEntity = tranInterUserTokenDao.findByUserCode(tranInterUserTokenEntity.getUserCode());
+        if(interUserTokenEntity != null) {
+            tranInterUserTokenEntity.setTranInterUserTokenId(interUserTokenEntity.getTranInterUserTokenId());
+            tranInterUserTokenEntity.setVerNum(interUserTokenEntity.getVerNum());
+            tranInterUserTokenEntity.setUpdTime(tranInterUserTokenEntity.getCrtTime());
+            tranInterUserTokenEntity.setUpdUserCode(tranInterUserTokenEntity.getCrtUserCode());
+            tranInterUserTokenEntity.setCrtTime(null);
+            tranInterUserTokenEntity.setCrtUserCode(null);
+            tranInterUserTokenDao.updateById(tranInterUserTokenEntity);
+        } else {
+            tranInterUserTokenDao.insert(tranInterUserTokenEntity);
+        }
+    }
+
+    @Override
+    public Integer checkJwtToken(String token) {
+        Map<String, Object> paramMap = new HashMap<>(2);
+        paramMap.put("jwtToken", token);
+        paramMap.put("expireTime", System.currentTimeMillis());
+        return tranInterUserTokenDao.checkJwtToken(paramMap);
     }
 
 

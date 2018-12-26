@@ -3,7 +3,6 @@ package com.haochen.consumer.shiro.realm;
 import com.haochen.consumer.auth.entity.MstInterUserBaseEntity;
 import com.haochen.consumer.auth.service.MstInterUserBaseService;
 import com.haochen.consumer.auth.service.MstInterUserRollService;
-import com.haochen.consumer.shiro.credential.JwtCredentialsMatcher;
 import com.haochen.consumer.shiro.filter.JwtToken;
 import com.haochen.consumer.util.JwtUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -27,11 +26,6 @@ public class JwtShiroRealm extends AuthorizingRealm {
     private MstInterUserRollService mstInterUserRollService;
 
 
-
-    public JwtShiroRealm(){
-        //这里使用我们自定义的Matcher
-        this.setCredentialsMatcher(new JwtCredentialsMatcher());
-    }
     /**
      * 限定这个Realm只支持我们自定义的JWT Token
      */
@@ -52,6 +46,7 @@ public class JwtShiroRealm extends AuthorizingRealm {
         if(user == null) {
             throw new AuthenticationException("token过期，请重新登录");
         }
+
         return new SimpleAuthenticationInfo(user, user.getSalt(), "jwtRealm");
     }
 

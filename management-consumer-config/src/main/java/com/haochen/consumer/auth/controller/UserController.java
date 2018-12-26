@@ -6,6 +6,7 @@ import com.haochen.common.exception.SystemException;
 import com.haochen.common.utils.ResultHelper;
 import com.haochen.consumer.auth.dto.*;
 import com.haochen.consumer.auth.entity.MstInterUserBaseEntity;
+import com.haochen.consumer.auth.entity.TranInterUserTokenEntity;
 import com.haochen.consumer.auth.service.MstInterUserBaseService;
 import com.haochen.consumer.base.controller.BaseController;
 import com.haochen.consumer.util.JwtUtils;
@@ -14,12 +15,14 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +45,21 @@ public class UserController extends BaseController {
 
 
     @PostMapping("/login")
-    public Response login(@RequestBody LoginInputBean loginDto) {
+    public Response login(@RequestBody LoginInputBean loginDto, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), loginDto.getPassword());
         subject.login(token);
 
         MstInterUserBaseEntity user = (MstInterUserBaseEntity) subject.getPrincipal();
-        String newToken = JwtUtils.sign(user.getUserName(), user.getSalt(), 3600) ;
+        String newToken = JwtUtils.sign(user.getUserName(), user.getSalt(), 3600);
+        TranInterUserTokenEntity tranInterUserTokenEntity = new TranInterUserTokenEntity();
+        tranInterUserTokenEntity.setExpireTime(System.currentTimeMillis() + 3600 * 1000);
+        tranInterUserTokenEntity.setJwtToken(newToken);
+        tranInterUserTokenEntity.setUserCode(user.getInterUserCode());
+        tranInterUserTokenEntity.setCrtUserCode(user.getInterUserCode());
+        tranInterUserTokenEntity.setCrtTime(new Date());
+        userService.updateJwtToken(tranInterUserTokenEntity);
+        response.setHeader("Authorization", newToken);
         LoginOutputBean loginOutputBean = new LoginOutputBean();
         loginOutputBean.setToken(newToken);
         return ResultHelper.successResp(loginOutputBean);
@@ -61,10 +72,7 @@ public class UserController extends BaseController {
         return ResultHelper.successResp(userInfoOutputBean);
     }
 
-    @PostMapping("/logout")
-    public Response logout() {
-        return ResultHelper.successResp();
-    }
+
 
 
 
@@ -190,6 +198,22 @@ public class UserController extends BaseController {
         return "auth/user/changePassword";
     }
 
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @GetMapping(value = "/logout")
+    public ResponseEntity<Void> logout() {
+        Subject subject = SecurityUtils.getSubject();
+//        if(subject.getPrincipals() != null) {
+//            UserDto user = (UserDto)subject.getPrincipals().getPrimaryPrincipal();
+//            userService.deleteLoginInfo(user.getUsername());
+//        }
+        SecurityUtils.getSubject().logout();
+
+        return ResponseEntity.ok().build();
+    }
 
 
 

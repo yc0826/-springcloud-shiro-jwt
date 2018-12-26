@@ -17,6 +17,25 @@ DROP DATABASE IF EXISTS `yc`;
 CREATE DATABASE IF NOT EXISTS `yc` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `yc`;
 
+DROP TABLE IF EXISTS `tran_inter_user_token`;
+CREATE TABLE IF NOT EXISTS `tran_inter_user_token` (
+	`tran_inter_user_token_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`jwt_token` VARCHAR(256) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`expire_time` BIGINT(20) NULL DEFAULT NULL,
+	`crt_time` DATETIME NULL DEFAULT NULL,
+	`crt_user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`upd_time` DATETIME NULL DEFAULT NULL,
+	`upd_user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`del_flg` TINYINT(1) NULL DEFAULT NULL,
+	`ver_num` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`tran_inter_user_token_id`)
+)
+COMMENT='token表'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+;
+
 -- 导出  表 yc.cfg_sys_reso 结构
 DROP TABLE IF EXISTS `cfg_sys_reso`;
 CREATE TABLE IF NOT EXISTS `cfg_sys_reso` (

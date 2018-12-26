@@ -6,6 +6,7 @@ import com.haochen.consumer.auth.dto.InterUserDto;
 import com.haochen.consumer.auth.dto.UserInfoOutputBean;
 import com.haochen.consumer.auth.entity.MstInterUserBaseEntity;
 import com.haochen.consumer.auth.entity.MstInterUserDtlEntity;
+import com.haochen.consumer.auth.entity.TranInterUserTokenEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +55,9 @@ public interface MstInterUserBaseService {
     @GetMapping(value = "/getUserInfo")
     UserInfoOutputBean getUserInfo(@RequestParam("userName") String userName);
 
+    @PostMapping(value = "/updateJwtToken")
+    void updateJwtToken(@RequestBody TranInterUserTokenEntity tranInterUserTokenEntity);
 
+    @GetMapping(value = "/checkJwtToken")
+    Integer checkJwtToken(@RequestParam("token") String token);
 }

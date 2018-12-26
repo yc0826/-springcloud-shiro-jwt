@@ -4,6 +4,7 @@ import com.haochen.provider.auth.dto.InterUserDto;
 import com.haochen.provider.auth.dto.UserInfoOutputBean;
 import com.haochen.provider.auth.entity.MstInterUserBaseEntity;
 import com.haochen.provider.auth.entity.MstInterUserDtlEntity;
+import com.haochen.provider.auth.entity.TranInterUserTokenEntity;
 import com.haochen.provider.auth.service.MstInterUserBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,16 @@ public class UserController {
     @GetMapping(value = "/getUserInfo")
     public UserInfoOutputBean getUserInfo(@RequestParam("userName") String userName) {
         return userService.getUserInfo(userName);
+    }
+
+
+    @PostMapping(value = "/updateJwtToken")
+    public void updateJwtToken(@RequestBody TranInterUserTokenEntity tranInterUserTokenEntity) {
+        userService.updateJwtToken(tranInterUserTokenEntity);
+    }
+
+    @GetMapping(value = "/checkJwtToken")
+    public Integer checkJwtToken(@RequestParam("token") String token) {
+        return userService.checkJwtToken(token);
     }
 }

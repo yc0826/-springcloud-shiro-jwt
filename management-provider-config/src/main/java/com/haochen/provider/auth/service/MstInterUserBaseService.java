@@ -6,6 +6,7 @@ import com.haochen.provider.auth.entity.MstInterUserBaseEntity;
 import com.haochen.provider.auth.entity.MstInterUserDtlEntity;
 import com.haochen.provider.auth.dto.InterUserDto;
 import com.haochen.common.exception.SystemException;
+import com.haochen.provider.auth.entity.TranInterUserTokenEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,8 @@ public interface MstInterUserBaseService {
     List<String> findRoleCodeByUserCode(String userCode);
 
     UserInfoOutputBean getUserInfo(String userName);
+
+    void updateJwtToken(TranInterUserTokenEntity tranInterUserTokenEntity);
+
+    Integer checkJwtToken(String token);
 }

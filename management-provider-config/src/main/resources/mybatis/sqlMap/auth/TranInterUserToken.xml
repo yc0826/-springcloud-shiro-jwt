@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.haochen.provider.auth.repo.ITranInterUserTokenDao">
+
+	<!-- auto-generate start -->
+	<sql id = "mysqlPaginationStart">
+    	SELECT A.* FROM ( 
+	</sql>
+	<sql id = "mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="tranInterUserTokenColumns">
+    	<if test="null!=tranInterUserTokenId"> 
+    		and tran_inter_user_token_id = #{tranInterUserTokenId}
+    	</if>
+    	<if test="null!=userCode"> 
+    		and user_code = #{userCode}
+    	</if>
+    	<if test="null!=jwtToken"> 
+    		and jwt_token = #{jwtToken}
+    	</if>
+    	<if test="null!=expireTime"> 
+    		and expire_time = #{expireTime}
+    	</if>
+    	<if test="null!=crtTime"> 
+    		and crt_time = #{crtTime}
+    	</if>
+    	<if test="null!=crtUserCode"> 
+    		and crt_user_code = #{crtUserCode}
+    	</if>
+    	<if test="null!=updTime"> 
+    		and upd_time = #{updTime}
+    	</if>
+    	<if test="null!=updUserCode"> 
+    		and upd_user_code = #{updUserCode}
+    	</if>
+    	<if test="null!=delFlg"> 
+    		and del_flg = #{delFlg}
+    	</if>
+    	<if test="null!=verNum"> 
+    		and ver_num = #{verNum}
+    	</if>
+	</sql>
+	<sql id="conditionTranInterUserTokenColumns">
+	    <if test="null!=condition">
+        	<if test="null!=condition.tranInterUserTokenId"> 
+        		and tran_inter_user_token_id = #{condition.tranInterUserTokenId}
+        	</if>
+        	<if test="null!=condition.userCode"> 
+        		and user_code = #{condition.userCode}
+        	</if>
+        	<if test="null!=condition.jwtToken"> 
+        		and jwt_token = #{condition.jwtToken}
+        	</if>
+        	<if test="null!=condition.expireTime"> 
+        		and expire_time = #{condition.expireTime}
+        	</if>
+        	<if test="null!=condition.crtTime"> 
+        		and crt_time = #{condition.crtTime}
+        	</if>
+        	<if test="null!=condition.crtUserCode"> 
+        		and crt_user_code = #{condition.crtUserCode}
+        	</if>
+        	<if test="null!=condition.updTime"> 
+        		and upd_time = #{condition.updTime}
+        	</if>
+        	<if test="null!=condition.updUserCode"> 
+        		and upd_user_code = #{condition.updUserCode}
+        	</if>
+        	<if test="null!=condition.delFlg"> 
+        		and del_flg = #{condition.delFlg}
+        	</if>
+        	<if test="null!=condition.verNum"> 
+        		and ver_num = #{condition.verNum}
+        	</if>
+        </if>
+	</sql>
+	<sql id="tranInterUserTokenSetColumns">
+			<if test="null!=tranInterUserTokenId">
+				tran_inter_user_token_id = #{tranInterUserTokenId},
+			</if>
+			<if test="null!=userCode">
+				user_code = #{userCode},
+			</if>
+			<if test="null!=jwtToken">
+				jwt_token = #{jwtToken},
+			</if>
+			<if test="null!=expireTime">
+				expire_time = #{expireTime},
+			</if>
+			<if test="null!=crtTime">
+				crt_time = #{crtTime},
+			</if>
+			<if test="null!=crtUserCode">
+				crt_user_code = #{crtUserCode},
+			</if>
+			upd_time = now(),
+			<if test="null!=updUserCode">
+				upd_user_code = #{updUserCode},
+			</if>
+			<if test="null!=delFlg">
+				del_flg = #{delFlg},
+			</if>
+			ver_num = ver_num + 1,
+	</sql>
+
+	<resultMap id="tranInterUserTokenResultMap" type="com.haochen.provider.auth.entity.TranInterUserTokenEntity">
+        <result property="tranInterUserTokenId" column="tran_inter_user_token_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="jwtToken" column="jwt_token"/>
+        <result property="expireTime" column="expire_time"/>
+        <result property="crtTime" column="crt_time"/>
+        <result property="crtUserCode" column="crt_user_code"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="updUserCode" column="upd_user_code"/>
+        <result property="delFlg" column="del_flg"/>
+        <result property="verNum" column="ver_num"/>
+	</resultMap>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert">
+    <![CDATA[
+        INSERT INTO tran_inter_user_token (
+        	tran_inter_user_token_id
+        	,user_code
+        	,jwt_token
+        	,expire_time
+        	,crt_time
+        	,crt_user_code
+        	,upd_time
+        	,upd_user_code
+        	,del_flg
+        	,ver_num
+        ) VALUES (
+        		#{tranInterUserTokenId}
+        		,#{userCode}
+        		,#{jwtToken}
+        		,#{expireTime}
+				,now()
+        		,#{crtUserCode}
+				,now()
+        		,#{updUserCode}
+				,0
+				,1
+        )
+    ]]>
+	</insert>
+	
+	<delete id="deleteById">
+    <![CDATA[
+	    DELETE FROM
+	    	tran_inter_user_token 
+	    WHERE
+	    tran_inter_user_token_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteLogicById">
+    <![CDATA[
+	    UPDATE
+	    	THIRD_APPKEY_INFO 
+	    SET FLAG = -1
+	    WHERE
+	    tran_inter_user_token_id = #{id} 
+    ]]>
+    </delete>
+    <delete id="deleteByCondition">
+	    DELETE FROM
+	    	tran_inter_user_token 
+	    WHERE
+	    	1=1
+		    <include refid="tranInterUserTokenColumns" />
+    </delete>
+    
+	<update id="updateById">
+	    UPDATE
+	    	tran_inter_user_token 
+        <set>
+	        <include refid="tranInterUserTokenSetColumns" />
+		</set>
+	    WHERE
+	    tran_inter_user_token_id = #{tranInterUserTokenId} 
+		and ver_num =#{verNum}
+	</update>
+	<update id="updateByCondition">
+	    UPDATE
+	    	tran_inter_user_token 
+	    <set>
+	        <include refid="tranInterUserTokenSetColumns" />
+	    </set>
+	    WHERE
+			1=1
+	<include refid="conditionTranInterUserTokenColumns" />
+	</update>
+    
+    <select id="queryById" resultMap="tranInterUserTokenResultMap">
+    	<![CDATA[
+			SELECT
+				tran_inter_user_token_id
+				,user_code
+				,jwt_token
+				,expire_time
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				tran_inter_user_token 
+			WHERE 
+				tran_inter_user_token_id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="queryByCondition" resultMap="tranInterUserTokenResultMap">
+			<![CDATA[
+				SELECT
+					tran_inter_user_token_id
+					,user_code
+					,jwt_token
+					,expire_time
+					,crt_time
+					,crt_user_code
+					,upd_time
+					,upd_user_code
+					,del_flg
+					,ver_num
+				FROM
+					tran_inter_user_token
+				WHERE
+					1=1
+					<include refid="tranInterUserTokenColumns" />
+			]]>
+	</select>
+	
+	<select id="queryList" resultMap="tranInterUserTokenResultMap">
+		SELECT
+			tran_inter_user_token_id
+			,user_code
+			,jwt_token
+			,expire_time
+			,crt_time
+			,crt_user_code
+			,upd_time
+			,upd_user_code
+			,del_flg
+			,ver_num
+		FROM
+			tran_inter_user_token
+		WHERE
+			1=1
+			<include refid="tranInterUserTokenColumns" />
+		ORDER BY
+			tran_inter_user_token_id
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT(0)
+		FROM
+			tran_inter_user_token
+		WHERE
+			1=1
+			<include refid="tranInterUserTokenColumns" />
+	</select>
+	
+	<select id="queryAll" resultMap="tranInterUserTokenResultMap">
+    	<![CDATA[
+			SELECT
+				tran_inter_user_token_id
+				,user_code
+				,jwt_token
+				,expire_time
+				,crt_time
+				,crt_user_code
+				,upd_time
+				,upd_user_code
+				,del_flg
+				,ver_num
+			FROM
+				tran_inter_user_token 
+			ORDER BY
+				tran_inter_user_token_id
+	    ]]>
+	</select>
+	
+	<!-- auto-generate end -->
+	
+	
+	<!-- user-defined start -->
+	<select id="findByUserCode" resultMap="tranInterUserTokenResultMap">
+		SELECT
+			tran_inter_user_token_id
+			,user_code
+			,jwt_token
+			,expire_time
+			,crt_time
+			,crt_user_code
+			,upd_time
+			,upd_user_code
+			,del_flg
+			,ver_num
+		FROM
+			tran_inter_user_token
+		WHERE del_flg = 0
+		AND user_code = #{userCode}
+	</select>
+	
+
+	<select id="checkJwtToken" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			tran_inter_user_token
+		WHERE del_flg = 0
+		AND jwt_token = #{jwtToken}
+		AND expire_time >= #{expireTime}
+	</select>
+	<!-- user-defined end -->
+	
+</mapper>
+
