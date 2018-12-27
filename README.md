@@ -26,8 +26,6 @@ management-ui 基于 vue 的前端项目,通过调用 management-consumer-config
 
 5.启用前端服务 需要 node 环境,进入 management-ui 目录,npm install & npm run dev 即可进行访问
 
-5.登陆帐号 admin 密码 123456
-
-6.目前 zuul 模块没有实际用途，供后续动静分离时使用
+6.登陆帐号 admin 密码 123456
 
 有使用和部署问题欢迎加群 833825797 讨论
