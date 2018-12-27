@@ -1,6 +1,44 @@
 <template>
   <div>
-    用户管理
+    <el-form :model="searchForm">
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <el-form-item
+            label="姓名"
+            label-width="65px"
+          >
+            <el-input
+              v-model="searchForm.userName"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item
+            label="手机号"
+            label-width="65px"
+          >
+            <el-input
+              v-model="searchForm.mobileNo"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <div class="grid-content" />
+        </el-col>
+        <el-col :span="4">
+          <el-button
+            type="primary"
+            @click="dialogFormVisible = false"
+          >查 询</el-button>
+          <el-button
+            type="primary"
+            @click="dialogFormVisible = false"
+          >清 空</el-button>
+        </el-col>
+      </el-row>
+    </el-form>
     <el-table
       :data="tableData"
       style="width: 100%"
@@ -114,6 +152,9 @@ export default {
       pageSize: 10,
       currentPage: 1,
       tableData: null,
+      searchForm: {
+        userName: ''
+      },
       form: {
         name: '',
         region: '',
@@ -155,4 +196,30 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
 </style>
