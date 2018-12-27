@@ -36,6 +36,10 @@
             type="primary"
             @click="dialogFormVisible = false"
           >清 空</el-button>
+          <el-button
+            type="primary"
+            @click="dialogFormVisible = false"
+          >新 增</el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -99,34 +103,81 @@
       title="收货地址"
     >
       <el-form :model="form">
-        <el-form-item
-          :label-width="formLabelWidth"
-          label="活动名称"
-        >
-          <el-input
-            v-model="form.name"
-            autocomplete="off"
-          />
-        </el-form-item>
-        <el-form-item
-          :label-width="formLabelWidth"
-          label="活动区域"
-        >
-          <el-select
-            v-model="form.region"
-            placeholder="请选择活动区域"
-          >
-            <el-option
-              label="区域一"
-              value="shanghai"
-            />
-            <el-option
-              label="区域二"
-              value="beijing"
-            />
-          </el-select>
-        </el-form-item>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item
+              label="姓"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.lastName"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item
+              label="名"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.firstName"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item
+              label="登陆名"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.lastName"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item
+              label="手机号"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.firstName"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item
+              label="密码"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.password"
+                type="password"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item
+              label="手机号"
+              label-width="65px"
+            >
+              <el-input
+                v-model="form.mobile"
+                autocomplete="off"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
+
       <div
         slot="footer"
         class="dialog-footer"
@@ -156,14 +207,9 @@ export default {
         userName: ''
       },
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        lastName: '',
+        firstName: '',
+        password: ''
       },
       dialogFormVisible: false,
       formLabelWidth: '120px'
@@ -196,30 +242,4 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
 </style>
