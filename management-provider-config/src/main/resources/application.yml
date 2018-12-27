@@ -3,7 +3,7 @@ spring:
     #当前应用名称
     name: management-provider
   datasource:
-    url: jdbc:mysql://10.101.8.166:3306/yc2?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://10.101.8.166:3306/yc?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root123
     driver-class-name: com.mysql.jdbc.Driver

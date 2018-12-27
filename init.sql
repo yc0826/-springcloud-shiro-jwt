@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- 主机:                           10.101.8.166
--- 服务器版本:                        5.6.37 - MySQL Community Server (GPL)
+-- 服务器版本:                        5.6.37-log - MySQL Community Server (GPL)
 -- 服务器操作系统:                      linux-glibc2.12
--- HeidiSQL 版本:                  9.5.0.5278
+-- HeidiSQL 版本:                  9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,25 +16,6 @@
 DROP DATABASE IF EXISTS `yc`;
 CREATE DATABASE IF NOT EXISTS `yc` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `yc`;
-
-DROP TABLE IF EXISTS `tran_inter_user_token`;
-CREATE TABLE IF NOT EXISTS `tran_inter_user_token` (
-	`tran_inter_user_token_id` INT(11) NOT NULL AUTO_INCREMENT,
-	`user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-	`jwt_token` VARCHAR(256) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-	`expire_time` BIGINT(20) NULL DEFAULT NULL,
-	`crt_time` DATETIME NULL DEFAULT NULL,
-	`crt_user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-	`upd_time` DATETIME NULL DEFAULT NULL,
-	`upd_user_code` VARCHAR(64) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-	`del_flg` TINYINT(1) NULL DEFAULT NULL,
-	`ver_num` INT(11) NULL DEFAULT NULL,
-	PRIMARY KEY (`tran_inter_user_token_id`)
-)
-COMMENT='token表'
-COLLATE='utf8mb4_unicode_ci'
-ENGINE=InnoDB
-;
 
 -- 导出  表 yc.cfg_sys_reso 结构
 DROP TABLE IF EXISTS `cfg_sys_reso`;
@@ -57,30 +38,30 @@ CREATE TABLE IF NOT EXISTS `cfg_sys_reso` (
   `ver_num` int(10) NOT NULL COMMENT '版本号码',
   PRIMARY KEY (`cfg_sys_reso_id`),
   UNIQUE KEY `unique_cfg_sys_reso_code` (`reso_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统基础－系统资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统基础－系统资源表';
 
--- 正在导出表  yc.cfg_sys_reso 的数据：~19 rows (大约)
+-- 正在导出表  yc.cfg_sys_reso 的数据：~18 rows (大约)
 DELETE FROM `cfg_sys_reso`;
 /*!40000 ALTER TABLE `cfg_sys_reso` DISABLE KEYS */;
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('1', '资源', '0', '0/', '', '', '00040003', '00050003', NULL, '2017-12-02 09:06:55', 'admin', '2017-12-02 08:09:00', NULL, 0, 0);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('175', '权限管理', '1', '0/1/', 'auth:menu', '', '00040003', '00050003', NULL, '2017-12-01 23:17:42', 'admin', '2017-12-02 08:08:00', 'admin', 0, 2);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('176', '用户管理', '175', '0/1/175/', 'user:view', 'user', '00040003', '00050003', NULL, '2017-12-01 23:18:32', 'admin', '2017-12-01 23:18:32', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('177', '菜单管理', '175', '0/1/175/', 'resource:view', 'resource', '00040003', '00050003', NULL, '2017-12-01 23:19:16', 'admin', '2017-12-01 23:19:16', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('178', '新增', '176', '0/1/175/176/', 'user:create', '', '00040004', '00050003', NULL, '2017-12-01 23:19:48', 'admin', '2017-12-01 23:19:48', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('179', '新增', '177', '0/1/175/177/', 'resource:create', '', '00040004', '00050003', NULL, '2017-12-01 23:20:17', 'admin', '2017-12-01 23:20:17', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('180', '修改', '177', '0/1/175/177/', 'resource:update', '', '00040004', '00050003', NULL, '2017-12-01 23:20:56', 'admin', '2017-12-01 23:20:56', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('181', '修改', '176', '0/1/175/176/', 'user:update', '', '00040004', '00050003', NULL, '2017-12-01 23:21:27', 'admin', '2017-12-01 23:21:27', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('182', '删除', '176', '0/1/175/176/', 'user:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:21:57', 'admin', '2017-12-01 23:21:57', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('183', '删除', '177', '0/1/175/177/', 'resource:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:22:29', 'admin', '2017-12-01 23:22:29', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('184', '角色管理', '175', '0/1/175/', 'role:view', 'role', '00040003', '00050003', NULL, '2017-12-01 23:23:24', 'admin', '2017-12-01 23:23:24', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('185', '新增', '184', '0/1/175/184/', 'role:create', '', '00040004', '00050003', NULL, '2017-12-01 23:23:44', 'admin', '2017-12-01 23:23:44', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('186', '修改', '184', '0/1/175/184/', 'role:update', '', '00040004', '00050003', NULL, '2017-12-01 23:24:05', 'admin', '2017-12-01 23:24:05', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('187', '删除', '184', '0/1/175/184/', 'role:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:24:36', 'admin', '2017-12-01 23:24:36', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('188', '授权管理', '175', '0/1/175/', 'authorization:view', 'authorization', '00040003', '00050003', NULL, '2017-12-01 23:25:19', 'admin', '2017-12-01 23:25:19', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('189', '新增', '188', '0/1/175/188/', 'authorization:create', '', '00040004', '00050003', NULL, '2017-12-01 23:25:43', 'admin', '2017-12-01 23:25:43', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('190', '修改', '188', '0/1/175/188/', 'authorization:update', '', '00040004', '00050003', NULL, '2017-12-01 23:26:02', 'admin', '2017-12-01 23:26:02', NULL, 0, 1);
-INSERT INTO `cfg_sys_reso` (`reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES ('191', '删除', '188', '0/1/175/188/', 'authorization:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:26:22', 'admin', '2017-12-01 23:26:22', NULL, 0, 1);
-
+INSERT INTO `cfg_sys_reso` (`cfg_sys_reso_id`, `reso_code`, `reso_name`, `parent_reso_code`, `parent_reso_codes`, `permission`, `url`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES
+	(243, '1', '资源', '0', '0/', '', '', '00040003', '00050003', NULL, '2017-12-02 09:06:55', 'admin', '2017-12-02 08:09:00', NULL, 0, 0),
+	(244, '175', '权限管理', '1', '0/1/', 'auth:menu', '', '00040003', '00050003', NULL, '2017-12-01 23:17:42', 'admin', '2017-12-02 08:08:00', 'admin', 0, 2),
+	(245, '176', '用户管理', '175', '0/1/175/', 'user:view', 'user', '00040003', '00050003', NULL, '2017-12-01 23:18:32', 'admin', '2017-12-01 23:18:32', NULL, 0, 1),
+	(246, '177', '菜单管理', '175', '0/1/175/', 'resource:view', 'resource', '00040003', '00050003', NULL, '2017-12-01 23:19:16', 'admin', '2017-12-01 23:19:16', NULL, 0, 1),
+	(247, '178', '新增', '176', '0/1/175/176/', 'user:create', '', '00040004', '00050003', NULL, '2017-12-01 23:19:48', 'admin', '2017-12-01 23:19:48', NULL, 0, 1),
+	(248, '179', '新增', '177', '0/1/175/177/', 'resource:create', '', '00040004', '00050003', NULL, '2017-12-01 23:20:17', 'admin', '2017-12-01 23:20:17', NULL, 0, 1),
+	(249, '180', '修改', '177', '0/1/175/177/', 'resource:update', '', '00040004', '00050003', NULL, '2017-12-01 23:20:56', 'admin', '2017-12-01 23:20:56', NULL, 0, 1),
+	(250, '181', '修改', '176', '0/1/175/176/', 'user:update', '', '00040004', '00050003', NULL, '2017-12-01 23:21:27', 'admin', '2017-12-01 23:21:27', NULL, 0, 1),
+	(251, '182', '删除', '176', '0/1/175/176/', 'user:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:21:57', 'admin', '2017-12-01 23:21:57', NULL, 0, 1),
+	(252, '183', '删除', '177', '0/1/175/177/', 'resource:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:22:29', 'admin', '2017-12-01 23:22:29', NULL, 0, 1),
+	(253, '184', '角色管理', '175', '0/1/175/', 'role:view', 'role', '00040003', '00050003', NULL, '2017-12-01 23:23:24', 'admin', '2017-12-01 23:23:24', NULL, 0, 1),
+	(254, '185', '新增', '184', '0/1/175/184/', 'role:create', '', '00040004', '00050003', NULL, '2017-12-01 23:23:44', 'admin', '2017-12-01 23:23:44', NULL, 0, 1),
+	(255, '186', '修改', '184', '0/1/175/184/', 'role:update', '', '00040004', '00050003', NULL, '2017-12-01 23:24:05', 'admin', '2017-12-01 23:24:05', NULL, 0, 1),
+	(256, '187', '删除', '184', '0/1/175/184/', 'role:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:24:36', 'admin', '2017-12-01 23:24:36', NULL, 0, 1),
+	(257, '188', '授权管理', '175', '0/1/175/', 'authorization:view', 'authorization', '00040003', '00050003', NULL, '2017-12-01 23:25:19', 'admin', '2017-12-01 23:25:19', NULL, 0, 1),
+	(258, '189', '新增', '188', '0/1/175/188/', 'authorization:create', '', '00040004', '00050003', NULL, '2017-12-01 23:25:43', 'admin', '2017-12-01 23:25:43', NULL, 0, 1),
+	(259, '190', '修改', '188', '0/1/175/188/', 'authorization:update', '', '00040004', '00050003', NULL, '2017-12-01 23:26:02', 'admin', '2017-12-01 23:26:02', NULL, 0, 1),
+	(260, '191', '删除', '188', '0/1/175/188/', 'authorization:delete', '', '00040004', '00050003', NULL, '2017-12-01 23:26:22', 'admin', '2017-12-01 23:26:22', NULL, 0, 1);
 /*!40000 ALTER TABLE `cfg_sys_reso` ENABLE KEYS */;
 
 -- 导出  表 yc.mst_inter_user_base 结构
@@ -154,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `mst_inter_user_dtl` (
   `ver_num` int(10) NOT NULL COMMENT '版本号码',
   PRIMARY KEY (`mst_inter_user_dtl_id`),
   KEY `unique_mst_inter_user_dtl_code` (`inter_user_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=750 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－内部用户详细表';
+) ENGINE=InnoDB AUTO_INCREMENT=749 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－内部用户详细表';
 
 -- 正在导出表  yc.mst_inter_user_dtl 的数据：~21 rows (大约)
 DELETE FROM `mst_inter_user_dtl`;
@@ -199,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `mst_inter_user_roll` (
   `ver_num` int(10) NOT NULL COMMENT '版本号码',
   PRIMARY KEY (`mst_inter_user_roll_id`),
   KEY `inter_user_code` (`inter_user_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=1652 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－内部用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=1650 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－内部用户角色表';
 
 -- 正在导出表  yc.mst_inter_user_roll 的数据：~262 rows (大约)
 DELETE FROM `mst_inter_user_roll`;
@@ -1099,7 +1080,7 @@ CREATE TABLE IF NOT EXISTS `mst_roll_base` (
   `del_flg` tinyint(1) NOT NULL COMMENT '删除flag:{0：未删除；1：删除}',
   `ver_num` int(10) NOT NULL COMMENT '版本号码',
   PRIMARY KEY (`mst_roll_base_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－角色基本表';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－角色基本表';
 
 -- 正在导出表  yc.mst_roll_base 的数据：~14 rows (大约)
 DELETE FROM `mst_roll_base`;
@@ -2340,7 +2321,7 @@ CREATE TABLE IF NOT EXISTS `mst_subsy_base` (
   PRIMARY KEY (`mst_subsy_base_id`),
   UNIQUE KEY `unique_mst_subsy_base_code` (`subsy_code`),
   UNIQUE KEY `unique_mst_subsy_base_mob` (`mob_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－公司基本表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='业务基础－公司基本表';
 
 -- 正在导出表  yc.mst_subsy_base 的数据：~9 rows (大约)
 DELETE FROM `mst_subsy_base`;
@@ -2356,6 +2337,29 @@ INSERT INTO `mst_subsy_base` (`mst_subsy_base_id`, `subsy_code`, `subsy_name`, `
 	(8, '3130118007', '麦冬公司名', '麦冬显示名', '310000', '310100', '310101', '麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址', 121.490317, 31.222771, '', '13564532323', '', '麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址\n麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址麦冬地址', '周一至周六，9：00-18：00；\n周日，全天；', '00030001', NULL, '/reso/downLoadPicFile?tranResoFileMngId=TRFM180301151428656F0D8D7CF54D5B87343DBB2C64A73C', '00660001', '00840002', NULL, NULL, 1, 70000, NULL, 5.0000, '2018-03-01 15:17:52', 'MIUB6720793870139372ECC5', '2018-03-12 20:57:26', 'MIUB6722400082668127E2D4', 0, 11, 0, '买一送一', '', '00790001', 1, '2018-03-01 15:17:53', '2018-03-01 15:17:53', 1),
 	(9, '3410118009', '起风了', '风好大', '110000', '110100', '110101', '北京十二环，沿海黄金地带', 116.327589, 39.610997, '123', '13588660063', '', '', '', '00030001', NULL, '/reso/downLoadPicFile?tranResoFileMngId=TRFM1803061528587613EAF8C3EC4149935FE0A3B47EC1B0', '00660001', '00840002', '00880003', '', 1, 9874, NULL, 5.0000, '2018-03-09 09:36:09', 'MIUB67169682475047784BB4', '2018-03-14 11:25:58', 'MIUB7393096794414848871C', 0, 13, 0, '', '', '00790001', 1, '2018-03-09 09:36:05', '2018-03-09 09:36:05', 1);
 /*!40000 ALTER TABLE `mst_subsy_base` ENABLE KEYS */;
+
+-- 导出  表 yc.tran_inter_user_token 结构
+DROP TABLE IF EXISTS `tran_inter_user_token`;
+CREATE TABLE IF NOT EXISTS `tran_inter_user_token` (
+  `tran_inter_user_token_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_code` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jwt_token` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expire_time` bigint(20) DEFAULT NULL,
+  `crt_time` datetime DEFAULT NULL,
+  `crt_user_code` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `upd_time` datetime DEFAULT NULL,
+  `upd_user_code` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `del_flg` tinyint(1) DEFAULT NULL,
+  `ver_num` int(11) DEFAULT NULL,
+  PRIMARY KEY (`tran_inter_user_token_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='token表';
+
+-- 正在导出表  yc.tran_inter_user_token 的数据：~0 rows (大约)
+DELETE FROM `tran_inter_user_token`;
+/*!40000 ALTER TABLE `tran_inter_user_token` DISABLE KEYS */;
+INSERT INTO `tran_inter_user_token` (`tran_inter_user_token_id`, `user_code`, `jwt_token`, `expire_time`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES
+	(3, 'admin', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDU4MjEyOTcsImlhdCI6MTU0NTgxNzY5NywidXNlcm5hbWUiOiJhZG1pbiJ9.qKAbrMwuWXmLTxn_pKQB5Q5S-sF-smFcdsM-m38amrs', 1545821297370, '2018-12-26 16:19:09', 'admin', '2018-12-26 17:48:19', 'admin', 0, 7);
+/*!40000 ALTER TABLE `tran_inter_user_token` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
