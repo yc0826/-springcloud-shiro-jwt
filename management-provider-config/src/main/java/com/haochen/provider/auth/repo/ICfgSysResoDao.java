@@ -39,9 +39,6 @@ public interface ICfgSysResoDao {
 
     CfgSysResoEntity findByCode(String resoCode);
 
-
-
-
     //-- user-defined start --
 
     List<CfgSysResoEntity> findAll();
@@ -57,7 +54,6 @@ public interface ICfgSysResoDao {
     Set<String> findfindPermissionsByResoCodes(List<String> resoCodes);
 
     String getWebResoMaxCode();
-
 
     List<CfgSysResoEntity> findByPermissions(List<String> permissions);
 
