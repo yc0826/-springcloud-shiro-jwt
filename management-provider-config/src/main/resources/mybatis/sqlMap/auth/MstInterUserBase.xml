@@ -268,6 +268,8 @@
         <result property="updTime" column="upd_time"/>
         <result property="name" column="name"/>
         <result property="sex" column="sex"/>
+        <result property="lastName" column="user_last_name"/>
+        <result property="firstName" column="user_first_name"/>
     </resultMap>
 
     <sql id="whereCondition">
@@ -305,7 +307,8 @@
             ,b.app_aces_flg
             ,b.crt_time
             ,b.upd_time
-            ,concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) `name`
+            ,d.user_last_name
+            ,d.user_first_name
             ,if(d.gder_flg = 1, '男', '女') `sex`
         from
         mst_inter_user_base b
@@ -325,7 +328,8 @@
             ,b.app_aces_flg
             ,b.crt_time
             ,b.upd_time
-            ,concat(ifnull(d.user_last_name, ''), ifnull(d.user_first_name, '')) `name`
+            ,d.user_last_name
+            ,d.user_first_name
             ,if(d.gder_flg = 1, '男', '女') `sex`
         from
           mst_inter_user_base b

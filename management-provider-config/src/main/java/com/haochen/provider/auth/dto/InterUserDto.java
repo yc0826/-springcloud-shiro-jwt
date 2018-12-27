@@ -33,6 +33,10 @@ public class InterUserDto implements Serializable{
 
     private String subsyCode;
 
+    private String lastName;
+
+    private String firstName;
+
     public String getInterUserCode() {
         return interUserCode;
     }
@@ -42,7 +46,7 @@ public class InterUserDto implements Serializable{
     }
 
     public String getName() {
-        return name;
+        return this.lastName + this.firstName;
     }
 
     public void setName(String name) {
@@ -127,5 +131,21 @@ public class InterUserDto implements Serializable{
 
     public void setTimeStr(String timeStr) {
         this.timeStr = timeStr;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }
