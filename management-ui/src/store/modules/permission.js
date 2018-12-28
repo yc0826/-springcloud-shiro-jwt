@@ -3,7 +3,6 @@ import {
   constantRouterMap
 } from '@/router'
 
-import Layout from '@/views/layout/Layout'
 /**
  *
  * @param  {Array} userRouter 后台返回的用户权限json
@@ -15,12 +14,7 @@ export function recursionRouter(userRouter = []) {
     if (item.children && item.children.length > 0) {
       item.children = recursionRouter(item.children)
     }
-    if (item.componentPath === 'Layout') {
-      item.component = Layout
-    } else {
-      item.component = resolve => require(['@/views/' + item.componentPath], resolve)
-    }
-
+    item.component = resolve => require(['@/views/' + item.componentPath], resolve)
     const meta = []
     meta.title = item.title
     item.meta = meta

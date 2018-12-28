@@ -45,7 +45,7 @@ DELETE FROM `cfg_sys_reso`;
 /*!40000 ALTER TABLE `cfg_sys_reso` DISABLE KEYS */;
 INSERT INTO `cfg_sys_reso` (`cfg_sys_reso_id`, `reso_code`, `reso_name`, `path`, `parent_reso_code`, `permission`, `component_path`, `reso_type_code`, `reso_plat_code`, `sc_type_code`, `crt_time`, `crt_user_code`, `upd_time`, `upd_user_code`, `del_flg`, `ver_num`) VALUES
 	(1, ''1'', ''资源'', '''', ''0'', '''', '''', ''00040003'', ''00050003'', NULL, ''2017-12-02 09:06:55'', ''admin'', ''2017-12-02 08:09:00'', NULL, 0, 0),
-	(2, ''175'', ''权限管理'', ''/auth'', ''1'', ''auth:menu'', ''Layout'', ''00040003'', ''00050003'', NULL, ''2017-12-01 23:17:42'', ''admin'', ''2017-12-02 08:08:00'', ''admin'', 0, 2),
+	(2, ''175'', ''权限管理'', ''/auth'', ''1'', ''auth:menu'', ''layout/Layout'', ''00040003'', ''00050003'', NULL, ''2017-12-01 23:17:42'', ''admin'', ''2017-12-02 08:08:00'', ''admin'', 0, 2),
 	(3, ''176'', ''用户管理'', ''user'', ''175'', ''user:view'', ''auth/user/index'', ''00040003'', ''00050003'', NULL, ''2017-12-01 23:18:32'', ''admin'', ''2017-12-01 23:18:32'', NULL, 0, 1),
 	(4, ''177'', ''菜单管理'', ''resource'', ''175'', ''resource:view'', ''auth/resource/index'', ''00040003'', ''00050003'', NULL, ''2017-12-01 23:19:16'', ''admin'', ''2017-12-01 23:19:16'', NULL, 0, 1),
 	(5, ''178'', ''新增'', '''', ''176'', ''user:create'', '''', ''00040004'', ''00050003'', NULL, ''2017-12-01 23:19:48'', ''admin'', ''2017-12-01 23:19:48'', NULL, 0, 1),
