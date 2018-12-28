@@ -20,6 +20,12 @@ public class UserMenu implements Serializable {
 
     private List<UserMenu> children;
 
+    private String componentPath;
+
+    private String path;
+
+    private String name;
+
     public String getPid() {
         return pid;
     }
@@ -67,5 +73,29 @@ public class UserMenu implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getComponentPath() {
+        return componentPath;
+    }
+
+    public void setComponentPath(String componentPath) {
+        this.componentPath = componentPath;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

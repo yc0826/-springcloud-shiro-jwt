@@ -12,7 +12,9 @@ public class MenuTreeDto implements Serializable {
 
     private String label;
 
-    private String url;
+    private String path;
+
+    private String componentPath;
 
     private Integer depth;
 
@@ -44,14 +46,6 @@ public class MenuTreeDto implements Serializable {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public Integer getDepth() {
@@ -116,5 +110,21 @@ public class MenuTreeDto implements Serializable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getComponentPath() {
+        return componentPath;
+    }
+
+    public void setComponentPath(String componentPath) {
+        this.componentPath = componentPath;
     }
 }

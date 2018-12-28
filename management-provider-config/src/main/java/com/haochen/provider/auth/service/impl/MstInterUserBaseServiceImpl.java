@@ -1,6 +1,5 @@
 package com.haochen.provider.auth.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.haochen.common.Constants;
 import com.haochen.common.exception.SystemException;
 import com.haochen.common.utils.BizCodeGeneratorUtil;
@@ -328,18 +327,20 @@ public class MstInterUserBaseServiceImpl implements MstInterUserBaseService {
                 userMenu.setFather(cfgSysResoEntity.getParentResoCode());
                 userMenu.setResources(cfgSysResoEntity.getPermission());
                 userMenu.setTitle(cfgSysResoEntity.getResoName());
+                userMenu.setComponentPath(cfgSysResoEntity.getComponentPath());
+                userMenu.setPath(cfgSysResoEntity.getPath());
+                userMenu.setName(cfgSysResoEntity.getResoName());
                 userMenu.setChildren(this.getMenus(permissions, cfgSysResoEntity.getResoCode()));
                 menus.add(userMenu);
             }
         }
-        System.out.println(JSONObject.toJSON(menus));
         return menus;
 
     }
 
     private void initMenus(List<CfgSysResoEntity> menus, Set<String> permissions, List<CfgSysResoEntity> allResources) {
         for (CfgSysResoEntity resource : allResources) {
-            if (resource.isRootNode()) {
+            if ("0".equals(resource.getParentResoCode())) {
                 continue;
             }
             if (!Constants.MENU.equals(resource.getResoTypeCode())) {

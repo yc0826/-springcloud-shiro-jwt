@@ -55,7 +55,7 @@ public class CfgSysResoServiceImpl implements CfgSysResoService {
 
     private void initMenus(List<CfgSysResoEntity> menus, Set<String> permissions, List<CfgSysResoEntity> allResources) {
         for (CfgSysResoEntity resource : allResources) {
-            if (resource.isRootNode()) {
+            if ("0".equals(resource.getParentResoCode())) {
                 continue;
             }
             if (!Constants.MENU.equals(resource.getResoTypeCode())) {
@@ -125,22 +125,8 @@ public class CfgSysResoServiceImpl implements CfgSysResoService {
     }
 
     private List<CfgSysResoEntity> findWithChildren(Set<String> permissions, String parentResoCode) {
-        List<CfgSysResoEntity> list;
-        List<String> permissionList = new ArrayList<>(permissions);
-        if (parentResoCode == null) {
-            list = cfgSysResoDao.findByPermissions(permissionList);
-        } else {
-            Map<String, Object> paramMap = new HashMap<>(2);
-            paramMap.put("parentResoCode", parentResoCode);
-            paramMap.put("permissionList", permissionList);
-            list = cfgSysResoDao.findMenusByParentCode(paramMap);
-        }
-        if (!CollectionUtils.isEmpty(list)) {
-            for (CfgSysResoEntity cfgSysResoEntity : list) {
-                cfgSysResoEntity.setChildren(this.findWithChildren(permissions, cfgSysResoEntity.getResoCode()));
-            }
-        }
-        return list;
+//
+        return null;
     }
 
     @Override

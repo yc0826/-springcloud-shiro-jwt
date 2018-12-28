@@ -4,12 +4,12 @@
 <mapper namespace="com.haochen.provider.auth.repo.ICfgSysResoDao">
 
     <!-- auto-generate start -->
-    <sql id="mysqlPaginationStart">
-        SELECT A.* FROM (
-    </sql>
-    <sql id="mysqlPaginationEnd">
-        ) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
-    </sql>
+    <sql id = "mysqlPaginationStart">
+    	SELECT A.* FROM (
+	</sql>
+    <sql id = "mysqlPaginationEnd">
+    	) AS A LIMIT #{rowBounds.offset} , #{rowBounds.limit}
+	</sql>
     <!-- 用于select查询公用抽取的列 -->
     <sql id="cfgSysResoColumns">
         <if test="null!=cfgSysResoId">
@@ -18,20 +18,23 @@
         <if test="null!=resoCode">
             and reso_code = #{resoCode}
         </if>
-        <if test="null!=parentResoCode">
-            and parent_reso_code = #{parentResoCode}
-        </if>
-        <if test="null!=url">
-            and url = #{url}
-        </if>
         <if test="null!=resoName">
             and reso_name = #{resoName}
         </if>
-        <if test="null!=resoTypeCode">
-            and reso_type_code = #{resoTypeCode}
+        <if test="null!=path">
+            and path = #{path}
+        </if>
+        <if test="null!=parentResoCode">
+            and parent_reso_code = #{parentResoCode}
         </if>
         <if test="null!=permission">
             and permission = #{permission}
+        </if>
+        <if test="null!=componentPath">
+            and component_path = #{componentPath}
+        </if>
+        <if test="null!=resoTypeCode">
+            and reso_type_code = #{resoTypeCode}
         </if>
         <if test="null!=resoPlatCode">
             and reso_plat_code = #{resoPlatCode}
@@ -66,20 +69,23 @@
             <if test="null!=condition.resoCode">
                 and reso_code = #{condition.resoCode}
             </if>
-            <if test="null!=condition.parentResoCode">
-                and parent_reso_code = #{condition.parentResoCode}
-            </if>
-            <if test="null!=condition.url">
-                and url = #{condition.url}
-            </if>
             <if test="null!=condition.resoName">
                 and reso_name = #{condition.resoName}
             </if>
-            <if test="null!=condition.resoTypeCode">
-                and reso_type_code = #{condition.resoTypeCode}
+            <if test="null!=condition.path">
+                and path = #{condition.path}
+            </if>
+            <if test="null!=condition.parentResoCode">
+                and parent_reso_code = #{condition.parentResoCode}
             </if>
             <if test="null!=condition.permission">
                 and permission = #{condition.permission}
+            </if>
+            <if test="null!=condition.componentPath">
+                and component_path = #{condition.componentPath}
+            </if>
+            <if test="null!=condition.resoTypeCode">
+                and reso_type_code = #{condition.resoTypeCode}
             </if>
             <if test="null!=condition.resoPlatCode">
                 and reso_plat_code = #{condition.resoPlatCode}
@@ -114,20 +120,23 @@
         <if test="null!=resoCode">
             reso_code = #{resoCode},
         </if>
-        <if test="null!=parentResoCode">
-            parent_reso_code = #{parentResoCode},
-        </if>
-        <if test="null!=url">
-            url = #{url},
-        </if>
         <if test="null!=resoName">
             reso_name = #{resoName},
         </if>
-        <if test="null!=resoTypeCode">
-            reso_type_code = #{resoTypeCode},
+        <if test="null!=path">
+            path = #{path},
+        </if>
+        <if test="null!=parentResoCode">
+            parent_reso_code = #{parentResoCode},
         </if>
         <if test="null!=permission">
             permission = #{permission},
+        </if>
+        <if test="null!=componentPath">
+            component_path = #{componentPath},
+        </if>
+        <if test="null!=resoTypeCode">
+            reso_type_code = #{resoTypeCode},
         </if>
         <if test="null!=resoPlatCode">
             reso_plat_code = #{resoPlatCode},
@@ -154,12 +163,12 @@
     <resultMap id="cfgSysResoResultMap" type="com.haochen.provider.auth.entity.CfgSysResoEntity">
         <result property="cfgSysResoId" column="cfg_sys_reso_id"/>
         <result property="resoCode" column="reso_code"/>
-        <result property="parentResoCode" column="parent_reso_code"/>
-        <result property="parentResoCodes" column="parent_reso_codes"/>
-        <result property="url" column="url"/>
         <result property="resoName" column="reso_name"/>
-        <result property="resoTypeCode" column="reso_type_code"/>
+        <result property="path" column="path"/>
+        <result property="parentResoCode" column="parent_reso_code"/>
         <result property="permission" column="permission"/>
+        <result property="componentPath" column="component_path"/>
+        <result property="resoTypeCode" column="reso_type_code"/>
         <result property="resoPlatCode" column="reso_plat_code"/>
         <result property="scTypeCode" column="sc_type_code"/>
         <result property="crtTime" column="crt_time"/>
@@ -171,16 +180,17 @@
     </resultMap>
 
     <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="resoCode" parameterType="com.haochen.provider.auth.entity.CfgSysResoEntity">
-        <![CDATA[
+    <insert id="insert">
+    <![CDATA[
         INSERT INTO cfg_sys_reso (
-        	reso_code
-        	,parent_reso_code
-        	,parent_reso_codes
-        	,url
+        	cfg_sys_reso_id
+        	,reso_code
         	,reso_name
-        	,reso_type_code
+        	,path
+        	,parent_reso_code
         	,permission
+        	,component_path
+        	,reso_type_code
         	,reso_plat_code
         	,sc_type_code
         	,crt_time
@@ -190,13 +200,14 @@
         	,del_flg
         	,ver_num
         ) VALUES (
-        		#{resoCode}
-        		,#{parentResoCode}
-        		,#{parentResoCodes}
-        		,#{url}
+        		#{cfgSysResoId}
+        		,#{resoCode}
         		,#{resoName}
-        		,#{resoTypeCode}
+        		,#{path}
+        		,#{parentResoCode}
         		,#{permission}
+        		,#{componentPath}
+        		,#{resoTypeCode}
         		,#{resoPlatCode}
         		,#{scTypeCode}
 				,now()
@@ -207,23 +218,23 @@
 				,1
         )
     ]]>
-    </insert>
+	</insert>
 
     <delete id="deleteById">
-        <![CDATA[
+    <![CDATA[
 	    DELETE FROM
-	    	cfg_sys_reso 
+	    	cfg_sys_reso
 	    WHERE
-	    cfg_sys_reso_id = #{id} 
+	    cfg_sys_reso_id = #{id}
     ]]>
     </delete>
     <delete id="deleteLogicById">
-        <![CDATA[
+    <![CDATA[
 	    UPDATE
-	    	THIRD_APPKEY_INFO 
+	    	THIRD_APPKEY_INFO
 	    SET FLAG = -1
 	    WHERE
-	    cfg_sys_reso_id = #{id} 
+	    cfg_sys_reso_id = #{id}
     ]]>
     </delete>
     <delete id="deleteByCondition">
@@ -231,14 +242,14 @@
         cfg_sys_reso
         WHERE
         1=1
-        <include refid="cfgSysResoColumns"/>
+        <include refid="cfgSysResoColumns" />
     </delete>
 
     <update id="updateById">
         UPDATE
         cfg_sys_reso
         <set>
-            <include refid="cfgSysResoSetColumns"/>
+            <include refid="cfgSysResoSetColumns" />
         </set>
         WHERE
         cfg_sys_reso_id = #{cfgSysResoId}
@@ -248,24 +259,24 @@
         UPDATE
         cfg_sys_reso
         <set>
-            <include refid="cfgSysResoSetColumns"/>
+            <include refid="cfgSysResoSetColumns" />
         </set>
         WHERE
         1=1
-        <include refid="conditionCfgSysResoColumns"/>
+        <include refid="conditionCfgSysResoColumns" />
     </update>
 
     <select id="queryById" resultMap="cfgSysResoResultMap">
-        <![CDATA[
+    	<![CDATA[
 			SELECT
 				cfg_sys_reso_id
 				,reso_code
-				,parent_reso_code
-				,parent_reso_codes
-				,url
 				,reso_name
-				,reso_type_code
+				,path
+				,parent_reso_code
 				,permission
+				,component_path
+				,reso_type_code
 				,reso_plat_code
 				,sc_type_code
 				,crt_time
@@ -275,22 +286,23 @@
 				,del_flg
 				,ver_num
 			FROM
-				cfg_sys_reso 
-			WHERE 
-				cfg_sys_reso_id = #{id} 
+				cfg_sys_reso
+			WHERE
+				cfg_sys_reso_id = #{id}
 	    ]]>
-    </select>
+	</select>
 
     <select id="queryByCondition" resultMap="cfgSysResoResultMap">
-        <![CDATA[
+			<![CDATA[
 				SELECT
 					cfg_sys_reso_id
 					,reso_code
-					,parent_reso_code
-					,url
 					,reso_name
-					,reso_type_code
+					,path
+					,parent_reso_code
 					,permission
+					,component_path
+					,reso_type_code
 					,reso_plat_code
 					,sc_type_code
 					,crt_time
@@ -305,17 +317,18 @@
 					1=1
 					<include refid="cfgSysResoColumns" />
 			]]>
-    </select>
+	</select>
 
     <select id="queryList" resultMap="cfgSysResoResultMap">
         SELECT
         cfg_sys_reso_id
         ,reso_code
-        ,parent_reso_code
-        ,url
         ,reso_name
-        ,reso_type_code
+        ,path
+        ,parent_reso_code
         ,permission
+        ,component_path
+        ,reso_type_code
         ,reso_plat_code
         ,sc_type_code
         ,crt_time
@@ -328,7 +341,7 @@
         cfg_sys_reso
         WHERE
         1=1
-        <include refid="cfgSysResoColumns"/>
+        <include refid="cfgSysResoColumns" />
         ORDER BY
         cfg_sys_reso_id
     </select>
@@ -340,19 +353,20 @@
         cfg_sys_reso
         WHERE
         1=1
-        <include refid="cfgSysResoColumns"/>
+        <include refid="cfgSysResoColumns" />
     </select>
 
     <select id="queryAll" resultMap="cfgSysResoResultMap">
-        <![CDATA[
+    	<![CDATA[
 			SELECT
 				cfg_sys_reso_id
 				,reso_code
-				,parent_reso_code
-				,url
 				,reso_name
-				,reso_type_code
+				,path
+				,parent_reso_code
 				,permission
+				,component_path
+				,reso_type_code
 				,reso_plat_code
 				,sc_type_code
 				,crt_time
@@ -362,49 +376,12 @@
 				,del_flg
 				,ver_num
 			FROM
-				cfg_sys_reso 
+				cfg_sys_reso
 			ORDER BY
 				cfg_sys_reso_id
 	    ]]>
-    </select>
+	</select>
 
-    <select id="queryPaginationListCount" resultType="Integer">
-        SELECT
-        COUNT(0)
-        FROM
-        cfg_sys_reso
-        WHERE
-        1=1
-        <include refid="conditionCfgSysResoColumns"/>
-    </select>
-
-    <select id="queryPaginationList" resultMap="cfgSysResoResultMap">
-        <include refid="mysqlPaginationStart"/>
-        SELECT
-        cfg_sys_reso_id
-        ,reso_code
-        ,parent_reso_code
-        ,url
-        ,reso_name
-        ,reso_type_code
-        ,permission
-        ,reso_plat_code
-        ,sc_type_code
-        ,crt_time
-        ,crt_user_code
-        ,upd_time
-        ,upd_user_code
-        ,del_flg
-        ,ver_num
-        FROM
-        cfg_sys_reso
-        WHERE
-        1=1
-        <include refid="conditionCfgSysResoColumns"/>
-        ORDER BY
-        cfg_sys_reso_id
-        <include refid="mysqlPaginationEnd"/>
-    </select>
     <!-- auto-generate end -->
 
 
@@ -412,12 +389,12 @@
     <sql id="resColumns">
         cfg_sys_reso_id
         ,reso_code
-        ,parent_reso_code
-        ,parent_reso_codes
-        ,url
         ,reso_name
-        ,reso_type_code
+        ,path
+        ,parent_reso_code
         ,permission
+        ,component_path
+        ,reso_type_code
         ,reso_plat_code
         ,sc_type_code
         ,crt_time
@@ -553,7 +530,8 @@
     <resultMap id="menuMap" type="com.haochen.provider.auth.dto.MenuTreeDto">
         <result property="id" column="reso_code"/>
         <result property="parent_id" column="parent_reso_code"/>
-        <result property="url" column="url"/>
+        <result property="path" column="path"/>
+        <result property="componentPath" column="component_path"/>
         <result property="label" column="reso_name"/>
         <result property="resoTypeCode" column="reso_type_code"/>
         <result property="permission" column="permission"/>
