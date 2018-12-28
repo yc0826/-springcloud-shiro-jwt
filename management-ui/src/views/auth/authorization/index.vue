@@ -1,7 +1,6 @@
 <!--  -->
 <template>
   <div>
-    授权管理
     <el-table
       :data="tableData"
       style="width: 100%"

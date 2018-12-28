@@ -1,7 +1,6 @@
 <!--  -->
 <template>
   <div>
-    角色管理
     <el-table
       :data="tableData"
       style="width: 100%"
