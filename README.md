@@ -1,3 +1,6 @@
+项目主要目的是帮助想学习springcloud和shiro的却不知道如何开始的朋友入门，在没有方向的时候，把现成的框架下下来跑一跑，读一读配置和源码必能让你
+获益良多
+
 姐妹版项目地址 dubbo 服务https://gitee.com/896022/shiroAuth.git
 
 本项目采用 springcloud 作为微服务框架，并运用了 maven 的多模块结构
