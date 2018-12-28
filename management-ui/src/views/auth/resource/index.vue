@@ -8,31 +8,45 @@
     <el-table-tree-column
       :expand-all="!1"
       fixed
-      file-icon="icon icon-file"
-      folder-icon="icon icon-folder"
       prop="label"
       label="名称"
       width="320"
-      class-name="123"
       header-align="center"
     />
     <el-table-column
       :show-overflow-tooltip="true"
       prop="typeName"
       label="类型"
-      width="200"
+      width="100"
+      align="center"
+    />
+    <el-table-column
+      :show-overflow-tooltip="true"
+      prop="path"
+      label="路径"
+      width="150"
+      align="center"
+    />
+    <el-table-column
+      :show-overflow-tooltip="true"
+      prop="componentPath"
+      label="vue组件路径"
+      width="300"
+      align="center"
     />
     <el-table-column
       :show-overflow-tooltip="true"
       prop="permission"
       label="权限字符串"
-      width="600"
+      width="300"
+      align="center"
     />
     <el-table-column
       :show-overflow-tooltip="true"
       fixed="right"
       label="操作"
       width="400"
+      align="center"
     >
       <template slot-scope="scope">
         <el-button
