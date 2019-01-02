@@ -22,7 +22,7 @@
         <java-version>1.8</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Utils Properties -->
-        <com.alibaba.fastjson.version>1.2.17</com.alibaba.fastjson.version>
+        <com.alibaba.fastjson.version>1.2.31</com.alibaba.fastjson.version>
         <!-- Build Properties -->
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
